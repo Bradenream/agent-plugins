@@ -10,6 +10,9 @@ Run `python3 scripts/build.py` from a clean, approved commit. The generated
 `dist/site/agents/` directory contains:
 
 - `setup.md`: the canonical guide, with local Markdown links rewritten for web use.
+- The guide routes by available capabilities; chat assistants read individual
+  Markdown files without downloading the plugin archive. CLI and hosted MCP
+  procedures are linked references in the same versioned payload.
 - `voiceflow/`: the complete plugin and all linked skills, references, and installers.
 - `voiceflow.zip`: the same plugin in a reproducible archive.
 - `manifest.json`: version, source commit, dirty status, per-file hashes, and a
@@ -37,7 +40,9 @@ if the website supports them. Do not update a manifest before its archive.
    intended approved revision. The manifest is provenance, not a signature.
 3. Deploy all files together and fetch the public setup, linked skill, manifest,
    and archive from a fresh unauthenticated session.
-4. Test the one-prompt journey in each supported client and a new conversation.
+4. Test the one-prompt journey in each supported coding and chat client and a new
+   conversation. Verify chat hosts can fetch linked Markdown and connect remote
+   MCP; do not treat offline fixtures as live client compatibility evidence.
 5. Only then update the CTA's copied prompt to:
    “Set up Voiceflow by following https://www.voiceflow.com/agents/setup.md”.
 6. Keep the previous bundle for an atomic rollback. A rollback does not

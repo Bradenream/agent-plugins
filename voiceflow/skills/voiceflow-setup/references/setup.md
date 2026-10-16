@@ -1,110 +1,102 @@
-# Connect your coding agent to Voiceflow
+# Connect your assistant to Voiceflow
 
-Prepare Voiceflow for the user. Do the mechanical steps yourself. They should
-only need browser sign-in when required, then describe what they want to build.
-Keep progress messages short.
+Prepare Voiceflow for the user, using the capabilities actually available in
+this conversation. Complete mechanical steps yourself where supported. Keep
+progress short; ask the user only for an unavoidable sign-in, host setting, or
+missing detail. Do not ask them to choose between CLI and MCP.
 
-## 1. Load and retain the skills
+## 1. Inspect capabilities and reuse connections
 
-If this guide arrived through an installed plugin, use its adjacent skills.
-For the private preview, use an authenticated checkout of
-`Bradenream/agent-plugins` on branch `codex/voiceflow-agent-plugin`; never ask for
-a GitHub token in chat. Do not assume `main` already contains the preview.
+Inspect the host's available tools and connector inventory, including deferred
+tool discovery when available. Do not infer capabilities from a model name,
+brand, or a claim that the assistant is a coding agent.
 
-For the published website version, download the sibling `voiceflow.zip` and
-`manifest.json` from the same `/agents/` location. Verify the archive's SHA-256
-against the manifest before extracting into a user-owned cache outside the
-customer's project. It contains a `voiceflow/` plugin. If these files are
-unavailable, report that setup has not been published; do not invent a URL.
+Distinguish:
 
-Follow [client installation](clients.md) for the current agent only. Avoid
-installing both a plugin and duplicate loose skills. Read the installed
-[entry skill](../../voiceflow/SKILL.md) now, and confirm its linked files exist.
-Keep this session usable if the host needs a reload for native discovery. Tell
-the user about a pending reload rather than claiming it already happened.
+- Account tools that read or change the user's Voiceflow account.
+- Public documentation tools, which need no account and do not prove sign-in.
+- Host tools that can add/authenticate a remote connection.
+- Terminal/file tools that can install in the customer's persistent environment.
+  A temporary code interpreter or remote scratch sandbox does not qualify.
+- Ways to read guidance: web fetch, authenticated repository access, attached
+  files, MCP resources, or documentation tools.
 
-## 2. Reuse a working connection
+If Voiceflow account tools already exist, inspect their schemas and make one
+read-only workspace-list request, or a project-list/account read that needs no
+user-selected project. Use the actual tool name and arguments, never guess them.
+A valid account response, including an empty list, verifies the connection.
+Skip a new connector, CLI install, and sign-in, and continue to step 3.
+For a failed MCP read, use [MCP recovery](mcp.md#verification-and-recovery).
 
-If authenticated Voiceflow MCP tools are already available, inspect their schemas
-and make one read-only workspace-list request. A successful response, including
-an empty list, is sufficient. Reuse it and skip CLI installation/sign-in. Add the
-CLI later only if needed for a task the existing toolset cannot perform.
+## 2. Choose the supported connection path
 
-Otherwise locate `vf`, then run `vf version` and `vf auth login --help`.
-The tested baseline is **0.287.0**, with `--agent-mode`, `--no-browser`,
-`--login-timeout`, and `workspace list`. Retain a newer compatible installation.
-If an existing version lacks these capabilities, explain the needed upgrade;
-preserve its location and do not overwrite an unrelated executable.
+| Observed capability | Next step |
+| --- | --- |
+| A working account connection | Reuse it; go to step 3 |
+| No account connection; a persistent customer terminal is available | Follow the [CLI path](cli.md), unless the user requested MCP or this host already has a configured Voiceflow MCP connection to repair |
+| No usable terminal; remote MCP can be connected by a tool or host settings | Follow the [MCP path](mcp.md) |
+| Only web/docs access; host connection support is unknown | Check the host's current official connection instructions if accessible; ask which app the user is using only if that is the missing fact |
+| Host cannot connect account tools or run the CLI | Explain that this chat can offer guidance but cannot connect to or act on their account; give the smallest supported next step |
 
-If absent, use [the verified CLI installer](installation.md). Use its returned
-absolute binary path for the rest of this session if it is not on PATH.
+Follow only the chosen path. Do not download an archive or provide shell
+commands to a chat-only assistant. A successful public docs request, saved
+configuration, sign-in badge, or user saying "done" is not account verification.
+If the user must change a host setting or sign in, wait for that action, then
+rediscover tools and verify a live account read. Do not restart setup from scratch.
 
-Make this live read:
+## 3. Make guidance available in this host
 
-```sh
-vf workspace list --agent-mode --no-interactive --timeout 20s --color never -o toon
-```
+Read the [entry skill](../../voiceflow/SKILL.md) and its
+[operation contract](../../voiceflow/references/operations.md). Follow specialist
+links only when a later task needs them. These are Markdown instructions; a
+native skill loader is not required to read them.
 
-Do not use `whoami` or stored credentials as proof of connection. Do not print
-workspace details unless asked. An empty list is a connected account, not a
-reason to create a workspace. Classify failures before acting:
+**Clients with persistent skill/plugin support:** use [client installation](clients.md)
+for this host only. If already installed, reuse the adjacent files. In this
+private preview, use an authenticated checkout of `Bradenream/agent-plugins` on
+branch `codex/voiceflow-agent-plugin`; `main` does not contain the preview.
+For the published website bundle, download sibling `voiceflow.zip` and
+`manifest.json` from the same `/agents/` location and verify the archive SHA-256
+before extraction. Preserve user changes and avoid duplicate plugin/skill installs.
+Confirm the entry skill and linked files exist; report any pending host reload.
 
-Use TOON for this read on CLI 0.287.0. Its JSON passthrough can produce empty
-output when a timeout cancels the response before the body is consumed; TOON
-uses the fully decoded response. Empty output is not an empty workspace list.
+**Chat assistants:** read the linked Markdown through the available fetch or
+repository tool. Resolve relative links from the fetched file's location.
+No clone, ZIP, filesystem, or persistent skill installation is required.
+If an existing Knowledge MCP exposes `voiceflow://skill`, read it as maintained
+product guidance; it is not proof that this repository's fifteen skills are
+installed or that the account is connected. If resource reads are unavailable,
+use available documentation tools or web pages; do not require resource support.
+See [chat guidance alternatives](mcp.md#guidance-without-a-filesystem) when the
+linked files cannot be read. A second connection is unnecessary if guidance is
+already accessible.
 
-- Missing/expired authentication or HTTP 401: continue to browser sign-in.
-- HTTP 403: explain insufficient access; repeated login is not a permission fix.
-- Network, rate limit, or service failure: retry a read once after a short
-  indicated delay, otherwise report the blocker. Do not erase credentials.
-- Invalid response or missing command: inspect help and the failure; do not
-  claim connected.
+Private preview access can fail independently of Voiceflow sign-in. Use an
+existing authenticated repository connection or ask for the guide and linked
+Markdown as attachments. Never ask for a GitHub token in chat or claim the
+unpublished website bundle exists. If no guidance source is accessible, report
+that the account is connected but guidance setup is incomplete.
 
-The optional [connection checker](../scripts/check_connection.py) makes this
-read without printing its body when Python 3.10+ is already available. It does
-not install, log in, or repair anything.
+## 4. Verify and hand over
 
-## 3. Sign in only if needed
+Setup is ready for this conversation when:
 
-Run as a background task with a bounded 15-minute lifetime. Read JSON events
-from stderr while it runs:
+1. An actual read of the user's Voiceflow account succeeded in this session.
+2. Guidance is readable now: this package's entry/operation instructions, or
+   verified access to maintained Voiceflow guidance through docs/MCP.
+3. Persistence is stated accurately: installed where supported, or available
+   in this chat with future discovery dependent on the host. Do not promise
+   future chats inherit a read page or invent a memory/skill installation tool.
 
-```sh
-vf auth login --agent-mode --no-browser --login-timeout 15m
-```
-
-Show the exact `authorization_url` from `awaiting_authorization`. Ask the user
-to sign in or create a Voiceflow account in the browser and approve access.
-Wait for that process; do not start competing login flows. Do not save auth URLs
-or credentials in the repository. Wait for `signed_in`, then repeat the live
-workspace read. A closed browser, expired link, or cancelled login is not success.
-Offer one fresh login attempt if needed.
-
-The callback runs on the CLI's machine. For SSH or containers, first establish
-supported loopback port forwarding using the current CLI instructions. If the
-user's browser cannot reach that listener, explain the limitation and offer
-local setup. Never claim a remote loopback URL has completed authentication.
-
-Never ask for passwords, tokens, or secret values in chat. `VF_TOKEN` overrides
-stored OAuth credentials; inspect only its presence, not its value. Explain a
-stale override before changing it.
-
-## 4. Verify, then hand over
-
-Confirm all three conditions:
-
-1. A live, read-only Voiceflow request succeeded in this session.
-2. The entry skill and linked files are readable now.
-3. The plugin/skills are registered or saved in the host's persistent skill
-   location. Note any pending host reload honestly.
-
-If blocked, state what is missing and the smallest next step. Do not claim
-completion yet. Do not select a workspace/project, run a conversation, create
-content, or publish during setup.
+If guidance is session-only, say so briefly before the completion question.
+If a host needs a new chat to expose account tools, give the minimal resume
+instruction and leave account verification pending. Never claim setup complete
+without the live read. An empty account is valid; do not create, select, or ask
+the user to choose a workspace/project, run a test, or publish during setup.
 
 Once ready, end with exactly:
 
 > You're connected to Voiceflow. What would you like to build or improve?
 
-Wait for the answer. No sample project, task menu, workspace chooser, or extra
-discovery interview should come before that question.
+Wait for the answer. No sample project, task menu, or discovery interview should
+come before that question.

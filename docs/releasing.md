@@ -28,8 +28,11 @@ plugin caches use the version; unchanged versions can hide updated content.
 The repo is currently private under Bradenream. Do not claim public marketplace
 availability or an anonymous setup flow yet. When approved:
 
-1. Complete fresh OAuth and fresh-chat acceptance in Claude Code, Codex, and
-   Cursor, plus the important product-task cases.
+1. Complete fresh OAuth and fresh-chat acceptance in Claude Code, Codex, Cursor,
+   and each advertised chat client, plus the important product-task cases.
+   A host-specific connector listing must exist before linking customers to it;
+   otherwise use verified custom-MCP instructions. Subagent simulations do not
+   replace real host acceptance.
 2. Review the MIT-licensed original package content and source provenance for
    public distribution. This package does not vendor private product code.
 3. Remove preview-branch wording from the canonical guide and README.

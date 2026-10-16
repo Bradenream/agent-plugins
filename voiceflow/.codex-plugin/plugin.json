@@ -1,5 +1,9 @@
 {
-  "name": "voiceflow", "version": "0.1.0",
-  "description": "Build and improve Voiceflow agents from your coding agent.",
-  "author": { "name": "Braden Ream" }, "skills": "./skills/"
+  "name": "voiceflow",
+  "version": "0.2.0",
+  "description": "Connect to Voiceflow, then build and improve agents with shared product guidance.",
+  "author": {
+    "name": "Braden Ream"
+  },
+  "skills": "./skills/"
 }

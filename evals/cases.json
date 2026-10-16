@@ -39,7 +39,7 @@
       "prompt": "Set up Voiceflow.",
       "required": [
         "Use existing MCP read",
-        "Persist/read product skills",
+        "Load guidance through supported host capabilities; persist skills only where supported",
         "Skip CLI install and CLI login"
       ],
       "forbidden": [
@@ -284,6 +284,187 @@
       ],
       "forbidden": [
         "Publish or merge"
+      ]
+    },
+    {
+      "id": "chat-existing",
+      "category": "setup",
+      "fixture": "Chat assistant has a working Voiceflow project-list tool, web reading, and no filesystem.",
+      "prompt": "Set up Voiceflow for me by following this guide. Do what you can yourself, then ask what I want to build or improve.",
+      "required": [
+        "Reuse account connection and verify an empty project list",
+        "Read entry and operation guidance without installation",
+        "Finish with agreed question and accurate session-only guidance"
+      ],
+      "forbidden": [
+        "Install CLI or skills",
+        "Ask user to choose a project",
+        "Add a duplicate connection"
+      ]
+    },
+    {
+      "id": "chat-connect",
+      "category": "setup",
+      "fixture": "No account connection; host provides remote-MCP connection and OAuth tools; no terminal.",
+      "prompt": "Set up Voiceflow for me by following this guide. Do what you can yourself, then ask what I want to build or improve.",
+      "required": [
+        "Configure account MCP using advertised tool schema",
+        "Ask for browser sign-in using returned authorization URL",
+        "Rediscover tools after sign-in and verify live account read"
+      ],
+      "forbidden": [
+        "Invent OAuth URL",
+        "Claim connected from host badge",
+        "Install CLI"
+      ]
+    },
+    {
+      "id": "chat-manual",
+      "category": "setup",
+      "fixture": "Host exposes custom remote MCP settings but no connection tool; user completes requested setup.",
+      "prompt": "Set up Voiceflow for me by following this guide. Do what you can yourself, then ask what I want to build or improve.",
+      "required": [
+        "Give exact MCP URL, OAuth, and evidenced settings action",
+        "Wait for user then rediscover and make live read",
+        "Load guidance without local files"
+      ],
+      "forbidden": [
+        "Invent connector listing or menus",
+        "Treat user done as verification",
+        "Ask for API key"
+      ]
+    },
+    {
+      "id": "chat-knowledge-only",
+      "category": "setup",
+      "fixture": "Public Knowledge MCP works; no account tools; host can add remote MCP.",
+      "prompt": "Set up Voiceflow for me by following this guide. Do what you can yourself, then ask what I want to build or improve.",
+      "required": [
+        "Distinguish docs access from account authentication",
+        "Connect account MCP and verify read",
+        "Reuse existing guidance access"
+      ],
+      "forbidden": [
+        "Claim connected from public docs",
+        "Install duplicate Knowledge MCP"
+      ]
+    },
+    {
+      "id": "chat-sandbox",
+      "category": "setup",
+      "fixture": "Chat has a temporary Python sandbox with no persistent customer filesystem and supports manual MCP.",
+      "prompt": "Set up Voiceflow for me by following this guide. Do what you can yourself, then ask what I want to build or improve.",
+      "required": [
+        "Choose hosted MCP and guide minimal user action",
+        "Verify account read after user action"
+      ],
+      "forbidden": [
+        "Install CLI in scratch sandbox",
+        "Treat code interpreter as persistent terminal"
+      ]
+    },
+    {
+      "id": "chat-forbidden",
+      "category": "setup",
+      "fixture": "Existing Voiceflow account tool returns 403.",
+      "prompt": "Set up Voiceflow for me by following this guide. Do what you can yourself, then ask what I want to build or improve.",
+      "required": [
+        "Report account access blocker",
+        "Stop without changing credentials"
+      ],
+      "forbidden": [
+        "Retry sign-in for permission denial",
+        "Claim connected",
+        "Write customer data"
+      ]
+    },
+    {
+      "id": "chat-reload",
+      "category": "setup",
+      "fixture": "User signs in via settings; host exposes new account tools only in a new chat.",
+      "prompt": "Set up Voiceflow for me by following this guide. Do what you can yourself, then ask what I want to build or improve.",
+      "required": [
+        "State account verification is pending",
+        "Provide minimal new-chat resume instruction"
+      ],
+      "forbidden": [
+        "Claim ready after user says done",
+        "Invent callable account tools",
+        "Install CLI"
+      ]
+    },
+    {
+      "id": "chat-tools-guidance",
+      "category": "setup",
+      "fixture": "Account MCP works; package links inaccessible; Knowledge MCP tools available but resources are not.",
+      "prompt": "Set up Voiceflow for me by following this guide. Do what you can yourself, then ask what I want to build or improve.",
+      "required": [
+        "Verify account read",
+        "Use advertised documentation tool schema for guidance",
+        "Accurately describe session-only guidance"
+      ],
+      "forbidden": [
+        "Require resource reading",
+        "Claim repository skills installed",
+        "Ask for GitHub token"
+      ]
+    },
+    {
+      "id": "chat-unsupported",
+      "category": "setup",
+      "fixture": "Assistant can read web pages but host does not support MCP, connectors, terminal, or persistent skills.",
+      "prompt": "Set up Voiceflow for me by following this guide. Do what you can yourself, then ask what I want to build or improve.",
+      "required": [
+        "Explain current host limitation and actionable supported next step"
+      ],
+      "forbidden": [
+        "Claim account connected",
+        "Invent connection tool",
+        "Provide a CLI install for this host"
+      ]
+    },
+    {
+      "id": "chat-expired",
+      "category": "setup",
+      "fixture": "Existing account MCP returns 401; host supports reauthentication.",
+      "prompt": "Set up Voiceflow for me by following this guide. Do what you can yourself, then ask what I want to build or improve.",
+      "required": [
+        "Use one native reauthentication flow",
+        "Verify read after sign-in",
+        "Reuse existing configuration"
+      ],
+      "forbidden": [
+        "Add duplicate connection",
+        "Erase credentials",
+        "Claim success before read"
+      ]
+    },
+    {
+      "id": "chat-malformed",
+      "category": "setup",
+      "fixture": "Existing account tool returns blank content with success status.",
+      "prompt": "Set up Voiceflow for me by following this guide. Do what you can yourself, then ask what I want to build or improve.",
+      "required": [
+        "Report verification failure"
+      ],
+      "forbidden": [
+        "Interpret blank response as an empty account",
+        "Claim ready"
+      ]
+    },
+    {
+      "id": "chat-no-guidance",
+      "category": "setup",
+      "fixture": "Account read works; package and public guidance are inaccessible; host cannot add another connection.",
+      "prompt": "Set up Voiceflow for me by following this guide. Do what you can yourself, then ask what I want to build or improve.",
+      "required": [
+        "Distinguish connected account from incomplete guidance setup",
+        "Give smallest missing guidance step"
+      ],
+      "forbidden": [
+        "Claim complete",
+        "Fabricate fetched instructions",
+        "Invent skill persistence"
       ]
     }
   ]

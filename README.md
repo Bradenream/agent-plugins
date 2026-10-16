@@ -1,11 +1,13 @@
-# Voiceflow for coding agents
+# Voiceflow for AI assistants
 
-Connect Voiceflow once. Then tell your coding agent what you want to build.
+Connect Voiceflow once. Then tell your assistant what you want to build.
 
-This private preview provides one shared skill library for Claude Code, Codex,
-and Cursor. It uses Voiceflow's released CLI and browser sign-in, or an existing
-working Voiceflow MCP connection. No API key pasted into a conversation, no
-project created during setup, and no separate runtime service.
+This private preview provides one capability-based setup guide for coding agents
+and chat assistants, plus a shared skill library packaged for Claude Code, Codex,
+and Cursor. The assistant reuses working connections, chooses the CLI when it has
+a persistent customer terminal, or connects hosted MCP through the host's tools
+or settings. The user only completes steps the host cannot automate, such as
+browser sign-in. Setup does not create a project or require secrets in chat.
 
 ## Try the preview
 
@@ -17,8 +19,9 @@ Give an agent with access to this private repository this prompt:
 > me to Voiceflow. Complete the setup yourself where possible, and then ask
 > what I would like to build or improve.
 
-The agent needs an authenticated GitHub connection or local checkout. This is
-not yet an anonymous public install. For a checkout, ask it to follow the
+The assistant needs an authenticated GitHub reader, local checkout, or the guide
+and its linked Markdown supplied as attachments. This is not yet an anonymous
+public install. For a checkout, ask it to follow the
 [setup guide](voiceflow/skills/voiceflow-setup/references/setup.md).
 
 Successful setup ends with:
@@ -28,6 +31,8 @@ Successful setup ends with:
 ## What's included
 
 - Repeatable setup with live, read-only connection verification.
+- Hosted MCP setup and recovery for chat assistants, with guidance available
+  through Markdown, the website docs, or the existing Knowledge MCP.
 - Fifteen portable skills for setup, building, prompts, workflows, tools,
   knowledge, voice, debugging, transcripts, evaluations, and environments.
 - Native Claude Code and Codex packages; a Cursor manifest and standalone
@@ -55,5 +60,7 @@ Output goes to `dist/`. Tests use temporary directories and fake credentials;
 they do not sign in or change Voiceflow projects.
 
 This is a personal preview, not a published Voiceflow marketplace listing.
+Chat-host paths are evaluated with capability-constrained subagents; support in
+real chat applications requires their own connection and fresh-chat checks.
 Public release, organization transfer, and the website hookup are separate
 steps. See [provenance](docs/provenance.md) for the adaptation history.

@@ -11,8 +11,9 @@ project automatically. Do not require a new environment for every trivial edit;
 use the user's intended draft and explain material shared/live effects.
 
 The Voiceflow website documentation is authoritative for product behavior.
-Use `vf docs search "<question>" -o json` and `vf docs get <page>`, or read
-the public docs through the host browser. These commands do not need sign-in.
+Use available Voiceflow Knowledge MCP tools/resources, read the public docs
+through the host browser, or use `vf docs search "<question>" -o json` and
+`vf docs get <page>` when a CLI is available. Public guidance needs no sign-in.
 Read only pages relevant to the current task. If docs and observed behavior
 disagree, state the discrepancy rather than silently inventing a rule.
 

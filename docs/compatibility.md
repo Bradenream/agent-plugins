@@ -13,6 +13,7 @@ model has completed onboarding successfully.
 | CLI 0.287.0 | Live executable help checked; five local HTTP scenarios exercised without contacting a Voiceflow account |
 | Skill installation | Repeat install, conflict preservation, updates, removal, rollback, path protection, complete tree |
 | Website bundle | Repeat builds produce identical bytes; every emitted setup link resolves and every artifact hash matches |
+| Chat-assistant routing (0.2.0) | Three capability-constrained subagents exercised 12 offline scenarios: seven completed setup and five correctly blocked or requested the missing step; all 12 passed behavioral review |
 
 The baseline review is dated **2026-10-16**. Native host verification checks
 installation/discovery files, not model selection or completion quality.
@@ -44,3 +45,10 @@ local fixture server and a fake token; it never signs in or contacts Voiceflow.
 Neither installs into the user's real skill directory.
 
 See [acceptance cases](../evals/README.md) for the remaining behavior tests.
+
+For 0.2.0, all 32 local tests pass, including fixture boundary checks. The updated
+package was installed in isolated Codex and Claude Code profiles, with all 15
+skills discovered. The [chat evaluation report](../evals/reports/2026-10-16-chat-setup.md)
+records the actual subagent decisions, fixture issues, and limitations. These
+simulations do not establish compatibility with any named chat application;
+live OAuth and fresh-chat checks remain required before advertising support.
