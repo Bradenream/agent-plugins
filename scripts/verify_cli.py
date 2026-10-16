@@ -28,12 +28,17 @@ def main():
     scenario = {"status": 200, "body": {"workspaces": []}}
 
     class Handler(BaseHTTPRequestHandler):
+        # Send the small fixture as one buffered response, like the real JSON API.
+        wbufsize = 16 * 1024
+
         def do_GET(self):
             requested.append(self.path)
+            body = json.dumps(scenario["body"]).encode()
             self.send_response(scenario["status"])
             self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
             self.end_headers()
-            self.wfile.write(json.dumps(scenario["body"]).encode())
+            self.wfile.write(body)
 
         def log_message(self, *args):
             pass
