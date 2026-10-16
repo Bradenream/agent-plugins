@@ -33,7 +33,11 @@ if [ "$actual" != "$expected" ]; then echo "Checksum mismatch; nothing installed
 tar -xzf "$scratch/archive.tar.gz" -C "$scratch" vf
 if [ ! -f "$scratch/vf" ] || [ -L "$scratch/vf" ]; then echo "Invalid executable." >&2; exit 4; fi
 chmod 755 "$scratch/vf"
-"$scratch/vf" version | head -n 1 | grep -Fx "vf $version" >/dev/null
+reported="$("$scratch/vf" version)"
+if [ "${reported%%$'\n'*}" != "vf $version" ]; then
+  echo "Unexpected executable version." >&2
+  exit 4
+fi
 mkdir -p -- "$target_dir"
 target_dir="$(cd -- "$target_dir" && pwd)"
 target="$target_dir/vf"
