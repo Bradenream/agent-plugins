@@ -1,0 +1,18 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "voiceflow",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Build and improve Voiceflow agents from your coding agent.",
+  "author": { "name": "Braden Ream" },
+  "homepage": "https://www.voiceflow.com/docs",
+  "repository": "https://github.com/Bradenream/agent-plugins",
+  "keywords": ["voiceflow", "agents", "workflows", "voice"],
+  "extensions": { "com.openai": { "interface": {
+    "displayName": "Voiceflow",
+    "shortDescription": "Build with Voiceflow",
+    "longDescription": "Connect to Voiceflow, then build, debug, and improve agents using portable product skills.",
+    "developerName": "Braden Ream",
+    "category": "Development"
+  } } }
+}

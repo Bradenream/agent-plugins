@@ -1,0 +1,4 @@
+{
+  "name": "voiceflow-plugins", "owner": { "name": "Braden Ream" },
+  "plugins": [{ "name": "voiceflow", "source": "./voiceflow", "description": "Build with Voiceflow." }]
+}
