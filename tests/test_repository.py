@@ -148,6 +148,13 @@ class ConnectionTests(unittest.TestCase):
             self.assertNotEqual(connection.classify(0, output, ""), "connected")
         self.assertNotEqual(connection.classify(1, '{"workspaces":[]}', ""), "connected")
 
+    def test_typed_toon_workspace_envelope(self):
+        for output in ("workspaces[0]:", "workspaces[1]{id,name}:\n  123,Example\n",
+                       "workspaces[1]:\n  - id: 123\n    name: Example\n"):
+            self.assertEqual(connection.classify(0, output, ""), "connected")
+        for output in ("workspaces: null", "workspaces[0]", "some text workspaces[0]:"):
+            self.assertNotEqual(connection.classify(0, output, ""), "connected")
+
     def test_probe_is_read_only_bounded_and_does_not_echo_output(self):
         result = subprocess.CompletedProcess([], 0, '{"workspaces":[{"secret":"hidden"}]}', "")
         with patch.object(connection.subprocess, "run", return_value=result) as run:
@@ -156,6 +163,7 @@ class ConnectionTests(unittest.TestCase):
         self.assertEqual(args[0][1:3], ["workspace", "list"])
         self.assertEqual(kwargs["timeout"], 25)
         self.assertNotIn("--debug", args[0])
+        self.assertEqual(args[0][-2:], ["-o", "toon"])
 
     def test_missing_cli_and_timeout(self):
         for error, expected in ((FileNotFoundError(), "cli_missing"),

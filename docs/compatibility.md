@@ -20,6 +20,12 @@ No real OAuth session or customer mutation was performed by this repository's
 automated tests. Browser OAuth, fresh-chat skill selection, and representative
 product tasks are acceptance checks before a public release.
 
+CLI 0.287.0 has a JSON passthrough/timeout interaction: a response whose body
+arrives after its headers can be cancelled before JSON output is consumed,
+producing blank output with exit code zero. Setup therefore uses typed TOON
+output and explicitly rejects blank output. The HTTP fixture deliberately splits
+headers and body to retain regression coverage. This repo does not modify the CLI.
+
 Run the local checks:
 
 ```sh

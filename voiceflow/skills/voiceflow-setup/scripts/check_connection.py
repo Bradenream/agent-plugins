@@ -1,6 +1,7 @@
 """Read-only connection probe. Never echo service output or credentials."""
 import argparse
 import json
+import re
 import subprocess
 
 
@@ -27,6 +28,9 @@ def classify(returncode, stdout, stderr):
         for payload in payloads[:1]:
             if isinstance(payload, dict) and isinstance(payload.get("workspaces"), list):
                 return "connected"
+        # Only the typed workspace-list envelope is accepted, not arbitrary text.
+        if re.match(r"\Aworkspaces\[\d+\](?:\{[^{}\r\n]+\})?:[ \t]*(?:\r?\n|\Z)", stdout):
+            return "connected"
     return "unexpected_response"
 
 
@@ -34,7 +38,7 @@ def check(binary, timeout=25):
     try:
         result = subprocess.run(
             [binary, "workspace", "list", "--agent-mode", "--no-interactive",
-             "--timeout", "20s", "-o", "json"],
+             "--timeout", "20s", "--color", "never", "-o", "toon"],
             capture_output=True, text=True, encoding="utf-8", timeout=timeout, check=False,
         )
     except FileNotFoundError:

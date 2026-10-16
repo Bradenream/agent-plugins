@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import subprocess
 import threading
+import time
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -28,9 +29,6 @@ def main():
     scenario = {"status": 200, "body": {"workspaces": []}}
 
     class Handler(BaseHTTPRequestHandler):
-        # Send the small fixture as one buffered response, like the real JSON API.
-        wbufsize = 16 * 1024
-
         def do_GET(self):
             requested.append(self.path)
             body = json.dumps(scenario["body"]).encode()
@@ -38,6 +36,9 @@ def main():
             self.send_header("Content-Type", "application/json")
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
+            # A split response exercises the released CLI's early-cancel edge case.
+            self.wfile.flush()
+            time.sleep(0.05)
             self.wfile.write(body)
 
         def log_message(self, *args):
@@ -53,7 +54,7 @@ def main():
             scenario.update(status=status, body={"workspaces": []} if status == 200 else {"message": "fixture failure"})
             result = subprocess.run([
                 args.vf, "workspace", "list", "--agent-mode", "--no-interactive", "--timeout", "2s",
-                "-o", "json", "--server-url", f"http://127.0.0.1:{server.server_port}",
+                "-o", "toon", "--color", "never", "--server-url", f"http://127.0.0.1:{server.server_port}",
                 "--token", "local-fixture-not-a-credential",
             ], capture_output=True, text=True, encoding="utf-8", timeout=20)
             actual = probe.classify(result.returncode, result.stdout, result.stderr)

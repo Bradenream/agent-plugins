@@ -42,12 +42,16 @@ absolute binary path for the rest of this session if it is not on PATH.
 Make this live read:
 
 ```sh
-vf workspace list --agent-mode --no-interactive --timeout 20s -o json
+vf workspace list --agent-mode --no-interactive --timeout 20s --color never -o toon
 ```
 
 Do not use `whoami` or stored credentials as proof of connection. Do not print
 workspace details unless asked. An empty list is a connected account, not a
 reason to create a workspace. Classify failures before acting:
+
+Use TOON for this read on CLI 0.287.0. Its JSON passthrough can produce empty
+output when a timeout cancels the response before the body is consumed; TOON
+uses the fully decoded response. Empty output is not an empty workspace list.
 
 - Missing/expired authentication or HTTP 401: continue to browser sign-in.
 - HTTP 403: explain insufficient access; repeated login is not a permission fix.

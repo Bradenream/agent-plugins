@@ -25,7 +25,10 @@ api-tool, variable, secret, document, knowledge-base, message, prompt, integrati
 mcp-server, mcp-tool, transcript, test, evaluation, environment, and other resources.
 Do not translate private helper names into imaginary public commands.
 
-Use JSON output for reads and supported file/stdin input for complex writes.
+Use structured output for reads and supported file/stdin input for complex writes.
+On CLI 0.287.0, prefer `-o toon` with `--timeout`: JSON passthrough can return an
+empty body because of early timeout-context cancellation. Do not interpret blank
+output as successful verification. Use current CLI help when this is corrected.
 Inspect help for the exact flag; do not assume every command accepts --data.
 Do not place secrets in command arguments or shell history. A --dry-run previews
 a request; it does not prove server validation or runtime correctness.
