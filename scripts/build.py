@@ -16,7 +16,7 @@ def sha(data):
 
 def package_files(root):
     plugin = root / "voiceflow"
-    for path in sorted(plugin.rglob("*")):
+    for path in sorted(plugin.rglob("*"), key=lambda path: path.relative_to(root).as_posix()):
         if "__pycache__" in path.parts or path.suffix == ".pyc":
             continue
         if path.is_symlink():
@@ -69,6 +69,7 @@ def build(root=ROOT, output=None):
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
         for name, data in files:
             entry = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
+            entry.create_system = 3
             entry.compress_type = zipfile.ZIP_DEFLATED
             entry.external_attr = 0o100644 << 16
             bundle.writestr(entry, data)
@@ -92,7 +93,8 @@ def build(root=ROOT, output=None):
     (site / "manifest.json").write_bytes((json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode("utf-8"))
     (output / "SHA256SUMS").write_bytes("".join(
         f"{sha(p.read_bytes())}  {p.relative_to(output).as_posix()}\n"
-        for p in sorted(site.rglob("*")) if p.is_file()).encode("utf-8"))
+        for p in sorted(site.rglob("*"), key=lambda path: path.relative_to(site).as_posix())
+        if p.is_file()).encode("utf-8"))
     return site
 
 

@@ -188,11 +188,13 @@ class PublicationTests(unittest.TestCase):
             self.assertEqual(builder.sha((site / name).read_bytes()), expected)
         self.assertTrue(manifest["hasUncommittedChanges"])
         with zipfile.ZipFile(site / "voiceflow.zip") as archive:
+            self.assertEqual(archive.namelist(), sorted(archive.namelist()))
             self.assertEqual(len([n for n in archive.namelist() if n.endswith("/SKILL.md")]), 15)
             for info in archive.infolist():
                 self.assertTrue(info.filename.startswith("voiceflow/"))
                 self.assertNotIn("..", info.filename.split("/"))
                 self.assertEqual(info.date_time, (1980, 1, 1, 0, 0, 0))
+                self.assertEqual(info.create_system, 3)
         for link in validator.markdown_links((site / "setup.md").read_text(encoding="utf-8")):
             if "://" not in link and not link.startswith("#"):
                 self.assertTrue((site / link.split("#")[0]).is_file(), link)
