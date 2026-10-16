@@ -9,7 +9,7 @@ model has completed onboarding successfully.
 | Codex CLI 0.162.0-alpha.2 | Isolated marketplace install, enabled plugin inventory, all 15 skill files present |
 | Cursor | Manifest checked against current documentation; standalone skill installation tested. Interactive discovery has not been tested locally because Cursor is unavailable |
 | macOS arm64 | Real checksum-verified CLI install and existing-binary preservation tested |
-| Linux and Windows | CI runs real platform installers and CLI contract checks; see the branch's Actions results for current outcome |
+| Linux x86_64 and Windows x86_64 | Real checksum-verified installers, package checks, and CLI contract checks passed in CI |
 | CLI 0.287.0 | Live executable help checked; five local HTTP scenarios exercised without contacting a Voiceflow account |
 | Skill installation | Repeat install, conflict preservation, updates, removal, rollback, path protection, complete tree |
 | Website bundle | Repeat builds produce identical bytes; every emitted setup link resolves and every artifact hash matches |
@@ -19,6 +19,12 @@ installation/discovery files, not model selection or completion quality.
 No real OAuth session or customer mutation was performed by this repository's
 automated tests. Browser OAuth, fresh-chat skill selection, and representative
 product tasks are acceptance checks before a public release.
+
+The [initial complete platform run](https://github.com/Bradenream/agent-plugins/actions/runs/38980919367)
+passed on all three operating systems. All 23 local tests passed (the three Unix
+installer unit tests are intentionally skipped on Windows, whose actual installer
+is tested in its CI job). Downloaded CI artifacts had matching content digests
+across Linux, Windows, and macOS, and every manifest file hash was verified.
 
 CLI 0.287.0 has a JSON passthrough/timeout interaction: a response whose body
 arrives after its headers can be cancelled before JSON output is consumed,
