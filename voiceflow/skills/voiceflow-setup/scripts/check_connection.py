@@ -35,7 +35,7 @@ def check(binary, timeout=25):
         result = subprocess.run(
             [binary, "workspace", "list", "--agent-mode", "--no-interactive",
              "--timeout", "20s", "-o", "json"],
-            capture_output=True, text=True, timeout=timeout, check=False,
+            capture_output=True, text=True, encoding="utf-8", timeout=timeout, check=False,
         )
     except FileNotFoundError:
         return "cli_missing"

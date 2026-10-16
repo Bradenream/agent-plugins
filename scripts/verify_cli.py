@@ -21,7 +21,7 @@ def main():
     for command in (["version"], ["auth", "login", "--help"], ["workspace", "list", "--help"],
                     ["docs", "search", "--help"], ["docs", "get", "--help"],
                     ["workflow", "insert-step", "--help"], ["agent", "patch-prompt", "--help"]):
-        result = subprocess.run([args.vf, *command], capture_output=True, text=True, timeout=10, check=True)
+        result = subprocess.run([args.vf, *command], capture_output=True, text=True, encoding="utf-8", timeout=10, check=True)
         if command[:2] == ["auth", "login"]:
             assert all(flag in result.stdout for flag in ("--no-browser", "--login-timeout"))
     requested = []
@@ -50,9 +50,9 @@ def main():
                 args.vf, "workspace", "list", "--agent-mode", "--no-interactive", "--timeout", "2s",
                 "-o", "json", "--server-url", f"http://127.0.0.1:{server.server_port}",
                 "--token", "local-fixture-not-a-credential",
-            ], capture_output=True, text=True, timeout=20)
+            ], capture_output=True, text=True, encoding="utf-8", timeout=20)
             actual = probe.classify(result.returncode, result.stdout, result.stderr)
-            assert actual == expected, (status, actual)
+            assert actual == expected, (status, actual, result.returncode, result.stdout, result.stderr, requested)
         assert requested and all(path == "/v1/stable/workspace" for path in requested)
     finally:
         server.shutdown()

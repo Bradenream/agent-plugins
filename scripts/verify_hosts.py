@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def run(command, env, cwd):
-    result = subprocess.run(command, env=env, cwd=cwd, capture_output=True, text=True, timeout=60)
+    result = subprocess.run(command, env=env, cwd=cwd, capture_output=True, text=True, encoding="utf-8", timeout=60)
     if result.returncode:
         raise RuntimeError(f"{command[:3]} failed: {result.stderr[-1000:]}")
     return result.stdout

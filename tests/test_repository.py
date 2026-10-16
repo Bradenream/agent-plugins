@@ -43,7 +43,7 @@ class SkillInstallTests(unittest.TestCase):
         unrelated.write_text("keep")
         self.assertEqual(installer.install(self.source, self.target), "unchanged")
         self.assertEqual(installer.install(self.source, self.target, uninstall=True), "removed")
-        self.assertEqual(unrelated.read_text(), "keep")
+        self.assertEqual(unrelated.read_text(encoding="utf-8"), "keep")
         self.assertFalse((self.target / "voiceflow/SKILL.md").exists())
 
     def test_conflict_fails_before_any_write(self):
@@ -54,7 +54,7 @@ class SkillInstallTests(unittest.TestCase):
         (self.source / "voiceflow/new.md").write_text("new")
         with self.assertRaisesRegex(ValueError, "Existing file"):
             installer.install(self.source, self.target)
-        self.assertEqual(existing.read_text(), "custom")
+        self.assertEqual(existing.read_text(encoding="utf-8"), "custom")
         self.assertFalse((self.target / "voiceflow/new.md").exists())
 
     def test_edited_file_blocks_update_and_removal(self):
@@ -63,7 +63,7 @@ class SkillInstallTests(unittest.TestCase):
         for options in ({"update": True}, {"uninstall": True}):
             with self.assertRaisesRegex(ValueError, "Local change"):
                 installer.install(self.source, self.target, **options)
-        self.assertEqual((self.target / "voiceflow/SKILL.md").read_text(), "custom")
+        self.assertEqual((self.target / "voiceflow/SKILL.md").read_text(encoding="utf-8"), "custom")
 
     def test_intentional_update_replaces_only_managed_files(self):
         installer.install(self.source, self.target)
@@ -71,7 +71,7 @@ class SkillInstallTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "--update"):
             installer.install(self.source, self.target)
         self.assertEqual(installer.install(self.source, self.target, update=True), "installed")
-        self.assertEqual((self.target / "voiceflow/SKILL.md").read_text(), "updated")
+        self.assertEqual((self.target / "voiceflow/SKILL.md").read_text(encoding="utf-8"), "updated")
 
     def test_removed_file_is_not_silently_restored(self):
         installer.install(self.source, self.target)
@@ -115,7 +115,7 @@ class SkillInstallTests(unittest.TestCase):
         with patch.object(installer.os, "replace", side_effect=fail_second):
             with self.assertRaises(OSError):
                 installer.install(self.source, self.target, update=True)
-        self.assertEqual((self.target / "voiceflow/SKILL.md").read_text(), "original")
+        self.assertEqual((self.target / "voiceflow/SKILL.md").read_text(encoding="utf-8"), "original")
         self.assertEqual((self.target / installer.RECEIPT).read_bytes(), receipt_before)
         self.assertFalse((self.target / "voiceflow/new.md").exists())
 
@@ -175,7 +175,7 @@ class PublicationTests(unittest.TestCase):
     def test_archive_and_site_are_reproducible_and_complete(self):
         site = builder.build(self.root)
         first = {p.relative_to(site): p.read_bytes() for p in site.rglob("*") if p.is_file()}
-        manifest = json.loads((site / "manifest.json").read_text())
+        manifest = json.loads((site / "manifest.json").read_text(encoding="utf-8"))
         for name, expected in manifest["files"].items():
             self.assertEqual(builder.sha((site / name).read_bytes()), expected)
         self.assertTrue(manifest["hasUncommittedChanges"])
@@ -185,7 +185,7 @@ class PublicationTests(unittest.TestCase):
                 self.assertTrue(info.filename.startswith("voiceflow/"))
                 self.assertNotIn("..", info.filename.split("/"))
                 self.assertEqual(info.date_time, (1980, 1, 1, 0, 0, 0))
-        for link in validator.markdown_links((site / "setup.md").read_text()):
+        for link in validator.markdown_links((site / "setup.md").read_text(encoding="utf-8")):
             if "://" not in link and not link.startswith("#"):
                 self.assertTrue((site / link.split("#")[0]).is_file(), link)
         builder.build(self.root)
@@ -233,7 +233,7 @@ class UnixInstallerTests(unittest.TestCase):
 
     def run_installer(self):
         return subprocess.run(["bash", str(SETUP / "install-vf.sh")], env=self.env,
-                              capture_output=True, text=True, timeout=10)
+                              capture_output=True, text=True, encoding="utf-8", timeout=10)
 
     def fake_curl(self, script):
         path = self.commands / "curl"

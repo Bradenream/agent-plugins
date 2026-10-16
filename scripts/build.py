@@ -73,26 +73,26 @@ def build(root=ROOT, output=None):
             entry.external_attr = 0o100644 << 16
             bundle.writestr(entry, data)
     guide = root / "voiceflow/skills/voiceflow-setup/references/setup.md"
-    (site / "setup.md").write_text(rewrite_setup(guide.read_text(), guide, root))
+    (site / "setup.md").write_bytes(rewrite_setup(guide.read_text(encoding="utf-8"), guide, root).encode("utf-8"))
     try:
         revision = subprocess.run(["git", "rev-parse", "HEAD"], cwd=root, capture_output=True,
-                                  text=True, timeout=5, check=True).stdout.strip()
+                                  text=True, encoding="utf-8", timeout=5, check=True).stdout.strip()
         dirty = bool(subprocess.run(["git", "status", "--porcelain"], cwd=root, capture_output=True,
-                                    text=True, timeout=5, check=True).stdout.strip())
+                                    text=True, encoding="utf-8", timeout=5, check=True).stdout.strip())
     except (OSError, subprocess.SubprocessError):
         revision, dirty = None, True
     content = {p.relative_to(site).as_posix(): sha(p.read_bytes())
                for p in sorted(site.rglob("*")) if p.is_file()}
     manifest = {
-        "schema": 1, "version": json.loads((root / "voiceflow/plugin.json").read_text())["version"],
+        "schema": 1, "version": json.loads((root / "voiceflow/plugin.json").read_text(encoding="utf-8"))["version"],
         "sourceCommit": revision, "hasUncommittedChanges": dirty,
         "contentSHA256": sha(json.dumps(content, sort_keys=True).encode()),
         "files": content,
     }
-    (site / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
-    (output / "SHA256SUMS").write_text("".join(
+    (site / "manifest.json").write_bytes((json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode("utf-8"))
+    (output / "SHA256SUMS").write_bytes("".join(
         f"{sha(p.read_bytes())}  {p.relative_to(output).as_posix()}\n"
-        for p in sorted(site.rglob("*")) if p.is_file()))
+        for p in sorted(site.rglob("*")) if p.is_file()).encode("utf-8"))
     return site
 
 

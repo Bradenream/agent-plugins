@@ -75,7 +75,7 @@ def install(source, target, update=False, uninstall=False):
     receipt = target / RECEIPT
     if receipt.is_symlink():
         raise ValueError("Symlink receipt refused")
-    previous = json.loads(receipt.read_text()) if receipt.exists() else {"files": {}}
+    previous = json.loads(receipt.read_text(encoding="utf-8")) if receipt.exists() else {"files": {}}
     if not isinstance(previous.get("files"), dict):
         raise ValueError("Invalid installation receipt")
     old = previous["files"]
