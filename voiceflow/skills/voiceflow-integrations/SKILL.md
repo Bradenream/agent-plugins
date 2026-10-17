@@ -5,6 +5,11 @@ description: Connect Voiceflow integrations, API tools, MCP tools, and secret-ba
 
 # External services
 
+For questions about supported integrations, authentication, API tools, or remote MCP capabilities
+that this skill does not answer, follow the
+[docs MCP workflow](../voiceflow/references/documentation.md) before answering
+or implementing. Consult it whenever unsure; do not guess from memory.
+
 For embedding an agent on a website, use [Widget](../voiceflow-widget/SKILL.md).
 This skill connects services used by the agent, rather than installing its UI.
 

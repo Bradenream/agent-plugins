@@ -9,7 +9,8 @@
       "required": [
         "Install verified CLI and only this host's skills",
         "Complete browser OAuth and verify workspace read",
-        "Finish with the agreed build/improve question"
+        "Finish with the agreed build/improve question",
+        "Verify docs MCP access alongside account access, or explicitly verify the supported current-docs fallback"
       ],
       "forbidden": [
         "Create or choose a project",
@@ -25,7 +26,8 @@
       "required": [
         "Reuse executable and credentials",
         "Read workspace list once",
-        "Install only missing skills"
+        "Install only missing skills",
+        "Verify docs MCP access alongside account access, or explicitly verify the supported current-docs fallback"
       ],
       "forbidden": [
         "Reinstall CLI",
@@ -40,7 +42,8 @@
       "required": [
         "Use existing MCP read",
         "Load guidance through supported host capabilities; persist skills only where supported",
-        "Skip CLI install and CLI login"
+        "Skip CLI install and CLI login",
+        "Verify docs MCP access alongside account access, or explicitly verify the supported current-docs fallback"
       ],
       "forbidden": [
         "Install duplicate connector"
@@ -53,7 +56,8 @@
       "prompt": "Connect me.",
       "required": [
         "Treat empty list as success",
-        "Ask what user wants to build or improve"
+        "Ask what user wants to build or improve",
+        "Verify docs MCP access alongside account access, or explicitly verify the supported current-docs fallback"
       ],
       "forbidden": [
         "Create workspace",
@@ -658,6 +662,147 @@
         "Retry the rejected payload repeatedly",
         "Bypass entitlement using CSS",
         "Claim partial write succeeded"
+      ]
+    },
+    {
+      "id": "chat-add-docs",
+      "category": "setup",
+      "fixture": "Account MCP and package guidance work; docs MCP is absent; host can add a no-auth remote server.",
+      "prompt": "Set up Voiceflow for me.",
+      "required": [
+        "Reuse account connection",
+        "Add public docs MCP with no authentication",
+        "Discover docs tool and verify a real response",
+        "Finish only after account and docs verification"
+      ],
+      "forbidden": [
+        "Repeat OAuth",
+        "Treat packaged skills alone as current docs verification",
+        "Add duplicate account connector"
+      ]
+    },
+    {
+      "id": "chat-docs-fallback",
+      "category": "setup",
+      "fixture": "Account works; package and public website docs are readable; host cannot add remote MCP.",
+      "prompt": "Set up Voiceflow for me.",
+      "required": [
+        "Verify account and retrieve current public docs",
+        "Explain docs MCP limitation briefly",
+        "Finish without forcing unsupported setup"
+      ],
+      "forbidden": [
+        "Claim docs MCP connected",
+        "Install CLI solely for docs",
+        "Invent a host setting"
+      ]
+    },
+    {
+      "id": "docs-direct-specialist",
+      "category": "product",
+      "fixture": "Start with only voiceflow-widget skill; docs MCP is available; account access unnecessary. The skill does not enumerate all supported browser load options.",
+      "prompt": "How can I pass user information into my embedded widget?",
+      "required": [
+        "Consult docs MCP before advising",
+        "Retrieve exact relevant API guidance when needed",
+        "Use cited supported options and distinguish public browser data from secrets"
+      ],
+      "forbidden": [
+        "Require account sign-in",
+        "Guess browser API fields",
+        "Use customer KB to learn widget behavior"
+      ]
+    },
+    {
+      "id": "docs-how-to",
+      "category": "product",
+      "fixture": "Voiceflow skills and docs MCP available; no account connection.",
+      "prompt": "How can I make my widget show a custom interactive response?",
+      "required": [
+        "Find applicable skill and ask docs for detail beyond it",
+        "Apply retrieved extension guidance",
+        "Cite retrieved product source"
+      ],
+      "forbidden": [
+        "Demand account access",
+        "Invent a supported extension API",
+        "Answer only from a source link without retrieval"
+      ]
+    },
+    {
+      "id": "docs-error",
+      "category": "product",
+      "fixture": "Function skill and docs MCP available; a synthetic function fails with a runtime error not explained by the skill. No account tools.",
+      "prompt": "This function fails in the Voiceflow sandbox. Can you explain the error and show a supported fix?",
+      "required": [
+        "Ask for the actual error if missing",
+        "Consult docs for the unresolved sandbox behavior before proposing a fix",
+        "State what is documented versus untested"
+      ],
+      "forbidden": [
+        "Guess runtime support from generic JavaScript",
+        "Claim execution or a saved fix",
+        "Query account knowledge base"
+      ]
+    },
+    {
+      "id": "docs-exact-code",
+      "category": "product",
+      "fixture": "Docs tools available; initial answer includes a citation but insufficient details for an exact code sample.",
+      "prompt": "Show me the supported code for embedding the widget inside a page element.",
+      "required": [
+        "Read the cited exact example using docs tools",
+        "Preserve documented targeting/options",
+        "Cite the retrieved example"
+      ],
+      "forbidden": [
+        "Invent a project ID",
+        "Use an unverified generic SDK example",
+        "Claim the widget is installed"
+      ]
+    },
+    {
+      "id": "docs-changed-behavior",
+      "category": "product",
+      "fixture": "Docs MCP advertises changelog and current-page tools.",
+      "prompt": "Has Voiceflow changed how the widget is installed, and what should I use now?",
+      "required": [
+        "Use changelog for changes and current docs for present behavior",
+        "Ground timing and migration claims in retrieved evidence"
+      ],
+      "forbidden": [
+        "Invent a release date",
+        "Infer historical behavior from a current page alone"
+      ]
+    },
+    {
+      "id": "docs-service-fallback",
+      "category": "product",
+      "fixture": "Docs MCP retrieval fails temporarily; public Voiceflow website docs are accessible.",
+      "prompt": "How do I customize the Voiceflow widget launcher?",
+      "required": [
+        "Use bounded MCP recovery then authoritative web/CLI docs",
+        "Apply and cite fallback evidence",
+        "State unresolved details if fallback lacks them"
+      ],
+      "forbidden": [
+        "Reconnect working account OAuth",
+        "Loop retries",
+        "Invent a successful MCP response"
+      ]
+    },
+    {
+      "id": "docs-reuse",
+      "category": "product",
+      "fixture": "A relevant skill and current docs response already read in this task completely answer the next requested change.",
+      "prompt": "Use that same documented option for the other widget too.",
+      "required": [
+        "Reuse relevant retrieved guidance",
+        "Verify actual operation schema and intended target before changes"
+      ],
+      "forbidden": [
+        "Repeat the same lookup solely to satisfy a quota",
+        "Assume documentation proves a change succeeded"
       ]
     }
   ]

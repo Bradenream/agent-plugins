@@ -60,3 +60,19 @@ body, and nonempty output. Twelve new widget acceptance cases are specified but
 have not been executed as model evaluations or live platform installations;
 see the [widget protocol](../evals/widget-protocol.md). No website deployment or
 customer-account mutation was part of these checks.
+
+For 0.4.0, all 37 unit tests and all 16 skill validations pass. The docs MCP is bundled in the portable package and Codex/Claude
+adapter. Isolated native installs retained both configurations and all 16
+skills/references. Standalone skill installation still requires the host's
+normal docs connection step. Cursor's declared format is checked against its
+current reference; runtime discovery remains untested locally.
+
+A separate public, read-only probe verified Voiceflow Knowledge MCP 2.1.2,
+its four tools and required context fields, an `ask_voiceflow` response, and
+an exact Widget API page read. The first answer was low-confidence and reported
+`answerable: false`; it was not accepted as a complete implementation answer.
+No account credentials or customer data were sent. Unit checks include no-auth
+docs connection, separate account/docs verification, duplicate rejection, and
+explicit web fallback. The new [docs behavior cases](../evals/docs-protocol.md)
+remain unrun as model evaluations; earlier live results must not be interpreted
+as docs-MCP coverage.

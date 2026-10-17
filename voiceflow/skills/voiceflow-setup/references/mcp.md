@@ -63,6 +63,37 @@ Use returned status codes or structured errors, not assumptions:
 Return to [guidance and completion](setup.md#3-make-guidance-available-in-this-host)
 after a verified read.
 
+## Documentation connection
+
+The [Voiceflow Knowledge MCP](https://www.voiceflow.com/docs/mcp/knowledge) is a
+standard part of setup, alongside either account MCP or CLI. It is separate
+from the account server and answers product/how-to questions without signing in.
+
+| Setting | Value |
+| --- | --- |
+| Suggested name | Voiceflow Knowledge |
+| Server URL | `https://www.voiceflow.com/docs/mcp` |
+| Transport | Streamable HTTP |
+| Authentication | None |
+
+1. Discover existing documentation tools and connections, including servers
+   bundled by the native plugin. Reuse a matching connection by endpoint;
+   names/prefixes vary. Never add a duplicate because its name differs.
+2. If absent, use the host's supported add/connect tool with this public URL and
+   no authentication. If settings require the user, give the smallest verified
+   host-specific step. Do not reuse the account server's OAuth configuration.
+   For standalone coding-host installs, see [client guidance](clients.md#docs-mcp-for-standalone-skills).
+3. Rediscover tools and inspect schemas. Verify with one relevant `ask_voiceflow`
+   question, or an equivalent advertised docs tool. A saved URL or connected
+   badge is not enough; inspect the response for actual documentation evidence.
+4. If blocked by host support, policy, reload, or service failure, state that
+   distinction and use a verified public-docs/CLI-docs fallback. Do not restart
+   working account auth or require a terminal just to retrieve documentation.
+
+Follow the [documentation workflow](../../voiceflow/references/documentation.md)
+for question routing, source use, and bounded recovery. Account verification
+and docs verification are separate; neither substitutes for the other.
+
 ## Guidance without a filesystem
 
 Prefer the package's linked entry and operation instructions when readable.
@@ -78,10 +109,9 @@ for capabilities, then retrieve task-relevant docs after the user states a goal.
 A successful document/tool response verifies guidance access; a URL in this
 file or a connected badge does not.
 
-The optional [Knowledge MCP](https://www.voiceflow.com/docs/mcp/knowledge) uses
-`https://www.voiceflow.com/docs/mcp`, Streamable HTTP, with no sign-in. Add it
-only if needed for guidance and supported by the host. It is separate from the
-account server today; do not claim this repository combines the two servers.
+Use the standard [documentation connection](#documentation-connection) even
+when repository files are unavailable. It supplies current how-to guidance;
+it does not install this package or authenticate the account.
 
 Use the advertised `voiceflow://skill` resource if the host can read it. Otherwise
 discover the available documentation tools (such as `ask_voiceflow`,

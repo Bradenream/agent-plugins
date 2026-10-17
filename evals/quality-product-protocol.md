@@ -151,3 +151,12 @@ For both hall repairs, additional verifier questions about opening hours and
 pets check whether absent guide information leads to an honest unknown answer.
 These probes were added after seeing a greeting offer help with hours; they were
 not part of the frozen actor requests.
+
+## Documentation access in future runs
+
+For runs of 0.4.0 or later, both CLI and account-MCP actors also receive the
+public docs MCP. The account-transport restriction does not restrict product
+documentation tools. Follow [docs integration acceptance](docs-protocol.md):
+verify discovery first, then review whether unresolved implementation questions
+led to appropriate docs calls and supported decisions. Historical runs and their
+reports remain unchanged; they did not expose this documentation server.

@@ -5,6 +5,11 @@ description: Create or run Voiceflow saved tests and evaluations, define quality
 
 # Tests and evaluations
 
+For questions about test assertions, evaluation criteria, run behavior, or interpreting results
+that this skill does not answer, follow the
+[docs MCP workflow](../voiceflow/references/documentation.md) before answering
+or implementing. Consult it whenever unsure; do not guess from memory.
+
 Read the [operation contract](../voiceflow/references/operations.md). Distinguish
 a saved conversational test, its individual run, and an evaluation criterion.
 Inspect current schemas for test turns, response/routing/tool checks, and

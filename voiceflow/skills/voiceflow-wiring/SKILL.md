@@ -5,6 +5,11 @@ description: Connect Voiceflow function/API tool inputs, secrets, captured outpu
 
 # Wire tools and state
 
+For questions about input collection, defaults, captures, references, or state behavior
+that this skill does not answer, follow the
+[docs MCP workflow](../voiceflow/references/documentation.md) before answering
+or implementing. Consult it whenever unsure; do not guess from memory.
+
 Read the [operation contract](../voiceflow/references/operations.md). Inspect the
 resource declarations and the specific attachment using them. Tool definitions,
 attachments, and project variables are different resources.

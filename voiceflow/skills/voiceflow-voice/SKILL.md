@@ -5,6 +5,11 @@ description: Configure or improve Voiceflow agents for spoken conversations, voi
 
 # Spoken conversations
 
+For questions about voice providers, turn handling, interruptions, telephony, or transfer behavior
+that this skill does not answer, follow the
+[docs MCP workflow](../voiceflow/references/documentation.md) before answering
+or implementing. Consult it whenever unsure; do not guess from memory.
+
 Read the [operation contract](../voiceflow/references/operations.md). Identify the
 channel and current voice/provider settings before editing. Use supported
 provider values from live schemas; never invent a voice ID.

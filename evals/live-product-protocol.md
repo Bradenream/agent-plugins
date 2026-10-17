@@ -34,9 +34,15 @@ is a diagnostic sample, not a statistically reliable model success rate.
    run because document content can be shared across environments.
 5. Limit account operations to the assigned project/environment and transport.
    CLI actors use the verified CLI; MCP actors use only the account MCP for
-   Voiceflow operations. MCP actors may read local guidance and the fixture,
-   but must not fall back to CLI or raw HTTP. This tests an MCP transport path,
-   not a real non-coding chat application's interface.
+   account operations. **Both groups also receive the public docs MCP.**
+   Restricting the account transport must not exclude documentation tools.
+   MCP actors may read local guidance and the fixture, but must not fall back
+   to CLI or raw HTTP for account work. This tests an MCP transport path, not
+   a real non-coding chat application's interface.
+6. Verify docs tools are callable before starting. Follow the
+   [docs integration protocol](docs-protocol.md) and preserve the actual docs
+   calls/evidence separately from account reads and customer KB queries.
+   Missing docs access is an infrastructure limitation, not an agent omission.
 
 Use normal host approval controls. If a sandbox cannot access the existing
 OS-keychain session, request the specific command through normal approval;

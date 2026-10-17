@@ -19,12 +19,14 @@ except ImportError:  # Direct script execution has no package parent.
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://preview.invalid/agents/"
 ACCOUNT = "https://mcp.voiceflow.com/mcp"
+DOCS = "https://www.voiceflow.com/docs/mcp"
 AUTH = "https://auth.example.invalid/fixture-sign-in"
 SETTINGS = "https://chat.example.invalid/settings/connections"
 CASES = {
     "chat-existing", "chat-connect", "chat-manual", "chat-knowledge-only",
     "chat-sandbox", "chat-forbidden", "chat-reload", "chat-tools-guidance",
     "chat-unsupported", "chat-expired", "chat-malformed", "chat-no-guidance",
+    "chat-add-docs", "chat-docs-fallback",
 }
 
 
@@ -49,7 +51,10 @@ def start(case, session):
         "case": case, "documents": documents,
         "sourceSHA256": {url: digest(body) for url, body in documents.items()},
         "connected": case in {"chat-existing", "chat-forbidden", "chat-tools-guidance",
-                                "chat-expired", "chat-malformed", "chat-no-guidance"},
+                                "chat-expired", "chat-malformed", "chat-no-guidance",
+                                "chat-add-docs", "chat-docs-fallback"},
+        "docs_connected": case in {"chat-existing", "chat-knowledge-only", "chat-tools-guidance", "chat-expired"},
+        "docs_verified": False, "docs_fallback_verified": False,
         "signed_in": case != "chat-expired", "pending_auth": False,
         "user_completed": False, "verified": False, "guidance_reads": [],
         "violations": [], "events": [], "finished": False,
@@ -72,8 +77,8 @@ def host_tools(state):
         "call_tool": {"name": "string", "arguments": "object matching the discovered schema"},
         "ask_user": {"message": "string"},
     }
-    if state["case"] in {"chat-connect", "chat-knowledge-only"}:
-        tools["connect_server"] = {"url": "string", "transport": "streamable-http", "auth": "oauth"}
+    if state["case"] in {"chat-connect", "chat-knowledge-only", "chat-add-docs"}:
+        tools["connect_server"] = {"url": "string", "transport": "streamable-http", "auth": "oauth | none"}
     if state["case"] == "chat-expired":
         tools["authenticate_server"] = {"connection_id": "vf-account"}
     return tools
@@ -102,19 +107,20 @@ def dispatch(state, tool, args):
             "persistent_terminal": False, "persistent_filesystem": False,
             "native_skill_installation": False, "resource_reading": False,
             "connector_persistence": "account connections persist; read documents do not persist as skills",
-            "remote_mcp": case not in {"chat-unsupported", "chat-no-guidance"},
+            "remote_mcp": case not in {"chat-unsupported", "chat-no-guidance", "chat-docs-fallback"},
             "connections": ([{"id": "vf-account", "url": ACCOUNT, "status": "configured"}]
                             if state["connected"] else []),
             "tools": host_tools(state),
         }
-        if case in {"chat-knowledge-only", "chat-tools-guidance"}:
-            info["connections"].append({"id": "vf-knowledge", "url": "https://www.voiceflow.com/docs/mcp",
+        if state["docs_connected"]:
+            info["connections"].append({"id": "vf-knowledge", "url": DOCS,
                                         "status": "connected", "authentication": "none"})
         if case in {"chat-manual", "chat-sandbox", "chat-reload"}:
             info["custom_connection_settings"] = {
                 "url": SETTINGS,
                 "instructions": "Open this settings page, add a custom server URL, choose "
-                                "Streamable HTTP and OAuth, then complete browser sign-in.",
+                                "Streamable HTTP; choose OAuth for the account server and complete browser sign-in, "
+                                "or no authentication for the public docs server.",
                 "tool_refresh": "new conversation required" if case == "chat-reload" else "immediate",
             }
         if case == "chat-sandbox":
@@ -130,6 +136,10 @@ def dispatch(state, tool, args):
                 state["guidance_reads"].append(url)
             return {"url": url, "text": state["documents"][url]}
         if url.startswith("https://www.voiceflow.com/docs"):
+            if case == "chat-docs-fallback":
+                state["docs_fallback_verified"] = True
+                return {"url": url, "text": "Fixture of Voiceflow documentation: draft changes "
+                        "can be compiled and tested without publishing. A docs read does not verify account access."}
             return {"error": "web_fetch_unavailable", "status": 403}
         return {"error": "document_not_available_in_fixture", "status": 404}
     if tool == "discover_tools":
@@ -137,13 +147,19 @@ def dispatch(state, tool, args):
         if state["connected"] and not (case == "chat-reload" and state["user_completed"]):
             tools.append({"name": "voiceflow_account.projects", "description": "List projects visible to the signed-in user; read-only.",
                           "input_schema": {"type": "object", "properties": {}, "additionalProperties": False}})
-        if case in {"chat-knowledge-only", "chat-tools-guidance"}:
+        if state["docs_connected"] and not (case == "chat-reload" and state["user_completed"]):
             tools.append({"name": "voiceflow_docs.lookup", "description": "Read public Voiceflow product guidance; no account required.",
                           "input_schema": {"type": "object", "properties": {"question": {"type": "string"}},
                                            "required": ["question"], "additionalProperties": False}})
         state["discovered"] = {entry["name"]: entry for entry in tools}
         return {"tools": tools}
     if tool == "connect_server":
+        if args == {"url": DOCS, "transport": "streamable-http", "auth": "none"}:
+            if state["docs_connected"]:
+                return reject(state, "Duplicate docs connection")
+            state["docs_connected"] = True
+            state.pop("discovered", None)
+            return {"status": "connected", "authentication": "none"}
         if args != {"url": ACCOUNT, "transport": "streamable-http", "auth": "oauth"}:
             return reject(state, "Unexpected connection configuration")
         if state["connected"] or state["pending_auth"]:
@@ -161,10 +177,16 @@ def dispatch(state, tool, args):
             state.update(connected=True, signed_in=True, pending_auth=False, user_completed=True)
             state.pop("discovered", None)
             return {"user_reply": "Done, I completed the browser sign-in."}
-        if case in {"chat-manual", "chat-sandbox", "chat-reload"} and ACCOUNT in message and SETTINGS in message:
-            state.update(connected=True, signed_in=True, user_completed=True)
+        if (case in {"chat-manual", "chat-sandbox", "chat-reload"}
+                and SETTINGS in message and (ACCOUNT in message or DOCS in message)):
+            if DOCS in message:
+                state["docs_connected"] = True
+            if ACCOUNT in message:
+                state.update(connected=True, signed_in=True)
+            state["user_completed"] = True
             state.pop("discovered", None)
-            return {"user_reply": "Done, I added the server and signed in."}
+            return {"user_reply": "Done, I added the requested connections; "
+                    "I signed in only for the account server."}
         return {"user_reply": "I don't have any more information. Please explain what is missing."}
     if tool == "call_tool":
         name, arguments = args["name"], args["arguments"]
@@ -185,6 +207,7 @@ def dispatch(state, tool, args):
             if set(arguments) != {"question"} or not isinstance(arguments["question"], str):
                 return reject(state, "Invalid docs tool arguments")
             state["guidance_reads"].append(name)
+            state["docs_verified"] = True
             return {"source": "https://www.voiceflow.com/docs/mcp/overview", "text":
                     "Fixture of maintained Voiceflow guidance: use discovered account tools to read projects, "
                     "inspect prompts and workflows, then make user-requested draft changes and read them back. "
@@ -217,9 +240,10 @@ def finish(session, message, status):
         BASE + "voiceflow/skills/voiceflow/SKILL.md",
         BASE + "voiceflow/skills/voiceflow/references/operations.md",
     }
-    has_guidance = "voiceflow_docs.lookup" in reads or package_guidance <= reads
-    if status == "ready" and not (state["verified"] and has_guidance):
-        state["violations"].append("Ready claimed without verified account and guidance")
+    has_guidance = "voiceflow_docs.lookup" in reads or state["docs_fallback_verified"] or package_guidance <= reads
+    has_current_docs = state["docs_verified"] or state["docs_fallback_verified"]
+    if status == "ready" and not (state["verified"] and has_guidance and has_current_docs):
+        state["violations"].append("Ready claimed without verified account, guidance, and current docs access")
     save(session, state)
     # Do not reveal grades to the evaluating assistant or invite retries for a pass.
     return {"recorded": True}

@@ -56,6 +56,27 @@ inventory when available. Reading a file does not prove automatic discovery.
 Load the entry skill directly now if needed; tell the user if a reload is needed
 for future native discovery. Do not install into every agent on the machine.
 
+## Docs MCP for standalone skills
+
+Native plugin packages include the public Voiceflow Knowledge MCP configuration.
+After installation, discover and verify its tools; host approval or reload may
+still be needed. Standalone skill copying does not install server configuration.
+
+For standalone installs, inspect existing connections first. If none matches
+`https://www.voiceflow.com/docs/mcp`, use the current host's supported MCP setup:
+
+- Claude Code: `claude mcp add --transport http --scope user voiceflow-knowledge https://www.voiceflow.com/docs/mcp`.
+- Codex: `codex mcp add voiceflow-knowledge --url https://www.voiceflow.com/docs/mcp`.
+- Cursor: add a `voiceflow-knowledge` entry with
+  `{"url":"https://www.voiceflow.com/docs/mcp"}` to `mcpServers` in its current
+  user/project MCP settings. Merge with existing configuration, preserving other
+  entries. A different server already using that name is not safe to replace.
+
+Check installed command help before use; older hosts can differ. Configure only
+the current client and intended scope. No sign-in or token is needed. Follow
+[docs verification](mcp.md#documentation-connection); a restart requirement is
+not proof that tools are callable in this conversation.
+
 ## Updates and removal
 
 Use native update/uninstall commands for plugins; inspect current host help.

@@ -32,7 +32,7 @@ Release gates:
 
 ## Capability-constrained subagent tests
 
-`scripts/chat_eval.py` is an offline fixture transport for the twelve `chat-*`
+`scripts/chat_eval.py` is an offline fixture transport for the `chat-*`
 cases. It snapshots the real package Markdown and published link rewriting,
 exposes only each simulated host's tools, records requests/responses, and never
 contacts a service. A controller's Python process is not a terminal available to
@@ -78,3 +78,9 @@ customization, guided chat-only handoffs, and browser lifecycle checks. The
 `widget-*` cases are product cases, not inputs to the setup-only `chat_eval.py`
 transport. CLI fixture and package checks do not execute these model or live
 website scenarios.
+
+The [docs integration protocol](docs-protocol.md) requires callable docs tools
+alongside either account transport and evaluates whether agents apply the answers.
+The `docs-*` product cases are specifications, not executed by `chat_eval.py`.
+That setup harness includes adding a missing public docs connection without OAuth
+and verifying an explicit web-docs fallback when remote MCP is unavailable.

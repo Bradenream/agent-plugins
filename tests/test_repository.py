@@ -197,6 +197,11 @@ class PublicationTests(unittest.TestCase):
                 name = source.relative_to(self.root).as_posix()
                 self.assertEqual(archive.read(name), source.read_bytes())
                 self.assertEqual((site / name).read_bytes(), source.read_bytes())
+            for config in ("mcp.json", ".mcp.json"):
+                name = "voiceflow/" + config
+                expected = (self.root / name).read_bytes()
+                self.assertEqual(archive.read(name), expected)
+                self.assertEqual((site / name).read_bytes(), expected)
             for info in archive.infolist():
                 self.assertTrue(info.filename.startswith("voiceflow/"))
                 self.assertNotIn("..", info.filename.split("/"))

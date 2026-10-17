@@ -33,6 +33,13 @@ def validate(root=ROOT):
     assert (root / "LICENSE").read_bytes() == (plugin / "LICENSE").read_bytes()
     assert re.fullmatch(r"\d+\.\d+\.\d+", data[0]["version"]), "Invalid version"
     assert len(data[0]["extensions"]["com.openai"]["interface"]["shortDescription"]) <= 30
+    portable = json.loads((plugin / "mcp.json").read_text(encoding="utf-8"))
+    legacy = json.loads((plugin / ".mcp.json").read_text(encoding="utf-8"))
+    assert portable["$schema"] == "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json"
+    for config, transport in ((portable, "streamable-http"), (legacy, "http")):
+        assert config["mcpServers"] == {"voiceflow-knowledge": {
+            "type": transport, "url": "https://www.voiceflow.com/docs/mcp"}}, "Docs MCP config drift"
+    assert data[2]["mcpServers"] == "./.mcp.json", "Missing Codex MCP adapter"
     for folder in (".claude-plugin", ".cursor-plugin", ".agents/plugins"):
         market = json.loads((root / folder / "marketplace.json").read_text(encoding="utf-8"))
         assert market["name"] == "voiceflow-plugins"

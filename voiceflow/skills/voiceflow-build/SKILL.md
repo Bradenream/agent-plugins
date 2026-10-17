@@ -5,6 +5,11 @@ description: Build or extend Voiceflow agents and playbooks, choose the right ar
 
 # Build an agent
 
+For questions about architecture, agent capabilities, routing behavior, or a requested feature
+that this skill does not answer, follow the
+[docs MCP workflow](../voiceflow/references/documentation.md) before answering
+or implementing. Consult it whenever unsure; do not guess from memory.
+
 Read the [operation contract](../voiceflow/references/operations.md). Resolve the
 user's intended project and environment from context; clarify only missing
 choices. A build request authorizes its necessary draft work, not publishing.

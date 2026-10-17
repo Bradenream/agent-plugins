@@ -5,6 +5,11 @@ description: Read or edit Voiceflow workflow canvas blocks, steps, ports, branch
 
 # Workflows
 
+For questions about step behavior, ports, transitions, branching, or workflow errors
+that this skill does not answer, follow the
+[docs MCP workflow](../voiceflow/references/documentation.md) before answering
+or implementing. Consult it whenever unsure; do not guess from memory.
+
 Read the [operation contract](../voiceflow/references/operations.md), then the
 workflow and relevant step schemas. A block is a canvas container; steps inside
 it execute in order. A workflow ID, block ID, step ID, and port ID are distinct.

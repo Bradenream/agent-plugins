@@ -41,7 +41,9 @@ def main():
             assert (cached[0] / "voiceflow-setup/references/setup.md").is_file()
             for source in skills.rglob("*.md"):
                 assert (cached[0] / source.relative_to(skills)).read_bytes() == source.read_bytes()
-            print(f"{host}: installed, enabled, and all {len(expected)} skills and Markdown references match the source")
+            for name in ("mcp.json", ".mcp.json"):
+                assert (cached[0].parent / name).read_bytes() == (ROOT / "voiceflow" / name).read_bytes()
+            print(f"{host}: installed, enabled, all {len(expected)} skills/references and docs MCP configurations match source")
     print("Cursor runtime discovery must be tested in Cursor; no global configuration was changed.")
 
 

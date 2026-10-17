@@ -1,9 +1,15 @@
 ---
 name: voiceflow
-description: Use Voiceflow to build, customize, deploy, inspect, or debug conversational agents and website widgets. Routes product tasks to focused skills and establishes the shared operation contract.
+description: Answer Voiceflow product and how-to questions, or build, customize, deploy, inspect, and debug agents and website widgets. Routes tasks to focused skills and current documentation.
 ---
 
 # Work with Voiceflow
+
+For product questions and how-tos not answered by a relevant skill, follow the
+[documentation workflow](references/documentation.md): consult the docs MCP
+before answering or implementing. This includes questions you encounter while
+building, configuring, or debugging. Public guidance does not require account
+setup; answer documentation-only questions without requesting a sign-in.
 
 For initial connection, read [setup](../voiceflow-setup/SKILL.md). After setup,
 ask what the user wants to build or improve before selecting any project.

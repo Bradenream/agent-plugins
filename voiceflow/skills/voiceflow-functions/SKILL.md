@@ -5,6 +5,11 @@ description: Create or debug Voiceflow function code, sandbox behavior, fetch pa
 
 # Function code
 
+For questions about sandbox APIs, fetch behavior, limits, traces, or function errors
+that this skill does not answer, follow the
+[docs MCP workflow](../voiceflow/references/documentation.md) before answering
+or implementing. Consult it whenever unsure; do not guess from memory.
+
 Read the [operation contract](../voiceflow/references/operations.md).
 Prefer an existing integration for a supported action, an API tool for one HTTP
 request, and a function for transformation, branching, or composed logic.

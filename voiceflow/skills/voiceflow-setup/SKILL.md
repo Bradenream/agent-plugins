@@ -5,6 +5,11 @@ description: Connect an assistant to Voiceflow using available account tools, ho
 
 # Connect to Voiceflow
 
+For questions about host connection requirements, OAuth, account access, or setup errors
+that this skill does not answer, follow the
+[docs MCP workflow](../voiceflow/references/documentation.md) before answering
+or implementing. Consult it whenever unsure; do not guess from memory.
+
 Follow the [canonical setup guide](references/setup.md) for the connection
 decision tree, browser sign-in, persistence checks, and completion criteria.
 Read it before configuring a connection or running setup commands.

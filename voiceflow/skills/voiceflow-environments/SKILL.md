@@ -5,6 +5,11 @@ description: Resolve Voiceflow environment aliases and drafts, clone environment
 
 # Environments and release actions
 
+For questions about draft/live behavior, cloning, shared resources, merges, or publishing
+that this skill does not answer, follow the
+[docs MCP workflow](../voiceflow/references/documentation.md) before answering
+or implementing. Consult it whenever unsure; do not guess from memory.
+
 Read the [operation contract](../voiceflow/references/operations.md). Resolve the
 project and environment from live data. An environment alias, environment ID,
 and version ID are different. Draft-editing operations use the alias required

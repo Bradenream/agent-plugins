@@ -5,6 +5,11 @@ description: Create or edit reusable Voiceflow messages, prompts, and text refer
 
 # Messages and reusable prompts
 
+For questions about message variants, reusable prompts, variable substitution, or channel behavior
+that this skill does not answer, follow the
+[docs MCP workflow](../voiceflow/references/documentation.md) before answering
+or implementing. Consult it whenever unsure; do not guess from memory.
+
 Read the [operation contract](../voiceflow/references/operations.md). Distinguish
 literal message content, a reusable prompt resource, an agent's instructions,
 and a workflow step that references one of these.

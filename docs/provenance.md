@@ -73,3 +73,19 @@ All six SHA-256 values are pinned in the skill bundle, rather than trusting an
 unversioned latest installer. The binary remains a separately distributed
 Voiceflow component under its own licensing; it is not included in this repo
 or its plugin archive.
+
+## Docs MCP integration (0.4.0)
+
+Every skill now routes unresolved product/how-to questions to the shared docs
+workflow. Setup treats the public Knowledge MCP as a standard companion to CLI
+or account MCP, with verified public-docs fallbacks where unsupported. Portable
+`mcp.json` and the native `.mcp.json` adapter bundle only this public server;
+account OAuth remains capability-based setup, not a packaged credential.
+
+The [current Knowledge MCP documentation](https://www.voiceflow.com/docs/mcp/knowledge)
+and a read-only live probe on 2026-10-16 verified the endpoint, no-auth access,
+four tool names, and required context arguments. Server version 2.1.2 returned
+a low-confidence, non-answerable result for an embedded-widget question;
+`read_voiceflow_page` then retrieved the Widget API page with its embedded
+rendering options. The shared workflow explicitly handles that distinction.
+These probes establish retrieval, not model adherence or site implementation.

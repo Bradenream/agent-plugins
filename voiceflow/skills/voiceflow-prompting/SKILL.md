@@ -5,6 +5,11 @@ description: Write or revise Voiceflow global prompts, main-agent routing instru
 
 # Write instructions
 
+For questions about instruction inheritance, routing, resource references, or prompt behavior
+that this skill does not answer, follow the
+[docs MCP workflow](../voiceflow/references/documentation.md) before answering
+or implementing. Consult it whenever unsure; do not guess from memory.
+
 Read the [operation contract](../voiceflow/references/operations.md).
 Read existing instructions before editing. Preserve unrelated behavior and use
 targeted patch operations when supported; whole-text replacement can erase

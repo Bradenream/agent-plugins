@@ -5,6 +5,11 @@ description: Diagnose broken Voiceflow behavior from configuration, traces, and 
 
 # Diagnose before editing
 
+For questions about an error, unexpected runtime behavior, or a proposed fix
+that this skill does not answer, follow the
+[docs MCP workflow](../voiceflow/references/documentation.md) before answering
+or implementing. Consult it whenever unsure; do not guess from memory.
+
 For widget loading, styling, duplicate launchers, or website navigation problems,
 use [Widget](../voiceflow-widget/SKILL.md) before changing the agent's behavior.
 

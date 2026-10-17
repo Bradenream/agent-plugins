@@ -57,3 +57,11 @@ after the user saves. It must not claim installation based on a user saying
 Keep raw captures in ignored `test-results/`. Commit only sanitized evidence
 with per-case outcomes and explicit unrun platforms. No phone-number work is
 part of this protocol.
+
+## Documentation access
+
+For runs of 0.4.0 or later, provide the public docs MCP alongside each actor's
+account/site tools, including chat-only actors. Follow [docs acceptance](docs-protocol.md).
+Check use of current widget docs for questions beyond the skill, and official
+platform docs for site-editor/plan behavior. A local guide or an account schema
+alone is not evidence of looking up an unresolved widget behavior.

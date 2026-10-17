@@ -54,6 +54,71 @@ class ChatHarnessTests(unittest.TestCase):
         self.assertFalse(state["verified"])
         self.assertTrue(state["violations"])
 
+    def test_docs_connection_needs_no_oauth_but_requires_read_verification(self):
+        self.start("chat-add-docs")
+        self.read_account()
+        result = self.step("connect_server", url=harness.DOCS,
+                           transport="streamable-http", auth="none")
+        self.assertEqual(result["status"], "connected")
+        state = harness.load(self.session)
+        self.assertTrue(state["verified"])
+        self.assertFalse(state["pending_auth"])
+        self.assertFalse(state["docs_verified"])
+        self.assertNotIn("authorization_url", result)
+        self.step("discover_tools")
+        self.step("call_tool", name="voiceflow_docs.lookup",
+                  arguments={"question": "How do draft and live environments differ?"})
+        harness.finish(self.session, "Ready", "ready")
+        state = harness.load(self.session)
+        self.assertTrue(state["docs_verified"])
+        self.assertEqual(state["violations"], [])
+
+    def test_docs_oauth_and_duplicate_connections_are_rejected(self):
+        self.start("chat-add-docs")
+        result = self.step("connect_server", url=harness.DOCS,
+                           transport="streamable-http", auth="oauth")
+        self.assertIn("error", result)
+        self.assertFalse(harness.load(self.session)["pending_auth"])
+        self.step("connect_server", url=harness.DOCS,
+                  transport="streamable-http", auth="none")
+        result = self.step("connect_server", url=harness.DOCS,
+                           transport="streamable-http", auth="none")
+        self.assertIn("error", result)
+
+    def test_readable_skills_and_connected_docs_do_not_replace_docs_read(self):
+        self.start("chat-add-docs")
+        self.read_account()
+        for relative in ("voiceflow/SKILL.md", "voiceflow/references/operations.md"):
+            self.step("read_document", url=harness.BASE + "voiceflow/skills/" + relative)
+        self.step("connect_server", url=harness.DOCS,
+                  transport="streamable-http", auth="none")
+        harness.finish(self.session, "Ready", "ready")
+        self.assertTrue(harness.load(self.session)["violations"])
+
+    def test_web_fallback_can_verify_docs_without_claiming_mcp(self):
+        self.start("chat-docs-fallback")
+        self.read_account()
+        for relative in ("voiceflow/SKILL.md", "voiceflow/references/operations.md"):
+            self.step("read_document", url=harness.BASE + "voiceflow/skills/" + relative)
+        self.step("read_document", url="https://www.voiceflow.com/docs/mcp/knowledge")
+        harness.finish(self.session, "Ready using web docs; docs MCP unavailable", "ready")
+        state = harness.load(self.session)
+        self.assertTrue(state["docs_fallback_verified"])
+        self.assertFalse(state["docs_connected"])
+        self.assertFalse(state["docs_verified"])
+        self.assertEqual(state["violations"], [])
+
+    def test_manual_settings_can_connect_both_servers_without_verifying_either(self):
+        self.start("chat-manual")
+        self.step("ask_user", message="Add " + harness.ACCOUNT + " and " + harness.DOCS + " in " + harness.SETTINGS)
+        state = harness.load(self.session)
+        self.assertTrue(state["connected"])
+        self.assertTrue(state["docs_connected"])
+        self.assertFalse(state["verified"])
+        self.assertFalse(state["docs_verified"])
+        tools = self.step("discover_tools")["tools"]
+        self.assertEqual({t["name"] for t in tools}, {"voiceflow_account.projects", "voiceflow_docs.lookup"})
+
     def test_document_fragment_resolves_to_the_same_snapshot(self):
         self.start("chat-existing")
         url = harness.BASE + "voiceflow/skills/voiceflow-setup/references/mcp.md"

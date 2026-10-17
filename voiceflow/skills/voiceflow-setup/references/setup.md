@@ -46,6 +46,13 @@ rediscover tools and verify a live account read. Do not restart setup from scrat
 
 ## 3. Make guidance available in this host
 
+Make the **docs MCP a standard companion to either account MCP or CLI**.
+Reuse an existing Voiceflow Knowledge connection; native plugins bundle its
+public server. After plugin installation or discovery, verify a real docs tool
+response. If absent, follow [documentation connection](mcp.md#documentation-connection)
+using this host's supported connection tools/settings. No OAuth or API key is
+needed. Do not skip it merely because the package Markdown is readable.
+
 Read the [entry skill](../../voiceflow/SKILL.md) and its
 [operation contract](../../voiceflow/references/operations.md). Follow specialist
 links only when a later task needs them. These are Markdown instructions; a
@@ -68,8 +75,10 @@ product guidance; it is not proof that this repository's packaged skills are
 installed or that the account is connected. If resource reads are unavailable,
 use available documentation tools or web pages; do not require resource support.
 See [chat guidance alternatives](mcp.md#guidance-without-a-filesystem) when the
-linked files cannot be read. A second connection is unnecessary if guidance is
-already accessible.
+linked files cannot be read. Reuse an existing docs connection rather than
+adding duplicates. If the host cannot expose docs MCP, verify the public-docs
+or CLI-docs fallback and accurately describe that limitation; do not block
+otherwise usable account access or claim the docs MCP is connected.
 
 Private preview access can fail independently of Voiceflow sign-in. Use an
 existing authenticated repository connection or ask for the guide and linked
@@ -82,8 +91,11 @@ that the account is connected but guidance setup is incomplete.
 Setup is ready for this conversation when:
 
 1. An actual read of the user's Voiceflow account succeeded in this session.
-2. Guidance is readable now: this package's entry/operation instructions, or
-   verified access to maintained Voiceflow guidance through docs/MCP.
+2. Guidance is readable now: load this package's entry/operation instructions
+   when accessible, and verify a real docs MCP tool response (for example, how
+   draft and published environments differ). If docs MCP is unsupported or
+   unavailable, verify the public-docs/CLI-docs fallback and state the limitation.
+   Readable packaged skills alone do not verify live documentation access.
 3. Persistence is stated accurately: installed where supported, or available
    in this chat with future discovery dependent on the host. Do not promise
    future chats inherit a read page or invent a memory/skill installation tool.

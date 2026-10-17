@@ -5,6 +5,11 @@ description: Customize, install, and troubleshoot the Voiceflow chat or voice wi
 
 # Put a Voiceflow agent on a website
 
+For questions about widget options, styling, browser APIs, installation, or troubleshooting
+that this skill does not answer, follow the
+[docs MCP workflow](../voiceflow/references/documentation.md) before answering
+or implementing. Consult it whenever unsure; do not guess from memory.
+
 Read the [operation contract](../voiceflow/references/operations.md). Finish with
 the requested widget working on the intended site, or an exact installation
 handoff and a clear statement of what remains unverified. This skill covers

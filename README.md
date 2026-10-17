@@ -31,8 +31,12 @@ Successful setup ends with:
 ## What's included
 
 - Repeatable setup with live, read-only connection verification.
-- Hosted MCP setup and recovery for chat assistants, with guidance available
-  through Markdown, the website docs, or the existing Knowledge MCP.
+- Voiceflow docs MCP bundled in native plugins and included in setup for other
+  hosts, alongside either CLI or account MCP. No docs sign-in is needed.
+- Docs-first guidance in all sixteen skills: unresolved how-tos, implementation
+  questions, and troubleshooting use current documentation before action.
+- Hosted MCP setup and recovery for chat assistants, with public website/CLI
+  docs fallbacks when the host cannot expose the docs MCP.
 - Sixteen portable skills for setup, building, prompts, workflows, tools,
   knowledge, voice, website widgets, debugging, transcripts, evaluations,
   and environments.
@@ -42,7 +46,8 @@ Successful setup ends with:
 - A reproducible website bundle generated from the same setup guide and skills.
 
 Product guidance comes from the [Voiceflow documentation](https://www.voiceflow.com/docs).
-See the [skill index](voiceflow/skills/voiceflow/SKILL.md),
+See the [documentation workflow](voiceflow/skills/voiceflow/references/documentation.md),
+[skill index](voiceflow/skills/voiceflow/SKILL.md),
 [compatibility](docs/compatibility.md), [release checklist](docs/releasing.md),
 and [website publishing contract](docs/website-publishing.md).
 

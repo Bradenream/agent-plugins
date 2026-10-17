@@ -10,12 +10,14 @@ Ask for the missing choice if ambiguous. Never pick the first workspace or
 project automatically. Do not require a new environment for every trivial edit;
 use the user's intended draft and explain material shared/live effects.
 
-The Voiceflow website documentation is authoritative for product behavior.
-Use available Voiceflow Knowledge MCP tools/resources, read the public docs
-through the host browser, or use `vf docs search "<question>" -o json` and
-`vf docs get <page>` when a CLI is available. Public guidance needs no sign-in.
-Read only pages relevant to the current task. If docs and observed behavior
-disagree, state the discrepancy rather than silently inventing a rule.
+For any product question the relevant skill does not answer, use the
+[documentation workflow](documentation.md) before answering or implementing.
+The docs MCP is the default source for how-tos, capabilities, settings, API/CLI
+behavior, and troubleshooting, including questions you encounter during work.
+Use `ask_voiceflow` first for a specific question, then search/read as needed.
+Skills are not a complete product manual; consult docs whenever uncertain or
+when current behavior may differ. Reuse already-retrieved relevant guidance.
+Keep docs access available alongside either CLI or account MCP operations.
 
 ## Discover the actual operation
 

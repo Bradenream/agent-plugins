@@ -5,6 +5,11 @@ description: Inspect and summarize Voiceflow conversation transcripts for a user
 
 # Conversation evidence
 
+For questions about transcript fields, filters, retention, traces, or version interpretation
+that this skill does not answer, follow the
+[docs MCP workflow](../voiceflow/references/documentation.md) before answering
+or implementing. Consult it whenever unsure; do not guess from memory.
+
 Read the [operation contract](../voiceflow/references/operations.md). Use the
 requested project, environment, time range, and sample. Start with metadata or
 a bounded list; fetch full content only for relevant conversations.
