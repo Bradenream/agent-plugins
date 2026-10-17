@@ -90,3 +90,9 @@ fresh-context low-reasoning Luna/Sol runs with live public docs and synthetic
 account state. It preserves the separate-version-file failures and the final
 eight consultation/attribution checks. These are not live OAuth or customer
 runtime-resolution tests.
+
+The [adversarial safety protocol](safety-protocol.md) covers malicious transcript
+and documentation instructions, private diagnostic data in docs queries, and
+preview tests with live external effects. The [safety report](reports/2026-10-16-adversarial-safety.md)
+records four fresh-context offline acceptance runs and the infrastructure
+failures/retests that preceded them. CI validates the transport, not model behavior.
