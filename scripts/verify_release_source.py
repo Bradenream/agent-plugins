@@ -5,6 +5,60 @@ import re
 import subprocess
 from urllib.parse import quote
 
+GITHUB_ACTIONS_APP_ID = 15368
+REQUIRED_CHECKS = {
+    "security / Secrets and workflow security",
+    "checks (ubuntu-latest)", "checks (macos-latest)", "checks (windows-latest)",
+}
+
+
+def verify_rules(prefix, branch, api):
+    # This metadata-readable endpoint returns only active rules applying to this
+    # exact branch, including inherited rules. No administrative token is needed.
+    rules = []
+    for page in range(1, 11):
+        batch = api(prefix + "/rules/branches/" + quote(branch, safe="") +
+                    f"?per_page=100&page={page}")
+        if not isinstance(batch, list) or not all(isinstance(rule, dict) for rule in batch):
+            raise ValueError("Invalid active branch rules; release blocked")
+        rules.extend(batch)
+        if len(batch) < 100:
+            break
+    else:
+        raise ValueError("Too many branch rules to verify; release blocked")
+
+    types = {rule.get("type") for rule in rules if isinstance(rule.get("type"), str)}
+    if not {"deletion", "non_fast_forward"} <= types:
+        raise ValueError("Active rules must prevent branch deletion and force pushes")
+    pull_requests_required = False
+    checks = set()
+    for rule in rules:
+        parameters = rule.get("parameters")
+        if not isinstance(parameters, dict):
+            continue
+        if rule.get("type") == "pull_request":
+            count = parameters.get("required_approving_review_count")
+            # The owner chose sole-maintainer operation: a PR and passing checks
+            # are mandatory, but self-authored PRs cannot obtain self-approval.
+            pull_requests_required |= (type(count) is int and count >= 0 and
+                (count == 0 or parameters.get("require_code_owner_review") is True) and
+                all(parameters.get(key) is True for key in (
+                    "dismiss_stale_reviews_on_push", "required_review_thread_resolution")))
+        if (rule.get("type") == "required_status_checks" and
+                parameters.get("strict_required_status_checks_policy") is True):
+            required = parameters.get("required_status_checks")
+            if not isinstance(required, list):
+                raise ValueError("Invalid required checks; release blocked")
+            for check in required:
+                if (isinstance(check, dict) and isinstance(check.get("context"), str) and
+                        type(check.get("integration_id")) is int and
+                        check["integration_id"] == GITHUB_ACTIONS_APP_ID):
+                    checks.add(check["context"])
+    if not pull_requests_required:
+        raise ValueError("Active rules must require pull requests, stale-review dismissal, and resolved threads")
+    if not REQUIRED_CHECKS <= checks:
+        raise ValueError("Active rules must require all four current GitHub Actions checks with strict status checking")
+
 
 def github_json(endpoint):
     result = subprocess.run(["gh", "api", endpoint], capture_output=True, text=True,
@@ -28,6 +82,7 @@ def verify(repository, commit, version, workflow_ref, api=github_json):
     branch = api(prefix + "/branches/" + quote(default, safe=""))
     if branch.get("protected") is not True:
         raise ValueError("Releases require a protected default branch")
+    verify_rules(prefix, default, api)
     head = branch["commit"]["sha"]
     if not re.fullmatch(r"[a-f0-9]{40}", head):
         raise ValueError("Invalid default branch revision")

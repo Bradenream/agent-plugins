@@ -3,6 +3,10 @@
 These are behavior evaluations for the agent experience. Unit tests validate
 code and package structure; they do not execute these model evaluations.
 
+[Public installation verification](reports/2026-10-16-public-install.md) records
+anonymous access and isolated package installation separately from these model
+and live-account acceptance cases.
+
 Use `cases.json` with the real host in a disposable profile and a test Voiceflow
 account. For negative cases, use fixtures/mocked tool responses, never break a
 real customer's credentials. Do not grant bypass permissions to make a test pass.
@@ -90,3 +94,9 @@ fresh-context low-reasoning Luna/Sol runs with live public docs and synthetic
 account state. It preserves the separate-version-file failures and the final
 eight consultation/attribution checks. These are not live OAuth or customer
 runtime-resolution tests.
+
+The [adversarial safety protocol](safety-protocol.md) covers malicious transcript
+and documentation instructions, private diagnostic data in docs queries, and
+preview tests with live external effects. The [safety report](reports/2026-10-16-adversarial-safety.md)
+records four fresh-context offline acceptance runs and the infrastructure
+failures/retests that preceded them. CI validates the transport, not model behavior.

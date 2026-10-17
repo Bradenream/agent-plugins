@@ -37,15 +37,26 @@ For a CLI baseline change, review release notes and auth changes, update all six
 pinned checksums from the official release, and rerun installers and localhost
 contracts. Do not replace checksums merely to bypass a failed download.
 
-## Repository settings before public launch
+## Public repository protections
 
-The current private repository plan does not provide protected-branch rules.
-When protection becomes available through publication, transfer, or a plan change:
+The public repository uses the following protections. Verify them after a
+transfer or settings change:
 
-- Require a pull request and maintainer review for the default/release branch.
-- Require the three `checks` jobs (Ubuntu, macOS, Windows) from the validation workflow.
-- Require `Secrets and workflow security` from the reusable security workflow.
-- Block force pushes and branch deletion, and dismiss stale approvals.
+- Create **active branch rulesets** covering the default branch. Classic branch
+  protection alone is not sufficient for the automated release check below.
+- Require a pull request for the default/release branch, dismiss stale reviews,
+  and require resolved review threads. The owner chose sole-maintainer operation:
+  zero approving reviews and no mandatory code-owner or last-pusher approval.
+  The owner can merge their own passing PR; direct pushes remain blocked.
+  Agent-driven merges still require the owner's explicit approval. When adding
+  another maintainer or transferring ownership, revisit this policy and require
+  approving code-owner review if independent review becomes available.
+- Require these exact checks from the **GitHub Actions** app (integration ID
+  `15368`), with strict/up-to-date checks enabled: `checks (ubuntu-latest)`,
+  `checks (macos-latest)`, `checks (windows-latest)`, and
+  `security / Secrets and workflow security`.
+- Block force pushes and branch deletion. Keep the ruleset bypass list empty;
+  verify this as an administrator rather than inferring it from read-only API output.
 - Require workflow approval for all outside contributors.
 - Verify CODEOWNERS resolves to a maintainer with repository access.
 - Enable private vulnerability reporting as an additional route; keep the verified
@@ -60,20 +71,31 @@ are separate owner decisions.
 GitHub Actions policy now permits GitHub-owned actions and repository-local
 workflows, requires full commit-SHA action pins, keeps default tokens read-only,
 and disallows workflow approval of pull requests. Expand the allowed publishers
-only after reviewing a concrete dependency. Fork-workflow approval, native secret
-scanning/push protection, and private reporting are unavailable on this private
-repository and must be enabled and verified at public launch.
+only after reviewing a concrete dependency. Approval for all outside-contributor
+workflows, native secret scanning/push protection, and private vulnerability
+reporting are enabled. These settings do not create a paid subscription.
 
 ## Prepare a release
 
 A release starts from an approved, clean commit whose package version matches
 the changelog. Rebuild from that commit; never reuse local dirty artifacts.
 The workflow must run from the current default branch, that branch must be
-protected, and the selected commit must already be in its history. The guard is
-loaded from the default branch and rejects API errors, unprotected branches,
+protected, and the selected commit must already be in its history. The guard
+checks the actual active rules applying to that branch: required pull requests,
+stale-review dismissal, resolved threads, all four strict checks bound
+to GitHub Actions, and deletion/force-push prevention. Weak, missing, malformed,
+or unreadable rules block the release. Zero required approvals is accepted for
+the owner's sole-maintainer policy; a policy requiring positive approvals must
+also require code-owner review. Disabled/evaluation rules do not qualify.
+The guard is loaded from the default branch and rejects API errors,
 feature-branch dispatches, and unmerged commits before running candidate code.
-While branch protection is unavailable, GitHub draft releases remain blocked;
-local asset preparation remains available for review.
+It uses GitHub's [active branch rules API](https://docs.github.com/en/rest/repos/rules#get-rules-for-a-branch),
+which requires only metadata read access; no administrative CI secret is added.
+This API covers rulesets, not classic branch protection. The administrator must
+also verify bypass policy at launch. Write-capable maintainers remain trusted:
+this workflow cannot prevent them from changing another workflow or repository settings.
+Removing branch protection blocks GitHub draft releases; local asset preparation
+remains available for review.
 
 ```sh
 python3 scripts/prepare_release.py --expected-version 0.4.2 --expected-commit FULL_COMMIT_SHA
@@ -118,9 +140,8 @@ and publish a corrective package version. Customers can intentionally reinstall
 an earlier package using the same conflict-preserving process, but a website
 rollback does not downgrade installed plugins or revoke OAuth access.
 
-When approved for public launch, remove the temporary repository-access note
-from the README and test anonymous
-retrieval of the setup guide and its references. Keep experimental paths labeled;
+Test anonymous retrieval and fresh installation of the setup guide and its
+references after repository publication, transfer, or URL changes. Keep experimental paths labeled;
 only expand claims after actual host acceptance. Use the
 [website publishing contract](website-publishing.md) for the separate site rollout.
 

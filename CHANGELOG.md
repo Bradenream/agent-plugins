@@ -15,6 +15,10 @@ changes; an entry is not proof that a GitHub release or marketplace listing exis
 - Restrict package contents to a reviewed inventory and isolate release publishing permissions.
 - Add Claude contributor instructions, security check guidance, and Actions dependency updates.
 - Require releases to originate from the protected default branch and reject unmerged source commits.
+- Reject incomplete account responses and bound JSON connection checks outside the CLI.
+- Verify effective branch review/check requirements before preparing releases.
+- Add isolated adversarial safety evaluations and recorded behavioral evidence.
+- Align release verification with the owner's sole-maintainer policy while requiring PRs and all security/platform checks.
 
 ## 0.4.1 — 2026-10-16 (development milestone)
 

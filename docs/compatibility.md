@@ -25,6 +25,10 @@ repository tools and standalone installer, not native plugin use or the CLI.
 
 ## Evidence and remaining acceptance
 
+[Public installation verification](../evals/reports/2026-10-16-public-install.md)
+records an anonymous clone and raw-reference retrieval, standalone installs for
+all three clients, and isolated native Claude/Codex installation of 0.4.2.
+
 [Historical verification](verification-history.md) retains previous package
 results and limitations. The [acceptance protocols and reports](../evals/README.md)
 record baseline failures separately from post-fix retests. Historical model
@@ -42,10 +46,12 @@ fixture and fake credentials; repository tests do not sign in or change accounts
 
 ## Known limitations
 
-CLI 0.287.0 can return blank JSON output when a timeout cancels a response between
-headers and body. The setup guide uses typed TOON output and rejects blank
-responses. The fixture retains coverage for that case; this package does not
-patch the CLI.
+CLI 0.287.0 can return blank JSON output when its internal timeout cancels a
+response between headers and body. Manual reads use typed TOON output. The
+Python connection checker instead parses complete JSON on stdout without that
+inner timeout and bounds the whole subprocess to 25 seconds. It rejects malformed,
+truncated, and stderr-only responses. Localhost fixtures exercise split responses
+and invalid bodies; this package does not patch the CLI.
 
 Chat-only guidance may be session-scoped. A saved connector, sign-in badge, or
 public docs response is not proof of working account access. Setup only claims
