@@ -1,17 +1,29 @@
 """Read-only connection probe. Never echo service output or credentials."""
 import argparse
 import json
-import re
 import subprocess
 
 
+def parse_json(stream):
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError("Duplicate response field")
+            result[key] = value
+        return result
+
+    def invalid_constant(value):
+        raise ValueError("Invalid JSON constant")
+
+    try:
+        return json.loads(stream, object_pairs_hook=unique_object, parse_constant=invalid_constant)
+    except (ValueError, TypeError):
+        return None
+
+
 def classify(returncode, stdout, stderr):
-    payloads = []
-    for stream in (stdout, stderr):
-        try:
-            payloads.append(json.loads(stream))
-        except (ValueError, TypeError):
-            pass
+    payloads = [parse_json(stdout), parse_json(stderr)]
     for payload in payloads:
         if not isinstance(payload, dict):
             continue
@@ -25,11 +37,11 @@ def classify(returncode, stdout, stderr):
         if kind or payload.get("error"):
             return "request_failed"
     if returncode == 0:
-        for payload in payloads[:1]:
-            if isinstance(payload, dict) and isinstance(payload.get("workspaces"), list):
-                return "connected"
-        # Only the typed workspace-list envelope is accepted, not arbitrary text.
-        if re.match(r"\Aworkspaces\[\d+\](?:\{[^{}\r\n]+\})?:[ \t]*(?:\r?\n|\Z)", stdout):
+        payload = payloads[0]
+        workspaces = payload.get("workspaces") if isinstance(payload, dict) else None
+        if isinstance(workspaces, list) and all(
+                isinstance(item, dict) and isinstance(item.get("id"), str) and item["id"].strip()
+                for item in workspaces):
             return "connected"
     return "unexpected_response"
 
@@ -38,7 +50,9 @@ def check(binary, timeout=25):
     try:
         result = subprocess.run(
             [binary, "workspace", "list", "--agent-mode", "--no-interactive",
-             "--timeout", "20s", "--color", "never", "-o", "toon"],
+             "--color", "never", "-o", "json"],
+            # CLI 0.287.0 can cancel JSON body reading with its inner --timeout.
+            # Bound the whole process instead; truncated output never verifies access.
             capture_output=True, text=True, encoding="utf-8", timeout=timeout, check=False,
         )
     except FileNotFoundError:

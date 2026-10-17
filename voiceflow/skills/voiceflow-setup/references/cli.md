@@ -35,8 +35,11 @@ uses the fully decoded response. Empty output is not an empty workspace list.
   claim connected.
 
 The optional [connection checker](../scripts/check_connection.py) makes this
-read without printing its body when Python 3.10+ is already available. It does
-not install, log in, or repair anything.
+read without printing its body when Python 3.10+ is already available. It parses
+the complete JSON response on stdout and bounds the entire subprocess to 25
+seconds, omitting the CLI's inner timeout to avoid the body-cancellation issue.
+Truncated, malformed, or stderr-only responses never count as connected.
+It does not install, log in, or repair anything.
 
 ## Sign in only if needed
 

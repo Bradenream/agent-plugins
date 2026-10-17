@@ -42,7 +42,7 @@ def main():
             self.respond()
 
         def respond(self):
-            body = json.dumps(scenario["body"]).encode()
+            body = scenario.get("raw", json.dumps(scenario["body"]).encode())
             self.send_response(scenario["status"])
             self.send_header("Content-Type", "application/json")
             self.send_header("Content-Length", str(len(body)))
@@ -64,12 +64,21 @@ def main():
                                  (503, "temporarily_unavailable")):
             scenario.update(status=status, body={"workspaces": []} if status == 200 else {"message": "fixture failure"})
             result = subprocess.run([
-                args.vf, "workspace", "list", "--agent-mode", "--no-interactive", "--timeout", "2s",
-                "-o", "toon", "--color", "never", "--server-url", f"http://127.0.0.1:{server.server_port}",
+                args.vf, "workspace", "list", "--agent-mode", "--no-interactive",
+                "-o", "json", "--color", "never", "--server-url", f"http://127.0.0.1:{server.server_port}",
                 "--token", "local-fixture-not-a-credential",
             ], capture_output=True, text=True, encoding="utf-8", timeout=20)
             actual = probe.classify(result.returncode, result.stdout, result.stderr)
             assert actual == expected, (status, actual, result.returncode, result.stdout, result.stderr, requested)
+        for body in (b'', b'{"workspaces":[', b'{"workspaces":[]} trailing'):
+            scenario.update(status=200, raw=body)
+            result = subprocess.run([
+                args.vf, "workspace", "list", "--agent-mode", "--no-interactive",
+                "-o", "json", "--color", "never", "--server-url", f"http://127.0.0.1:{server.server_port}",
+                "--token", "local-fixture-not-a-credential",
+            ], capture_output=True, text=True, encoding="utf-8", timeout=20)
+            assert probe.classify(result.returncode, result.stdout, result.stderr) != "connected"
+        scenario.pop("raw")
         assert requested and all(method == "GET" and path == "/v1/stable/workspace"
                                  for method, path, _ in requested)
 
@@ -109,7 +118,7 @@ def main():
         server.shutdown()
         server.server_close()
         thread.join(timeout=5)
-    print("CLI help, five connection scenarios, and four widget contracts passed against localhost; no Voiceflow account was contacted.")
+    print("CLI help, five connection scenarios, three malformed responses, and four widget contracts passed against localhost; no Voiceflow account was contacted.")
 
 
 if __name__ == "__main__":

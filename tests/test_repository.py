@@ -182,22 +182,32 @@ class ConnectionTests(unittest.TestCase):
             self.assertNotEqual(connection.classify(0, output, ""), "connected")
         self.assertNotEqual(connection.classify(1, '{"workspaces":[]}', ""), "connected")
 
-    def test_typed_toon_workspace_envelope(self):
-        for output in ("workspaces[0]:", "workspaces[1]{id,name}:\n  123,Example\n",
-                       "workspaces[1]:\n  - id: 123\n    name: Example\n"):
-            self.assertEqual(connection.classify(0, output, ""), "connected")
-        for output in ("workspaces: null", "workspaces[0]", "some text workspaces[0]:"):
-            self.assertNotEqual(connection.classify(0, output, ""), "connected")
+    def test_truncated_malformed_and_stderr_only_success_are_rejected(self):
+        for output in ('{"workspaces":[', '{"workspaces":[]} trailing',
+                       'workspaces[1]{id,name}:\n',
+                       'workspaces[1]{id,name}:\n  invalid', 'workspaces[0]:',
+                       '{"workspaces":[null]}', '{"workspaces":[{}]}',
+                       '{"workspaces":[{"id":""}]}', '{"workspaces":[{"id":12}]}',
+                       '{"workspaces":null,"workspaces":[]}',
+                       '{"workspaces":[],"value":NaN}'):
+            with self.subTest(output=output):
+                self.assertEqual(connection.classify(0, output, ""), "unexpected_response")
+        self.assertEqual(connection.classify(0, "", '{"workspaces":[]}'), "unexpected_response")
+
+    def test_structured_error_overrides_a_success_body(self):
+        self.assertEqual(connection.classify(0, '{"workspaces":[]}',
+                         '{"error_type":"authentication_error"}'), "authentication_required")
 
     def test_probe_is_read_only_bounded_and_does_not_echo_output(self):
-        result = subprocess.CompletedProcess([], 0, '{"workspaces":[{"secret":"hidden"}]}', "")
+        result = subprocess.CompletedProcess([], 0, '{"workspaces":[{"id":"fixture-workspace"}]}', "")
         with patch.object(connection.subprocess, "run", return_value=result) as run:
             self.assertEqual(connection.check("/path/to/vf"), "connected")
         args, kwargs = run.call_args
         self.assertEqual(args[0][1:3], ["workspace", "list"])
         self.assertEqual(kwargs["timeout"], 25)
         self.assertNotIn("--debug", args[0])
-        self.assertEqual(args[0][-2:], ["-o", "toon"])
+        self.assertEqual(args[0][-2:], ["-o", "json"])
+        self.assertNotIn("--timeout", args[0])
 
     def test_missing_cli_and_timeout(self):
         for error, expected in ((FileNotFoundError(), "cli_missing"),

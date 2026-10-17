@@ -42,10 +42,18 @@ contracts. Do not replace checksums merely to bypass a failed download.
 The current private repository plan does not provide protected-branch rules.
 When protection becomes available through publication, transfer, or a plan change:
 
+- Create **active branch rulesets** covering the default branch. Classic branch
+  protection alone is not sufficient for the automated release check below.
 - Require a pull request and maintainer review for the default/release branch.
-- Require the three `checks` jobs (Ubuntu, macOS, Windows) from the validation workflow.
-- Require `Secrets and workflow security` from the reusable security workflow.
-- Block force pushes and branch deletion, and dismiss stale approvals.
+- Require at least one approving code-owner review, dismiss stale approvals,
+  and require resolved review threads. Ensure an independent trusted reviewer
+  is available; a sole maintainer cannot approve their own pull requests.
+- Require these exact checks from the **GitHub Actions** app (integration ID
+  `15368`), with strict/up-to-date checks enabled: `checks (ubuntu-latest)`,
+  `checks (macos-latest)`, `checks (windows-latest)`, and
+  `security / Secrets and workflow security`.
+- Block force pushes and branch deletion. Keep the ruleset bypass list empty;
+  verify this as an administrator rather than inferring it from read-only API output.
 - Require workflow approval for all outside contributors.
 - Verify CODEOWNERS resolves to a maintainer with repository access.
 - Enable private vulnerability reporting as an additional route; keep the verified
@@ -69,9 +77,18 @@ repository and must be enabled and verified at public launch.
 A release starts from an approved, clean commit whose package version matches
 the changelog. Rebuild from that commit; never reuse local dirty artifacts.
 The workflow must run from the current default branch, that branch must be
-protected, and the selected commit must already be in its history. The guard is
-loaded from the default branch and rejects API errors, unprotected branches,
+protected, and the selected commit must already be in its history. The guard
+checks the actual active rules applying to that branch: approving code-owner
+review, stale-approval dismissal, resolved threads, all four strict checks bound
+to GitHub Actions, and deletion/force-push prevention. Weak, missing, malformed,
+or unreadable rules block the release. Disabled/evaluation rules do not qualify.
+The guard is loaded from the default branch and rejects API errors,
 feature-branch dispatches, and unmerged commits before running candidate code.
+It uses GitHub's [active branch rules API](https://docs.github.com/en/rest/repos/rules#get-rules-for-a-branch),
+which requires only metadata read access; no administrative CI secret is added.
+This API covers rulesets, not classic branch protection. The administrator must
+also verify bypass policy at launch. Write-capable maintainers remain trusted:
+this workflow cannot prevent them from changing another workflow or repository settings.
 While branch protection is unavailable, GitHub draft releases remain blocked;
 local asset preparation remains available for review.
 
