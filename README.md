@@ -34,7 +34,8 @@ Successful setup ends with:
 - Voiceflow docs MCP bundled in native plugins and included in setup for other
   hosts, alongside either CLI or account MCP. No docs sign-in is needed.
 - Docs-first guidance in all sixteen skills: unresolved how-tos, implementation
-  questions, and troubleshooting use current documentation before action.
+  questions, and every new troubleshooting issue use current documentation before
+  action, even when a skill already suggests a fix.
 - Hosted MCP setup and recovery for chat assistants, with public website/CLI
   docs fallbacks when the host cannot expose the docs MCP.
 - Sixteen portable skills for setup, building, prompts, workflows, tools,
@@ -48,7 +49,8 @@ Successful setup ends with:
 Product guidance comes from the [Voiceflow documentation](https://www.voiceflow.com/docs).
 See the [documentation workflow](voiceflow/skills/voiceflow/references/documentation.md),
 [skill index](voiceflow/skills/voiceflow/SKILL.md),
-[compatibility](docs/compatibility.md), [release checklist](docs/releasing.md),
+[compatibility](docs/compatibility.md), [onboarding measurement](docs/measurement.md),
+[release checklist](docs/releasing.md),
 and [website publishing contract](docs/website-publishing.md).
 
 The [widget skill](voiceflow/skills/voiceflow-widget/SKILL.md) covers customization,

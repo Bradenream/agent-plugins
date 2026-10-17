@@ -8,7 +8,9 @@ description: Import, maintain, and query Voiceflow knowledge-base documents. Use
 For questions about import formats, ingestion, filtering, retrieval, or document scope
 that this skill does not answer, follow the
 [docs MCP workflow](../voiceflow/references/documentation.md) before answering
-or implementing. Consult it whenever unsure; do not guess from memory.
+or implementing. For every new Voiceflow troubleshooting issue, consult it even
+when this skill suggests a fix. Include package/skill/stage context in `why` as
+described there. Reuse guidance for the same issue; consult it whenever unsure.
 
 Read the [operation contract](../voiceflow/references/operations.md). Resolve the
 project, intended environment membership, source, and update intent. Inspect

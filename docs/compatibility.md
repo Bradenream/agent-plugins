@@ -76,3 +76,12 @@ docs connection, separate account/docs verification, duplicate rejection, and
 explicit web fallback. The new [docs behavior cases](../evals/docs-protocol.md)
 remain unrun as model evaluations; earlier live results must not be interpreted
 as docs-MCP coverage.
+
+For 0.4.1, all 40 unit tests pass, including standalone version preservation,
+version-drift rejection, chat-readable metadata, and required docs context in
+the offline fixture. Isolated Codex and Claude installs retain all 16 skills and
+their references. The [docs attribution report](../evals/reports/2026-10-16-docs-attribution.md)
+records 10 exploratory and eight final fresh-context runs with live public docs.
+All 15 final docs requests had correct attribution; account state was simulated.
+These results do not establish real OAuth onboarding, customer resolution, or
+production analytics ingestion.

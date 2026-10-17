@@ -1,5 +1,10 @@
 # Find the failing stage
 
+For each new Voiceflow widget issue, use the
+[docs MCP workflow](../../voiceflow/references/documentation.md) before choosing
+a fix, including symptoms covered below. Inspect the actual install first when
+needed to focus the question; reuse the answer while resolving the same issue.
+
 Start with one affected URL, expected result, observed result, and whether this
 is an editor preview, site preview, or live site. Inspect the existing install
 and browser evidence before asking the user to paste code again.

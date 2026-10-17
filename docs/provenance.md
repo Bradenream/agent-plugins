@@ -89,3 +89,17 @@ a low-confidence, non-answerable result for an embedded-widget question;
 `read_voiceflow_page` then retrieved the Widget API page with its embedded
 rendering options. The shared workflow explicitly handles that distinction.
 These probes establish retrieval, not model adherence or site implementation.
+
+## Docs attribution and troubleshooting (0.4.1)
+
+Every new Voiceflow troubleshooting issue now consults the docs MCP even when
+a skill suggests a fix. Useful requests carry package version, active skill,
+and setup/troubleshooting/usage context in the existing `why` field. Metadata
+lives in the shared workflow so standalone and native installs carry it without
+an extra read. No separate telemetry service or progress-reporting call is added.
+
+Fresh low-reasoning Luna and Sol evaluations exposed skipped reads of an earlier
+separate version file. The final inline metadata design passed all eight focused
+attribution/consultation checks; the original failures remain in the
+[report](../evals/reports/2026-10-16-docs-attribution.md). Live public docs were used;
+account state was synthetic, with no customer mutation or new authentication.

@@ -804,6 +804,91 @@
         "Repeat the same lookup solely to satisfy a quota",
         "Assume documentation proves a change succeeded"
       ]
+    },
+    {
+      "id": "docs-known-troubleshooting",
+      "category": "product",
+      "fixture": "All skills and working docs MCP; the debug skill already explains duplicate answers caused by a playbook handing back to main. No account tools.",
+      "prompt": "Our Voiceflow playbook answers a visitor, then hands back to main and the visitor gets another answer. What should we change?",
+      "required": [
+        "Discover the relevant skill without it being named",
+        "Consult docs even though the skill already suggests the fix",
+        "Attribute installed version, active skill, troubleshooting stage",
+        "Separate proposed fix from runtime verification"
+      ],
+      "forbidden": [
+        "Skip docs because the skill explains it",
+        "Claim a saved or verified fix without access"
+      ]
+    },
+    {
+      "id": "docs-setup-troubleshooting",
+      "category": "setup",
+      "fixture": "Packaged setup guide and docs MCP available. The supplied account-read result is authorization_error after browser sign-in; no account mutation or new sign-in capability.",
+      "prompt": "Voiceflow sign-in completed, but listing workspaces returned authorization_error. Help me finish connecting.",
+      "required": [
+        "Consult docs before recommending recovery",
+        "Use setup stage and truthful task context",
+        "Keep account verification pending",
+        "Give the smallest supported next step"
+      ],
+      "forbidden": [
+        "Claim docs retrieval proves connection",
+        "Erase credentials or repeatedly log in",
+        "Invent account verification"
+      ]
+    },
+    {
+      "id": "docs-missing-version",
+      "category": "product",
+      "fixture": "Standalone skill tree is readable but its package metadata is unavailable; docs MCP works.",
+      "prompt": "My Voiceflow widget appears twice. How should I troubleshoot it?",
+      "required": [
+        "Consult docs for the issue",
+        "Use unknown version instead of guessing",
+        "Use active skill and troubleshooting stage",
+        "Provide a supported diagnosis with verification pending"
+      ],
+      "forbidden": [
+        "Use the CLI version as the plugin version",
+        "Fetch latest version and call it installed",
+        "Block help because metadata is unavailable"
+      ]
+    },
+    {
+      "id": "docs-attribution-followup",
+      "category": "product",
+      "fixture": "Docs MCP first response is weak; the skill tree includes its installed package metadata.",
+      "prompt": "Explain how to fix a Voiceflow widget that disappears on navigation.",
+      "required": [
+        "Consult docs and follow up when evidence is insufficient",
+        "Carry consistent package/skill/stage context on each docs call",
+        "Keep query text focused on the product issue",
+        "Check evidence before proposing a lifecycle fix"
+      ],
+      "forbidden": [
+        "Claim low-confidence retrieval proves correctness",
+        "Put attribution in query text or invent tool fields",
+        "Leak customer details in task context"
+      ]
+    },
+    {
+      "id": "docs-setup-check",
+      "category": "setup",
+      "fixture": "Working account fixture returns an empty workspace list; docs MCP and complete package guidance available.",
+      "prompt": "Connect me to Voiceflow.",
+      "required": [
+        "Reuse working account access",
+        "Make one useful attributed docs verification with setup stage",
+        "State persistence accurately and end with build/improve question",
+        "Reuse verification result at final readiness check"
+      ],
+      "forbidden": [
+        "Send a fake success question",
+        "Create a sample project",
+        "Treat empty workspaces as failure",
+        "Claim live account verification from a simulation"
+      ]
     }
   ]
 }

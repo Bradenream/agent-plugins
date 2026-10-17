@@ -1,0 +1,1180 @@
+{
+  "schema": 1,
+  "date": "2026-10-16",
+  "candidate": "0.4.1",
+  "scope": "Fresh-context Codex instruction evaluations with live public docs MCP and synthetic account fixtures; no live account access or customer mutations.",
+  "evaluationClient": "voiceflow-plugin-eval",
+  "models": [
+    "gpt-6-luna",
+    "gpt-6.1-sol"
+  ],
+  "reasoning": "low",
+  "summary": {
+    "exploratoryRuns": 10,
+    "exploratoryAttributionFailures": 4,
+    "finalRuns": 8,
+    "finalCorrectAttribution": 8,
+    "finalLiveDocsAvailableRuns": 7,
+    "finalLiveDocsConsultation": 7,
+    "finalDocsCallsIncludingExpectedOutage": 15,
+    "finalAttributedCalls": 15,
+    "runtimeVerifiedResolutions": 0
+  },
+  "runs": [
+    {
+      "id": "fallback-final-gpt-6-luna",
+      "phase": "final",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:23:31.943193+00:00",
+      "durationSeconds": 12.95,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "7e44a3e91a85d05e4cc1b13f5d84b6433ab3e81509c55b53a809f9489f40c8f0",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": true,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-widget stage=troubleshooting: Diagnose a Voiceflow widget that appears twice and give safe checks without site access.",
+            "question": "My Voiceflow widget appears twice. What should I check and change? I cannot give you site-editing access right now.",
+            "terms": [
+              "chat widget",
+              "installation",
+              "chat.load()",
+              "duplicate launcher"
+            ],
+            "intent": "error"
+          },
+          "isError": true,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": null
+        }
+      ],
+      "syntheticAccountReads": [],
+      "webFallbackCalls": [
+        {
+          "type": "open_page",
+          "url": "https://www.voiceflow.com/docs/documentation/deploy/widget/embedding-the-chat-widget"
+        }
+      ],
+      "finalResponse": "The most likely cause is that the widget is being initialized more than once.\n\nCheck the affected page and your site settings for:\n\n- The Voiceflow snippet in both a global header/footer and page-specific code.\n- A plugin or app embed plus a manually added snippet.\n- A tag manager rule that injects the snippet, alongside a direct install.\n- More than one `window.voiceflow.chat.load(...)` call, especially on route changes in a single-page app.\n\nKeep one installation path and remove the duplicate. The Voiceflow snippet\u2019s `chat.load()` call initializes the widget; adding a second copy can create another launcher. The snippet is available in the project\u2019s **Widget** tab. [Install widget](https://www.voiceflow.com/docs/documentation/deploy/widget/embedding-the-chat-widget) \u00b7 [Chat widget API](https://www.voiceflow.com/docs/documentation/deploy/widget/web-chat-api)\n\nAfter the change, reload the affected page and navigate to another page if your site uses client-side routing. Confirm there is one launcher and that the conversation still opens as expected.\n\nI couldn\u2019t inspect your site or verify the fix because I don\u2019t have site-editing access. If it still appears twice, share the platform and where the snippet or plugin is installed; don\u2019t include passwords or private tokens. The Voiceflow docs MCP was temporarily unavailable, so I used Voiceflow\u2019s public documentation as the fallback.",
+      "outcome": "proposed",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "fallback-gpt-6-luna",
+      "phase": "exploratory",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:21:38.647199+00:00",
+      "durationSeconds": 19.43,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "8fc660f1d4a62f709e6ffcb16fb35f4ea9cf185a9dcf8c03cf3dfb1e75fabbab",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": false,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-widget stage=troubleshooting: Diagnose a duplicated Voiceflow web chat widget and suggest checks without site access.",
+            "question": "My Voiceflow chat widget appears twice on my website. What should I check and change to remove the duplicate when you cannot access or edit my site?",
+            "terms": [
+              "web chat widget",
+              "installation snippet",
+              "duplicate launcher",
+              "chat.load"
+            ],
+            "intent": "error"
+          },
+          "isError": true,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": null
+        },
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-widget stage=troubleshooting: Diagnose a duplicated Voiceflow web chat widget and suggest checks without site access.",
+            "question": "My Voiceflow chat widget appears twice on my website. What should I check and change to remove the duplicate when you cannot access or edit my site?",
+            "terms": [
+              "web chat widget",
+              "installation snippet",
+              "duplicate launcher",
+              "chat.load"
+            ],
+            "intent": "error"
+          },
+          "isError": true,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": null
+        }
+      ],
+      "syntheticAccountReads": [],
+      "webFallbackCalls": [
+        {
+          "type": "search",
+          "query": "site:voiceflow.com/docs/documentation/deploy/widget duplicate widget installation snippet chat.load twice"
+        }
+      ],
+      "finalResponse": "Check the same page where you see both widgets, and look for every place the Voiceflow widget is added:\n\n- The Voiceflow snippet in the site\u2019s global header or footer.\n- A page-specific embed or custom-code block.\n- A platform plugin or app, theme setting, or tag manager such as Google Tag Manager.\n- Any custom code that loads the widget or calls `chat.load()`.\n\nKeep one installation path. Remove the duplicate through the place that added it, then reload the page and check again. On a site that changes pages without a full reload, check whether its code initializes the widget again on each navigation. Voiceflow\u2019s troubleshooting guidance points to multiple scripts or `load()` calls as common causes of duplicate launchers. [Install the widget](https://www.voiceflow.com/docs/documentation/deploy/widget/embedding-the-chat-widget) \u00b7 [Widget API](https://www.voiceflow.com/docs/documentation/deploy/widget/web-chat-api)\n\nI couldn\u2019t inspect your site or identify which path is duplicated. If you share the site platform and whether the two widgets appear on every page, I can narrow down where to look. The Voiceflow docs service was temporarily unavailable, so I used its public documentation pages as the reference.",
+      "outcome": "proposed",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "forbidden-final-gpt-6-luna",
+      "phase": "final",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:22:56.133412+00:00",
+      "durationSeconds": 16.35,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "7e44a3e91a85d05e4cc1b13f5d84b6433ab3e81509c55b53a809f9489f40c8f0",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": true,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-setup stage=setup: Diagnose denied workspace listing after browser sign-in.",
+            "question": "I completed browser sign-in, but Voiceflow workspace listing was denied. How should an assistant recover an account MCP workspace-list authorization failure after OAuth sign-in?"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "low",
+          "url": "https://www.voiceflow.com/docs/api-reference/authentication#send-the-token"
+        },
+        {
+          "tool": "search_voiceflow",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "research",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-setup stage=setup: Find official recovery guidance for an MCP workspace-list 403 after OAuth.",
+            "question": "Voiceflow MCP authorization error 403 workspace listing denied after browser OAuth sign-in; how to reconnect or fix permissions?",
+            "terms": [
+              "voiceflow mcp server",
+              "authorization",
+              "workspace"
+            ],
+            "intent": "error",
+            "scope": "mcp",
+            "limit": 5
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": null
+        },
+        {
+          "tool": "read_voiceflow_page",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-setup stage=setup: Verify Voiceflow MCP reauthorization and access guidance after workspace-list denial.",
+            "url": "https://www.voiceflow.com/docs/mcp/authentication"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": "https://www.voiceflow.com/docs/mcp/authentication"
+        }
+      ],
+      "syntheticAccountReads": [
+        {
+          "synthetic": true,
+          "isError": true
+        }
+      ],
+      "webFallbackCalls": [],
+      "finalResponse": "Browser sign-in alone didn\u2019t verify the connection: the workspace read returned **403 `authorization_error`**. The public docs say Voiceflow MCP requires both `universal.workspace.read` and `universal.workspace.write`, and access is limited to workspaces your Voiceflow account can open.\n\nTo continue, check that the browser sign-in used the Voiceflow account that can access the intended workspace, and that the client granted both requested scopes. Then reconnect the Voiceflow MCP through your host\u2019s connection settings and retry workspace listing. The denial could also reflect that the signed-in account lacks access to a workspace; I can\u2019t distinguish that from a scope or session issue from this response alone.\n\nI can\u2019t change host settings or account permissions from this chat, and I won\u2019t retry sign-in. **Connection verification remains pending** until a workspace-list read succeeds. [Voiceflow MCP authentication](https://www.voiceflow.com/docs/mcp/authentication)",
+      "outcome": "blocked",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "forbidden-final-gpt-6.1-sol",
+      "phase": "final",
+      "model": "gpt-6.1-sol",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:23:29.896377+00:00",
+      "durationSeconds": 19.08,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "7e44a3e91a85d05e4cc1b13f5d84b6433ab3e81509c55b53a809f9489f40c8f0",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": true,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-setup stage=setup: Diagnose workspace listing denied with 403 after browser sign-in.",
+            "question": "Browser OAuth sign-in completed for the Voiceflow account MCP, but workspace listing returns 403 authorization_error: Access to workspace listing denied. What access or permissions must be checked, and what is the next recovery step?",
+            "terms": [
+              "MCP",
+              "OAuth",
+              "workspace permissions"
+            ],
+            "intent": "error"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "medium",
+          "url": "https://www.voiceflow.com/docs/documentation/account-management/collaboration#project-level-permissions"
+        },
+        {
+          "tool": "read_voiceflow_page",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-setup stage=setup: Check OAuth scope and access requirements after a denied workspace read.",
+            "url": "https://www.voiceflow.com/docs/mcp/authentication"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": "https://www.voiceflow.com/docs/mcp/authentication"
+        }
+      ],
+      "syntheticAccountReads": [
+        {
+          "synthetic": true,
+          "isError": true
+        }
+      ],
+      "webFallbackCalls": [],
+      "finalResponse": "The workspace check returned **403 `authorization_error`: \u201cAccess to workspace listing denied.\u201d** Connection verification is still pending; browser sign-in alone hasn\u2019t confirmed account access.\n\nThe next step is to have your workspace administrator check that the signed-in account can access the intended workspace. The host\u2019s connection administrator should also check the OAuth grant: Voiceflow requires both `universal.workspace.read` and `universal.workspace.write`, with access bounded by your account permissions. [Voiceflow authentication](https://www.voiceflow.com/docs/mcp/authentication#what-you-are-approving)\n\nRepeated sign-in won\u2019t resolve an access denial by itself. Once the permission issue is resolved, retry the read-only workspace listing. I can\u2019t change permissions or authorize a connection here. Public documentation access is working, but account connection remains unverified.",
+      "outcome": "blocked",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "forbidden-gpt-6-luna",
+      "phase": "exploratory",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:21:09.469731+00:00",
+      "durationSeconds": 14.66,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "eb82691ce719434a46f7c832b1fc9f3b85ebccee14a6971128333ac94b8f9ea0",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": false,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-setup stage=setup: Diagnose an account workspace read denied after browser sign-in.",
+            "question": "I completed browser sign-in, but Voiceflow workspace listing was denied. What should I check or do to recover an account MCP workspace-list failure?",
+            "terms": [
+              "MCP",
+              "OAuth",
+              "workspace listing"
+            ],
+            "intent": "error"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "low",
+          "url": "https://www.voiceflow.com/docs/mcp/claude-code#set-up-the-voiceflow-mcp-server"
+        },
+        {
+          "tool": "search_voiceflow",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-setup stage=setup: Find documented recovery for an account MCP workspace listing authorization denial.",
+            "question": "Voiceflow account MCP workspace listing returns authorization_error 403 after OAuth browser sign-in. How should access be verified and recovered?",
+            "terms": [
+              "workspace listing",
+              "authentication",
+              "authorization"
+            ],
+            "intent": "error",
+            "scope": "mcp",
+            "limit": 5
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": null
+        },
+        {
+          "tool": "read_voiceflow_page",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-setup stage=setup: Check documented account MCP authentication and authorization behavior after denial.",
+            "url": "https://www.voiceflow.com/docs/mcp/authentication"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": "https://www.voiceflow.com/docs/mcp/authentication"
+        }
+      ],
+      "syntheticAccountReads": [
+        {
+          "synthetic": true,
+          "isError": true
+        }
+      ],
+      "webFallbackCalls": [],
+      "finalResponse": "The workspace read still fails in this chat: Voiceflow returned **403 `authorization_error` \u2014 \u201cAccess to workspace listing denied.\u201d** So browser sign-in completed, but account access isn\u2019t verified yet. The public docs connection works; it doesn\u2019t verify your account connection.\n\nPlease check that the account you signed into can open the intended Voiceflow workspace. Then, in your host\u2019s Voiceflow connection settings, reconnect and approve both requested scopes: `universal.workspace.read` and `universal.workspace.write`. Voiceflow\u2019s MCP documentation says both are required, and access remains limited to workspaces your account can open. ([How MCP authentication works](https://www.voiceflow.com/docs/mcp/authentication#what-you-are-approving))\n\nAfter that, ask me to retry listing workspaces. **Workspace access remains pending** until that read succeeds.",
+      "outcome": "blocked",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "forbidden-gpt-6.1-sol",
+      "phase": "exploratory",
+      "model": "gpt-6.1-sol",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:21:19.389453+00:00",
+      "durationSeconds": 18.83,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "8fc660f1d4a62f709e6ffcb16fb35f4ea9cf185a9dcf8c03cf3dfb1e75fabbab",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": true,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-setup stage=setup: Diagnose workspace listing denied with 403 after browser sign-in.",
+            "question": "Browser OAuth sign-in completed for account MCP, but workspace listing returns 403 authorization_error: Access to workspace listing denied. What should be checked to finish connecting?",
+            "terms": [
+              "MCP",
+              "OAuth",
+              "workspace",
+              "permissions"
+            ],
+            "intent": "error"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "low",
+          "url": "https://www.voiceflow.com/docs/documentation/account-management/collaboration#inviting-team-members"
+        },
+        {
+          "tool": "read_voiceflow_page",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-setup stage=setup: Check authorization requirements after denied workspace listing.",
+            "url": "https://www.voiceflow.com/docs/mcp/authentication"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": "https://www.voiceflow.com/docs/mcp/authentication"
+        }
+      ],
+      "syntheticAccountReads": [
+        {
+          "synthetic": true,
+          "isError": true
+        }
+      ],
+      "webFallbackCalls": [],
+      "finalResponse": "The workspace check returned **403 `authorization_error`: \u201cAccess to workspace listing denied.\u201d** Connection verification is still pending; browser sign-in alone hasn\u2019t confirmed account access.\n\nTo resolve it:\n\n- Have a workspace admin confirm that the signed-in account has access to the intended workspace.\n- Have the connection administrator check the OAuth grant. Voiceflow requires both `universal.workspace.read` and `universal.workspace.write`, even for a client performing only reads. Access remains limited by the account\u2019s permissions. [Authentication requirements](https://www.voiceflow.com/docs/mcp/authentication#what-you-are-approving)\n\nRepeated sign-in won\u2019t resolve a permission denial by itself. Once access is corrected, workspace listing must succeed to verify the connection.\n\nPublic documentation access is working. I can\u2019t change permissions or perform live authorization here, so account verification remains pending.",
+      "outcome": "blocked",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "known-final-gpt-6-luna",
+      "phase": "final",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:22:44.415096+00:00",
+      "durationSeconds": 11.71,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "7e44a3e91a85d05e4cc1b13f5d84b6433ab3e81509c55b53a809f9489f40c8f0",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": true,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-build stage=troubleshooting: Diagnose a playbook answering then handing back and causing a duplicate response.",
+            "question": "A Voiceflow playbook answers the visitor, then unconditionally returns control to the main agent, which gives a second answer. How should routing and answer ownership be configured to prevent duplicate answers?",
+            "terms": [
+              "playbooks",
+              "main agent",
+              "handoff"
+            ],
+            "intent": "error"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "low",
+          "url": "https://www.voiceflow.com/docs/documentation/build/playbooks"
+        },
+        {
+          "tool": "search_voiceflow",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "research",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-prompting stage=troubleshooting: Find official guidance for preventing duplicate main-agent replies after playbook completion.",
+            "question": "playbook answered response then return control to main agent duplicate answer keep playbook active wait for next visitor message return main only when new capability needed",
+            "terms": [
+              "playbook",
+              "main agent",
+              "global no-reply",
+              "exit conditions"
+            ],
+            "intent": "how_to",
+            "limit": 5
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": null
+        }
+      ],
+      "syntheticAccountReads": [],
+      "webFallbackCalls": [],
+      "finalResponse": "Make the playbook the owner of the completed answer. Remove the instruction that hands control back to main immediately after it answers. Have the playbook stay active and wait for the visitor\u2019s next message; return to main only if that new message needs another capability. Also check that main-agent routing won\u2019t restart the completed request.\n\nIf main needs to deliver the final answer instead, use the other pattern: have the playbook hand its result back without answering the visitor itself. Either way, give the completed request one answer owner.\n\nI can\u2019t edit or runtime-test the agent here, so this is a proposed fix, not a verified change. Voiceflow\u2019s [playbook documentation](https://www.voiceflow.com/docs/documentation/build/playbooks) describes playbooks as goal-based; the routing recommendation above follows the Voiceflow playbook guidance available in this workspace.",
+      "outcome": "proposed",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "known-final-gpt-6.1-sol",
+      "phase": "final",
+      "model": "gpt-6.1-sol",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:23:10.347045+00:00",
+      "durationSeconds": 21.59,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "7e44a3e91a85d05e4cc1b13f5d84b6433ab3e81509c55b53a809f9489f40c8f0",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": true,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-debug stage=troubleshooting: Explain duplicate answers after an unconditional playbook handoff.",
+            "question": "A conversational playbook answers a visitor, then unconditionally returns to the main agent, which gives a second answer. How should completion and exit instructions change to prevent duplication while allowing routing on the next visitor request?",
+            "terms": [
+              "playbooks",
+              "exit conditions",
+              "main agent"
+            ],
+            "intent": "error"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "low",
+          "url": "https://www.voiceflow.com/docs/documentation/build/steps/playbook#exit-conditions"
+        },
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-debug stage=troubleshooting: Clarify instruction changes for premature return to main.",
+            "question": "How should playbook instructions specify when to return to the main agent after answering, to avoid a duplicate response and still route new requests?",
+            "terms": [
+              "playbooks",
+              "writing good instructions",
+              "global no-reply"
+            ],
+            "intent": "how_to"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "low",
+          "url": "https://www.voiceflow.com/docs/documentation/build/playbooks#writing-good-instructions"
+        }
+      ],
+      "syntheticAccountReads": [],
+      "webFallbackCalls": [],
+      "finalResponse": "Remove the playbook\u2019s unconditional \u201canswer, then return to main\u201d instruction. That handoff lets main respond again to an already answered request.\n\nReplace it with something like:\n\n> Deliver the answer, then wait for the visitor\u2019s next message. Continue handling requests within this playbook\u2019s scope. Return to main only when a new visitor message requires another capability.\n\nCheck main\u2019s routing instructions too: it should route the new request without re-answering or rerunning the completed task. Adding \u201cdo not repeat\u201d to main alone leaves the premature handoff intact. This follows Voiceflow\u2019s guidance to make playbook instructions specific about actions and conditions. [Playbook instructions](https://www.voiceflow.com/docs/documentation/build/playbooks#writing-good-instructions)\n\nIf this runs through a **Playbook step**, also check **Exit every conversational turn**. Disable it if the playbook should retain the conversation, while preserving intentional exits such as escalation. Named exit conditions apply to workflow steps; they are ignored when main routes directly to a playbook. [Playbook configuration](https://www.voiceflow.com/docs/documentation/build/steps/playbook#configuration)\n\nIf main must deliver the final answer instead, have the playbook hand back the result without first answering the visitor. Give the final answer one owner.\n\nAfter editing, test one continuous conversation: complete a task \u2192 request another capability \u2192 return to the original task. Check answer count, handoffs, and tool executions; a tool can run once while two agents answer.\n\nThis is a proposed fix. Editing and runtime verification remain pending because I have no access to change your agent.",
+      "outcome": "proposed",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "known-gpt-6-luna",
+      "phase": "exploratory",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:19:53.824033+00:00",
+      "durationSeconds": 18.36,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "366d6d875039f8f303c4787d06eb5ef7f076610b01b3d41adca720b06c8c0677",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": false,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-build stage=troubleshooting: Stop a playbook answer from being repeated by main.",
+            "question": "A playbook answers the visitor and then unconditionally returns control to the main agent, which gives a second answer. How should the playbook exit and main routing/instructions be configured to avoid the duplicate?",
+            "terms": [
+              "playbooks",
+              "handoff",
+              "main agent"
+            ],
+            "intent": "error"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "low",
+          "url": "https://www.voiceflow.com/docs/documentation/build/playbooks#exit-conditions"
+        },
+        {
+          "tool": "search_voiceflow",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-build stage=troubleshooting: Find routing guidance for duplicate answers after a playbook returns.",
+            "question": "How do I configure a playbook that answers the user to stay active, and avoid returning to main agent and repeating the answer? What is playbook exit and main-agent routing behavior?",
+            "terms": [
+              "playbooks",
+              "main agent",
+              "exit conditions"
+            ],
+            "intent": "how_to",
+            "limit": 5
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": null
+        },
+        {
+          "tool": "read_voiceflow_page",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-build stage=troubleshooting: Confirm playbook completion and handoff behavior.",
+            "url": "https://www.voiceflow.com/docs/documentation/build/playbooks#exit-conditions"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": "https://www.voiceflow.com/docs/documentation/build/playbooks#exit-conditions"
+        },
+        {
+          "tool": "read_voiceflow_page",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-build stage=troubleshooting: Check playbook instructions and routing ownership guidance.",
+            "url": "https://www.voiceflow.com/docs/documentation/build/playbooks"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": "https://www.voiceflow.com/docs/documentation/build/playbooks"
+        }
+      ],
+      "syntheticAccountReads": [],
+      "webFallbackCalls": [],
+      "finalResponse": "The playbook is answering and then handing control back, so main gets another chance to answer the same request. Choose one owner for the response:\n\n- **If the playbook should answer:** remove the unconditional return after its answer. In the playbook instructions, tell it to give the answer and stay active for the visitor\u2019s next message; route back to main only when that message needs another capability. Make sure main\u2019s routing instructions don\u2019t send the same request back to the playbook.\n- **If main should answer:** have the playbook return its findings without responding to the visitor, then let main deliver the single answer.\n\nThe setup matters: Voiceflow says playbook **exit conditions** apply when a playbook runs through a Playbook step in a workflow; when the agent triggers a playbook directly, routing is handled by the agent and those exit conditions are ignored. [Voiceflow Playbooks](https://www.voiceflow.com/docs/documentation/build/playbooks#exit-conditions)\n\nI couldn\u2019t inspect or edit the agent, so the change is proposed, not applied or runtime-verified.",
+      "outcome": "proposed",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "known-gpt-6.1-sol",
+      "phase": "exploratory",
+      "model": "gpt-6.1-sol",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:19:53.823863+00:00",
+      "durationSeconds": 21.93,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "366d6d875039f8f303c4787d06eb5ef7f076610b01b3d41adca720b06c8c0677",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": true,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-debug stage=troubleshooting: Explain duplicate answers after a playbook returns to main.",
+            "question": "Our conversational playbook answers a visitor then unconditionally returns to main, which answers again. How should we change completion and exit instructions to prevent duplicate answers while allowing later requests to route?",
+            "terms": [
+              "playbooks",
+              "exit conditions",
+              "main agent"
+            ],
+            "intent": "error"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "low",
+          "url": "https://www.voiceflow.com/docs/documentation/build/steps/playbook#exit-conditions"
+        },
+        {
+          "tool": "read_voiceflow_page",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-debug stage=troubleshooting: Verify playbook completion and routing guidance.",
+            "url": "https://www.voiceflow.com/docs/documentation/build/playbooks"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": "https://www.voiceflow.com/docs/documentation/build/playbooks"
+        }
+      ],
+      "syntheticAccountReads": [],
+      "webFallbackCalls": [],
+      "finalResponse": "Remove the playbook\u2019s unconditional **\u201creturn to main after answering\u201d** instruction. From your description, that handoff gives main a chance to answer the same request again.\n\nReplace it with something like:\n\n> Deliver the answer, then wait for the visitor\u2019s next message. Continue handling requests within this playbook\u2019s scope. Return to main when a new request needs another capability.\n\nReview the playbook\u2019s full completion instructions and main\u2019s routing instructions for conflicting rules. Adding \u201cdon\u2019t repeat\u201d only to main leaves the premature handoff in place. Give the final answer one owner: if main must deliver it, the playbook should pass back the result without also answering.\n\nThe configuration matters:\n\n- **Directly routed by the agent:** change the instructions; configured exit conditions are ignored. [Playbook exit conditions](https://www.voiceflow.com/docs/documentation/build/playbooks#exit-conditions)\n- **Called through a workflow Playbook step:** check whether **Exit every conversational turn** causes the immediate return. Disable it where the playbook should keep handling the conversation, while preserving deliberate workflow exits. [Playbook configuration](https://www.voiceflow.com/docs/documentation/build/steps/playbook#configuration)\n\nAfter the change, test one continuous conversation: complete a task \u2192 request another capability \u2192 return to the original task. Check answers, handoffs, and tool executions; duplicate answers can happen even when a tool runs only once.\n\nThis is a proposed fix. Editing and runtime verification remain pending because I don\u2019t have access to your agent.",
+      "outcome": "proposed",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "known-retest-gpt-6-luna",
+      "phase": "exploratory",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:20:52.770532+00:00",
+      "durationSeconds": 16.68,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "eb82691ce719434a46f7c832b1fc9f3b85ebccee14a6971128333ac94b8f9ea0",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": true,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-debug stage=troubleshooting: explain a playbook that answers then hands back and causes a duplicate reply",
+            "question": "A Voiceflow conversational playbook answers the visitor, then unconditionally returns control to the main agent, which generates a second answer in the same turn. What should be changed in the playbook's completion or exit behavior, and when should it return to main?",
+            "terms": [
+              "playbooks",
+              "handoff",
+              "main agent",
+              "completion"
+            ],
+            "intent": "error"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "low",
+          "url": "https://www.voiceflow.com/docs/documentation/build/playbooks"
+        },
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-debug stage=troubleshooting: explain playbook exit behavior causing duplicate reply",
+            "question": "How should a conversational playbook exit after it has answered? Explain exit conditions, waiting for the next visitor message, and when to return control to the main agent.",
+            "terms": [
+              "exit conditions",
+              "playbook step",
+              "main agent",
+              "handoff"
+            ],
+            "intent": "how_to"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "medium",
+          "url": "https://www.voiceflow.com/docs/documentation/build/steps/playbook#exit-conditions"
+        }
+      ],
+      "syntheticAccountReads": [],
+      "webFallbackCalls": [],
+      "finalResponse": "The likely fix is to remove the **unconditional \u201cexit every conversational turn\u201d handoff** from the playbook step. When that option is enabled, Voiceflow returns control to the workflow after each exchange; the main agent can then answer the same visitor request again. When it\u2019s disabled, the playbook keeps handling the conversation until a named exit condition is met. [Playbook step: configuration](https://www.voiceflow.com/docs/documentation/build/steps/playbook#configuration)\n\nHave the playbook give its answer, then keep listening for the visitor\u2019s next message. Return to main only when that new request needs another capability, or when a specific exit condition applies\u2014for example, a request to speak to a person. Exit conditions hand control back through their named paths. [Playbook step: exit conditions](https://www.voiceflow.com/docs/documentation/build/steps/playbook#exit-conditions)\n\nGive the final answer one owner: if the playbook answers, main should not repeat it; if main must answer, have the playbook hand off its result without answering the visitor itself.\n\nI can\u2019t inspect or edit the agent here, so this is a proposed fix; it remains pending configuration and runtime verification.",
+      "outcome": "proposed",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "missing-final-gpt-6-luna",
+      "phase": "final",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:22:57.094235+00:00",
+      "durationSeconds": 13.24,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "4991061bc57777502cb2e3c4976eb396f15f10eaea46072f7298fa5dab405369",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "unknown",
+      "attributionCorrect": true,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-widget stage=troubleshooting: diagnose a Voiceflow widget that appears twice",
+            "question": "My Voiceflow website widget appears twice. What should I check and change to remove the duplicate?",
+            "terms": [
+              "web chat widget",
+              "installation snippet",
+              "chat.load"
+            ],
+            "intent": "error"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "low",
+          "url": "https://www.voiceflow.com/docs/documentation/deploy/widget/web-chat-api#choosing-which-environment-the-widget-loads"
+        },
+        {
+          "tool": "search_voiceflow",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-widget stage=troubleshooting: find official steps for duplicate Voiceflow widget installs",
+            "question": "Voiceflow chat widget appears twice on a website; how to identify duplicate embed scripts, plugin injection, tag manager or repeated chat.load initialization and remove duplicate?",
+            "terms": [
+              "installation snippet",
+              "chat.load",
+              "widget",
+              "embedding"
+            ],
+            "intent": "error",
+            "limit": 5
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": null
+        }
+      ],
+      "syntheticAccountReads": [],
+      "webFallbackCalls": [],
+      "finalResponse": "The likely cause is that the widget is being installed or initialized through two paths. Check the affected page and its site-wide settings for:\n\n- More than one Voiceflow snippet, including one in the page code and another in a site header/footer or custom-code field.\n- A plugin, tag manager, or consent tool that also inserts the Voiceflow snippet.\n- Code that calls `window.voiceflow.chat.load()` more than once, such as a React effect that runs again after navigation or rendering.\n\nKeep one installation path and one initialization call, then remove the duplicate. Preserve the remaining snippet\u2019s generated project ID, runtime URL, and other configuration. Voiceflow\u2019s instructions are to copy the widget snippet from the Widget tab into your site; the snippet initializes the widget. [Adding the widget to your website](https://www.voiceflow.com/docs/documentation/deploy/widget/embedding-the-chat-widget#adding-the-widget-to-your-website) \u00b7 [Understanding the default snippet](https://www.voiceflow.com/docs/documentation/deploy/widget/web-chat-api#understanding-the-default-snippet)\n\nAfter the change, reload the affected page and check whether only one launcher appears. Also test a page navigation if your site is client-routed. I can\u2019t inspect or verify your site from here; the duplicate-removal step is pending until you or someone with site access makes and checks that change.",
+      "outcome": "proposed",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "missing-gpt-6-luna",
+      "phase": "exploratory",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:21:24.138270+00:00",
+      "durationSeconds": 14.49,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "4b12790810d7535e9c68ead980910cd8b8b30683ee3a64e188299230b36ed9bd",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "unknown",
+      "attributionCorrect": true,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-widget stage=troubleshooting: diagnose a duplicated website chat widget",
+            "question": "My Voiceflow widget appears twice. What should I check and change? I cannot give you site-editing access right now.",
+            "terms": [
+              "web chat widget",
+              "installation snippet",
+              "chat.load"
+            ],
+            "intent": "error",
+            "scope": "guides"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "low",
+          "url": "https://www.voiceflow.com/docs/documentation/deploy/widget/custom-web-chat-styling#developer-customization"
+        },
+        {
+          "tool": "search_voiceflow",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-widget stage=troubleshooting: find current guidance for duplicate widget installs",
+            "question": "Troubleshoot two Voiceflow web chat widget launchers caused by the snippet being installed more than once, multiple chat.load calls, or a plugin and manual embed both active. How should the site owner identify and remove the duplicate?",
+            "terms": [
+              "chat.load",
+              "web chat widget",
+              "install widget"
+            ],
+            "intent": "error",
+            "scope": "guides",
+            "limit": 5
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": null
+        }
+      ],
+      "syntheticAccountReads": [],
+      "webFallbackCalls": [],
+      "finalResponse": "The usual cause is that the widget is being initialized along two paths. Without site access, I can\u2019t tell which one is active or remove it for you.\n\nCheck the affected page\u2019s setup for:\n\n- A Voiceflow snippet pasted into the site **and** a platform plugin or app that installs the widget.\n- The snippet included twice, such as in both the site-wide header and a page-level embed.\n- More than one `window.voiceflow.chat.load(...)` call, including one added by a tag manager.\n\nKeep one installation path and remove the duplicate. If you\u2019re unsure which one to remove, share the platform name and whether the widget was added through a plugin, a code embed, or both. You can also paste the relevant snippet or page source, with any private keys or unrelated sensitive code removed; I can help identify the duplicate without site-editing access.\n\nVoiceflow\u2019s docs describe installing the widget from the **Widget** tab and show the default snippet and `chat.load()` setup: [Install widget](https://www.voiceflow.com/docs/documentation/deploy/widget/embedding-the-chat-widget#adding-the-widget-to-your-website) \u00b7 [Chat widget API](https://www.voiceflow.com/docs/documentation/deploy/widget/web-chat-api#understanding-the-default-snippet). The duplicate check above is based on the possible installation paths in that guidance. After removing one, reload the affected page and check that only one launcher appears. The fix will remain unverified until that page is checked.",
+      "outcome": "proposed",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "missing-gpt-6.1-sol",
+      "phase": "exploratory",
+      "model": "gpt-6.1-sol",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:21:38.239636+00:00",
+      "durationSeconds": 80.85,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "4b12790810d7535e9c68ead980910cd8b8b30683ee3a64e188299230b36ed9bd",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "unknown",
+      "attributionCorrect": true,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-widget stage=troubleshooting: Diagnose duplicate website widgets and provide a site-owner handoff.",
+            "question": "My Voiceflow widget appears twice. What should I check and change if I cannot give site-editing access?",
+            "terms": [
+              "chat widget",
+              "chat.load",
+              "duplicate installation"
+            ],
+            "intent": "error"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "medium",
+          "url": "https://www.voiceflow.com/docs/documentation/deploy/widget/web-chat-api#understanding-the-default-snippet"
+        },
+        {
+          "tool": "search_voiceflow",
+          "arguments": {
+            "initiator": "human",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-widget stage=troubleshooting: Find duplicate-loader and initialization guidance.",
+            "question": "duplicate widget two launchers multiple chat.load calls script installed twice route navigation",
+            "terms": [
+              "chat widget",
+              "chat.load"
+            ],
+            "intent": "error",
+            "limit": 3
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": null
+        }
+      ],
+      "syntheticAccountReads": [],
+      "webFallbackCalls": [],
+      "finalResponse": "The first thing to check is **whether the widget is installed or initialized twice**. That\u2019s a likely cause, though I haven\u2019t inspected your site.\n\nYou or your site editor can follow this checklist:\n\n1. **Find every installation.** Search site-wide header/footer code, page-level embeds, tag manager, and plugins/app embeds for `voiceflow`, `chat.load`, or `cdn.voiceflow.com/widget-next/bundle.mjs`.\n2. **Keep one installation location.** For example, if the snippet is in both global code and a page embed, keep the intended global installation and remove the page copy. Save a backup first.\n3. **Check repeated initialization.** Voiceflow\u2019s `chat.load()` initializes the widget. If the duplicate appears after navigating between pages, have your developer check whether route changes or component mounts call it again. A custom chat button should open the existing widget instead of initializing another. [Voiceflow widget API](https://www.voiceflow.com/docs/documentation/deploy/widget/web-chat-api#understanding-the-default-snippet)\n4. **Verify after the change.** Reload the site in a fresh browser session, navigate between pages, use Back, and confirm there\u2019s only one launcher and the conversation doesn\u2019t unexpectedly reset.\n\nThe intended result is **one loader and one active widget per page**, with the retained snippet\u2019s project and environment targeting preserved.\n\nNo changes have been made; identifying the duplicate location, removing it, and verifying the live site remain pending. What website platform are you using, and does the second widget appear immediately or only after navigation?",
+      "outcome": "proposed",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "setup-final-gpt-6-luna",
+      "phase": "final",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:22:44.415056+00:00",
+      "durationSeconds": 12.67,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "7e44a3e91a85d05e4cc1b13f5d84b6433ab3e81509c55b53a809f9489f40c8f0",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": true,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-setup stage=setup: Verify docs access after account read",
+            "question": "How do I connect this assistant to Voiceflow when the host provides account MCP tools?",
+            "terms": [
+              "MCP",
+              "workspaces"
+            ],
+            "intent": "how_to",
+            "scope": "mcp"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "medium",
+          "url": "https://www.voiceflow.com/docs/mcp/knowledge"
+        },
+        {
+          "tool": "search_voiceflow",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-setup stage=setup: Find host connection steps for a Voiceflow account MCP",
+            "question": "How do I connect an MCP client to the Voiceflow MCP server for account access?",
+            "terms": [
+              "Voiceflow MCP server",
+              "OAuth",
+              "MCP client"
+            ],
+            "intent": "how_to",
+            "scope": "mcp",
+            "limit": 5
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": null,
+          "label": null,
+          "url": null
+        }
+      ],
+      "syntheticAccountReads": [
+        {
+          "synthetic": true,
+          "isError": false
+        }
+      ],
+      "webFallbackCalls": [],
+      "finalResponse": "The Voiceflow tools available here returned a **synthetic, empty workspace list**, so I can\u2019t verify or connect your live account from this workspace. No sign-in or account changes were made.\n\nTo connect Voiceflow, add its hosted MCP server in a supported client and complete OAuth sign-in. The server URL is `https://mcp.voiceflow.com/mcp`; the [Voiceflow MCP setup guide](https://www.voiceflow.com/docs/mcp/setup) has client-specific instructions.\n\n**Pending:** connect and authenticate in your host, then make a read-only account check. The public documentation connection works here, but it does not connect your account.",
+      "outcome": "blocked",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "setup-final-gpt-6.1-sol",
+      "phase": "final",
+      "model": "gpt-6.1-sol",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:23:12.495192+00:00",
+      "durationSeconds": 17.39,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "7e44a3e91a85d05e4cc1b13f5d84b6433ab3e81509c55b53a809f9489f40c8f0",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": true,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-setup stage=setup: Verify public docs guidance alongside the synthetic account connection.",
+            "question": "How do draft and published environments differ in Voiceflow?",
+            "terms": [
+              "environments",
+              "draft",
+              "publishing"
+            ],
+            "intent": "what_is"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": true,
+          "label": "low",
+          "url": "https://www.voiceflow.com/docs/documentation/deploy/environments/overview#key-concepts"
+        }
+      ],
+      "syntheticAccountReads": [
+        {
+          "synthetic": true,
+          "isError": false
+        }
+      ],
+      "webFallbackCalls": [],
+      "finalResponse": "The synthetic Voiceflow connection responded successfully with no workspaces. Public documentation access is working, and the packaged skills are readable for this session.\n\nLive account connection remains pending: this evaluation does not permit real authorization or verify live account access.",
+      "outcome": "blocked",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "setup-gpt-6-luna",
+      "phase": "exploratory",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:20:52.770631+00:00",
+      "durationSeconds": 10.18,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "eb82691ce719434a46f7c832b1fc9f3b85ebccee14a6971128333ac94b8f9ea0",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": false,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/unknown skill=voiceflow-setup stage=setup: Verify public docs access during connection setup.",
+            "question": "How do draft and published environments differ?",
+            "terms": [
+              "environments",
+              "publishing"
+            ],
+            "intent": "what_is"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": false,
+          "label": "low",
+          "url": "https://www.voiceflow.com/docs/documentation/deploy/environments/publishing"
+        }
+      ],
+      "syntheticAccountReads": [
+        {
+          "synthetic": true,
+          "isError": false
+        }
+      ],
+      "webFallbackCalls": [],
+      "finalResponse": "The Voiceflow connection is available: the account read succeeded and returned no workspaces. Public Voiceflow documentation also responded; draft edits auto-save, and publishing makes the draft live ([Voiceflow environments and publishing](https://www.voiceflow.com/docs/documentation/deploy/environments/publishing)).\n\nThis connection is available in this chat. The setup guide is readable here, but persistent setup for future chats is not verified.\n\nYou're connected to Voiceflow. What would you like to build or improve?",
+      "outcome": "blocked",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    },
+    {
+      "id": "setup-gpt-6.1-sol",
+      "phase": "exploratory",
+      "model": "gpt-6.1-sol",
+      "reasoning": "low",
+      "pluginVersion": "0.4.1",
+      "startedUTC": "2026-10-17T02:21:02.964100+00:00",
+      "durationSeconds": 16.41,
+      "status": "completed",
+      "exit": 0,
+      "skillSnapshotSHA256": "eb82691ce719434a46f7c832b1fc9f3b85ebccee14a6971128333ac94b8f9ea0",
+      "proxySHA256": "717e0b8c50432be8f307bd1536cce5b2901fb0b0634ab25c631dbbf19e40d5f0",
+      "expectedVersion": "0.4.1",
+      "attributionCorrect": true,
+      "docsCalls": [
+        {
+          "tool": "ask_voiceflow",
+          "arguments": {
+            "initiator": "agent",
+            "purpose": "answers",
+            "why": "vf-agent-plugin/0.4.1 skill=voiceflow-setup stage=setup: Verify public docs access alongside a successful synthetic workspace read.",
+            "question": "How do draft and published environments differ in Voiceflow?",
+            "terms": [
+              "environments",
+              "draft",
+              "publishing"
+            ],
+            "intent": "what_is"
+          },
+          "isError": false,
+          "rpcError": null,
+          "answerable": true,
+          "label": "low",
+          "url": "https://www.voiceflow.com/docs/documentation/deploy/environments/overview#key-concepts"
+        }
+      ],
+      "syntheticAccountReads": [
+        {
+          "synthetic": true,
+          "isError": false
+        }
+      ],
+      "webFallbackCalls": [],
+      "finalResponse": "The read-only connection check succeeded and returned no workspaces. Voiceflow\u2019s public documentation is accessible, and the packaged guidance is available in this chat.\n\nAccount access here is synthetic; live account connection remains unverified. What would you like to build or improve?",
+      "outcome": "blocked",
+      "runtimeVerified": false,
+      "userInterventionsDuringRun": 0
+    }
+  ]
+}

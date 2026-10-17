@@ -123,6 +123,10 @@ class SkillInstallTests(unittest.TestCase):
         installer.install(ROOT / "voiceflow/skills", self.target)
         self.assertEqual(len(list(self.target.glob("*/SKILL.md"))), 16)
         self.assertTrue((self.target / "voiceflow-setup/references/setup.md").is_file())
+        metadata = (self.target / "voiceflow/references/documentation.md").read_text(encoding="utf-8").split("---", 2)[1]
+        record = dict(line.split(": ", 1) for line in metadata.strip().splitlines())
+        manifest = json.loads((ROOT / "voiceflow/plugin.json").read_text(encoding="utf-8"))
+        self.assertEqual(record, {"package": manifest["name"], "version": manifest["version"]})
         for source in (ROOT / "voiceflow/skills").rglob("*.md"):
             installed = self.target / source.relative_to(ROOT / "voiceflow/skills")
             self.assertEqual(installed.read_bytes(), source.read_bytes())
@@ -239,6 +243,18 @@ class PublicationTests(unittest.TestCase):
 class RepositoryTests(unittest.TestCase):
     def test_all_manifests_and_skill_links(self):
         self.assertEqual(validator.validate(), 16)
+
+    def test_stale_standalone_version_is_rejected(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            shutil.copytree(ROOT / "voiceflow", root / "voiceflow",
+                            ignore=shutil.ignore_patterns("__pycache__"))
+            shutil.copyfile(ROOT / "LICENSE", root / "LICENSE")
+            record = root / "voiceflow/skills/voiceflow/references/documentation.md"
+            body = record.read_text().split("---", 2)[2]
+            record.write_text("---\npackage: voiceflow\nversion: 0.0.0\n---" + body)
+            with self.assertRaisesRegex(AssertionError, "Skill package version differs"):
+                validator.validate(root)
 
 
 @unittest.skipIf(os.name == "nt", "Unix installer; Windows installer runs in Windows CI")

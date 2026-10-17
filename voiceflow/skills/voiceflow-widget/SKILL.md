@@ -8,7 +8,9 @@ description: Customize, install, and troubleshoot the Voiceflow chat or voice wi
 For questions about widget options, styling, browser APIs, installation, or troubleshooting
 that this skill does not answer, follow the
 [docs MCP workflow](../voiceflow/references/documentation.md) before answering
-or implementing. Consult it whenever unsure; do not guess from memory.
+or implementing. For every new Voiceflow troubleshooting issue, consult it even
+when this skill suggests a fix. Include package/skill/stage context in `why` as
+described there. Reuse guidance for the same issue; consult it whenever unsure.
 
 Read the [operation contract](../voiceflow/references/operations.md). Finish with
 the requested widget working on the intended site, or an exact installation

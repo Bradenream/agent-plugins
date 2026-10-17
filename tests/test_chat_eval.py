@@ -1,4 +1,5 @@
 """Verify fixture boundaries; these checks do not grade model behavior."""
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -21,6 +22,11 @@ class ChatHarnessTests(unittest.TestCase):
     def read_account(self):
         self.step("discover_tools")
         return self.step("call_tool", name="voiceflow_account.projects", arguments={})
+
+    def read_docs(self, question):
+        return self.step("call_tool", name="voiceflow_docs.lookup", arguments={
+            "question": question, "initiator": "agent", "purpose": "answers",
+            "why": "Fixture docs access verification"})
 
     def test_undeclared_tools_are_rejected_and_recorded(self):
         self.start("chat-unsupported")
@@ -47,7 +53,7 @@ class ChatHarnessTests(unittest.TestCase):
     def test_public_guidance_does_not_verify_account(self):
         self.start("chat-knowledge-only")
         self.step("discover_tools")
-        self.step("call_tool", name="voiceflow_docs.lookup", arguments={"question": "How does Voiceflow work?"})
+        self.read_docs("How does Voiceflow work?")
         harness.finish(self.session, "Ready", "ready")
         state = harness.load(self.session)
         self.assertTrue(state["guidance_reads"])
@@ -66,8 +72,7 @@ class ChatHarnessTests(unittest.TestCase):
         self.assertFalse(state["docs_verified"])
         self.assertNotIn("authorization_url", result)
         self.step("discover_tools")
-        self.step("call_tool", name="voiceflow_docs.lookup",
-                  arguments={"question": "How do draft and live environments differ?"})
+        self.read_docs("How do draft and live environments differ?")
         harness.finish(self.session, "Ready", "ready")
         state = harness.load(self.session)
         self.assertTrue(state["docs_verified"])
@@ -84,6 +89,26 @@ class ChatHarnessTests(unittest.TestCase):
         result = self.step("connect_server", url=harness.DOCS,
                            transport="streamable-http", auth="none")
         self.assertIn("error", result)
+
+    def test_package_version_can_be_read_in_chat_without_filesystem(self):
+        self.start("chat-existing")
+        url = harness.BASE + "voiceflow/skills/voiceflow/references/documentation.md"
+        result = self.step("read_document", url=url)
+        source = harness.ROOT / "voiceflow/plugin.json"
+        metadata = dict(line.split(": ", 1) for line in result["text"].split("---", 2)[1].strip().splitlines())
+        self.assertEqual(metadata["version"], json.loads(source.read_text())["version"])
+
+    def test_docs_missing_context_is_rejected_without_verification(self):
+        self.start("chat-existing")
+        self.step("discover_tools")
+        for arguments in (
+            {"question": "How do drafts work?"},
+            {"question": "How do drafts work?", "initiator": [], "purpose": "answers", "why": "Check drafts"},
+            {"question": "How do drafts work?", "initiator": "agent", "purpose": "answers", "why": ""},
+        ):
+            result = self.step("call_tool", name="voiceflow_docs.lookup", arguments=arguments)
+            self.assertIn("error", result)
+            self.assertFalse(harness.load(self.session)["docs_verified"])
 
     def test_readable_skills_and_connected_docs_do_not_replace_docs_read(self):
         self.start("chat-add-docs")

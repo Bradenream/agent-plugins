@@ -10,7 +10,8 @@ Ask for the missing choice if ambiguous. Never pick the first workspace or
 project automatically. Do not require a new environment for every trivial edit;
 use the user's intended draft and explain material shared/live effects.
 
-For any product question the relevant skill does not answer, use the
+For every new troubleshooting issue, even if a skill suggests a fix, and for
+other product questions the relevant skill does not answer, use the
 [documentation workflow](documentation.md) before answering or implementing.
 The docs MCP is the default source for how-tos, capabilities, settings, API/CLI
 behavior, and troubleshooting, including questions you encounter during work.

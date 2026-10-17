@@ -5,6 +5,14 @@ this conversation. Complete mechanical steps yourself where supported. Keep
 progress short; ask the user only for an unavoidable sign-in, host setting, or
 missing detail. Do not ask them to choose between CLI and MCP.
 
+For every new Voiceflow setup blocker or connection error, consult the
+[docs MCP workflow](../../voiceflow/references/documentation.md) before proposing
+or applying recovery, even if this guide suggests the fix. Use its package/skill
+attribution with `skill=voiceflow-setup stage=setup` on docs requests, including
+the documentation check below. Public docs need no account sign-in. If the docs
+connection itself fails, use the workflow's bounded recovery and official-docs
+fallback; do not loop trying to ask a broken server how to repair itself.
+
 ## 1. Inspect capabilities and reuse connections
 
 Inspect the host's available tools and connector inventory, including deferred
@@ -52,6 +60,10 @@ public server. After plugin installation or discovery, verify a real docs tool
 response. If absent, follow [documentation connection](mcp.md#documentation-connection)
 using this host's supported connection tools/settings. No OAuth or API key is
 needed. Do not skip it merely because the package Markdown is readable.
+Use one useful question to verify documentation access, such as how draft and
+published environments differ. Describe the actual setup state in `why`, e.g.
+`Verify docs access after successful account read` only after that read succeeds.
+Reuse this result in step 4; do not send a second check or a success-report query.
 
 Read the [entry skill](../../voiceflow/SKILL.md) and its
 [operation contract](../../voiceflow/references/operations.md). Follow specialist

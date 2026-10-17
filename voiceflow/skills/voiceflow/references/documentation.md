@@ -1,9 +1,17 @@
+---
+package: voiceflow
+version: 0.4.1
+---
+
 # Answer product questions with the docs MCP
 
 Skills supply the workflow; Voiceflow's website documentation supplies current
-product knowledge. For **any Voiceflow how-to, capability, setting, API/CLI,
-or error question that the relevant skill does not answer**, consult the docs
-MCP before answering, choosing an implementation, or changing configuration.
+product knowledge. For **every new Voiceflow troubleshooting issue** (an error,
+unexpected behavior, or blocked setup), consult the docs MCP before recommending
+or applying a fix, even when a skill already suggests one. Inspect the relevant
+local evidence first when needed to ask a useful question. For other how-to,
+capability, setting, or API/CLI questions, consult it when the skill does not
+answer them, before answering or choosing an implementation.
 Do this for your own implementation questions as well as the user's questions.
 Also consult it when a skill appears stale, evidence conflicts, or you are unsure.
 A source link at the end of a skill is a starting point, not a substitute for
@@ -33,12 +41,46 @@ then answer the user in their language. Include relevant product terms and
 channel/version context; omit credentials, personal details, customer transcripts,
 and private source. These public tools do not need account IDs or tokens.
 
+## Include the package context
+
+On each docs call made while using these skills, prefix the existing `why`
+sentence with `vf-agent-plugin/<version> skill=<active-skill> stage=<stage>:`.
+Use `version` from this document's package metadata at the top, which is part of
+the installed skill files. It travels with standalone skills and native plugins;
+reading this workflow also reads the version. Use the skill
+actually guiding the work, not every skill read. The stages are:
+
+- `setup`: establishing or verifying the assistant's Voiceflow connection.
+- `troubleshooting`: diagnosing an error or unexpected product behavior after setup.
+- `usage`: other product questions and implementation guidance.
+
+For example, after reading the installed version, replace `<version>` here:
+`vf-agent-plugin/<version> skill=voiceflow-setup stage=setup: Diagnose an account read rejected after OAuth.`
+For an error question use `intent: error` where the live tool schema supports it;
+`purpose` remains `answers`. Preserve the actual human/agent initiator.
+Keep the whole `why` under 200 characters, leaving room for a useful task/symptom.
+Do not add unsupported arguments or put attribution in the search question.
+
+If this document's package metadata is missing or invalid, use `unknown` for the
+version; never substitute a CLI version, remembered release, or latest remote
+manifest. Use the supplied metadata when it is present.
+If the skill is genuinely unknown, use `skill=unknown`. Missing metadata must
+not block help. This is self-reported context in the existing docs request, not
+a new tracking request. Include no user/account IDs, site URLs, transcript text,
+credentials, or private code. Do not send extra queries merely to record progress
+or success, or upload a conversation afterward. Test controllers should label
+their MCP client as an evaluation client so test traffic can be separated.
+
+## Apply the answer and verify the result
+
 If the answer is weak, reports `answerable: false`, or points to a better
 term/page, refine the question or read that section. A successful tool response
 does not necessarily answer the question. Inspect the evidence and apply it;
 a token search followed by an unsupported answer does not resolve the question.
 Cite the returned documentation URL when explaining product behavior. For an
 implementation, use the documented approach and verify the result separately.
+For troubleshooting, say whether the fix is proposed, saved, or verified by an
+actual runtime/browser check. A docs response never establishes task completion.
 
 ## Keep the three sources distinct
 

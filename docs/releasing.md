@@ -20,7 +20,9 @@ are in the plugin archive. Behavioral skill changes also require the relevant
 [acceptance cases](../evals/README.md).
 
 Use a feature branch and obtain the owner's approval before merging. Increment
-all four plugin manifest versions together when shipping an update. Native
+all four plugin manifest versions and the package metadata at the top of the
+[documentation workflow](../voiceflow/skills/voiceflow/references/documentation.md)
+together when shipping an update. Validation rejects version drift. Native
 plugin caches use the version; unchanged versions can hide updated content.
 
 ## Public release and migration
@@ -50,5 +52,8 @@ plugin version. Preserve customer-edited loose skills; do not force replacement.
 ## Scope
 
 This repo contains instructions and small installation/build utilities. It does
-not create a new auth backend, collect telemetry, run a daemon, automatically
-update customer tools, or publish Voiceflow projects.
+not create a new auth backend, run a separate telemetry collector or daemon,
+automatically update customer tools, or publish Voiceflow projects.
+
+Docs requests carry package/skill/stage context through the existing Knowledge
+MCP analytics. See [measurement](measurement.md) for interpretation and limits.

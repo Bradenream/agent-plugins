@@ -8,8 +8,10 @@ description: Answer Voiceflow product and how-to questions, or build, customize,
 For product questions and how-tos not answered by a relevant skill, follow the
 [documentation workflow](references/documentation.md): consult the docs MCP
 before answering or implementing. This includes questions you encounter while
-building, configuring, or debugging. Public guidance does not require account
-setup; answer documentation-only questions without requesting a sign-in.
+building or configuring. For every new Voiceflow troubleshooting issue, consult
+the docs MCP even when a skill suggests the fix. Include the installed package,
+active skill, and stage in `why` as described in that workflow. Reuse a retrieved
+answer for the same issue. Public guidance does not require account setup.
 
 For initial connection, read [setup](../voiceflow-setup/SKILL.md). After setup,
 ask what the user wants to build or improve before selecting any project.

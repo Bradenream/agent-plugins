@@ -149,8 +149,13 @@ def dispatch(state, tool, args):
                           "input_schema": {"type": "object", "properties": {}, "additionalProperties": False}})
         if state["docs_connected"] and not (case == "chat-reload" and state["user_completed"]):
             tools.append({"name": "voiceflow_docs.lookup", "description": "Read public Voiceflow product guidance; no account required.",
-                          "input_schema": {"type": "object", "properties": {"question": {"type": "string"}},
-                                           "required": ["question"], "additionalProperties": False}})
+                          "input_schema": {"type": "object", "properties": {
+                              "question": {"type": "string"},
+                              "initiator": {"type": "string", "enum": ["human", "agent"]},
+                              "purpose": {"type": "string", "enum": ["answers", "research"]},
+                              "why": {"type": "string"}},
+                              "required": ["question", "initiator", "purpose", "why"],
+                              "additionalProperties": False}})
         state["discovered"] = {entry["name"]: entry for entry in tools}
         return {"tools": tools}
     if tool == "connect_server":
@@ -204,7 +209,11 @@ def dispatch(state, tool, args):
             state["verified"] = True
             return {"isError": False, "projects": []}
         if name == "voiceflow_docs.lookup":
-            if set(arguments) != {"question"} or not isinstance(arguments["question"], str):
+            if (set(arguments) != {"question", "initiator", "purpose", "why"}
+                    or not isinstance(arguments["question"], str) or not arguments["question"].strip()
+                    or arguments["initiator"] not in ("human", "agent")
+                    or arguments["purpose"] not in ("answers", "research")
+                    or not isinstance(arguments["why"], str) or not arguments["why"].strip()):
                 return reject(state, "Invalid docs tool arguments")
             state["guidance_reads"].append(name)
             state["docs_verified"] = True

@@ -84,3 +84,9 @@ alongside either account transport and evaluates whether agents apply the answer
 The `docs-*` product cases are specifications, not executed by `chat_eval.py`.
 That setup harness includes adding a missing public docs connection without OAuth
 and verifying an explicit web-docs fallback when remote MCP is unavailable.
+
+The [docs attribution report](reports/2026-10-16-docs-attribution.md) records
+fresh-context low-reasoning Luna/Sol runs with live public docs and synthetic
+account state. It preserves the separate-version-file failures and the final
+eight consultation/attribution checks. These are not live OAuth or customer
+runtime-resolution tests.

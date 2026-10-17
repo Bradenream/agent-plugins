@@ -32,6 +32,10 @@ def validate(root=ROOT):
     assert len({m["version"] for m in data}) == 1, "Plugin versions differ"
     assert (root / "LICENSE").read_bytes() == (plugin / "LICENSE").read_bytes()
     assert re.fullmatch(r"\d+\.\d+\.\d+", data[0]["version"]), "Invalid version"
+    knowledge = (plugin / "skills/voiceflow/references/documentation.md").read_text(encoding="utf-8")
+    assert knowledge.startswith("---\n"), "Missing skill package metadata"
+    record = dict(line.split(": ", 1) for line in knowledge.split("---", 2)[1].strip().splitlines())
+    assert record == {"package": data[0]["name"], "version": data[0]["version"]}, "Skill package version differs"
     assert len(data[0]["extensions"]["com.openai"]["interface"]["shortDescription"]) <= 30
     portable = json.loads((plugin / "mcp.json").read_text(encoding="utf-8"))
     legacy = json.loads((plugin / ".mcp.json").read_text(encoding="utf-8"))
