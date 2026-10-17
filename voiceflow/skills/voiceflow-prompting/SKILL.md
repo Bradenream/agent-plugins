@@ -15,6 +15,28 @@ routing and direct Q&A. Playbook instructions: the procedure, required informati
 tool use, success, and recovery for one job. Do not redefine identity in each
 playbook.
 
+Read global `prompt` and main-agent `instructions` explicitly; ordinary agent
+metadata can omit their text. For the read/write fields, see
+[identity and greeting](../voiceflow/references/request-shapes.md#identity-and-greeting).
+For a new business, remove starter identity and placeholder routing prose from
+both layers. For an existing business, preserve its established identity and
+unrelated instructions.
+
+Match completion claims to tool results. A successful lookup, calculation, or
+conversation-variable update does not prove an external submission or booking.
+Only confirm an external effect when the connected action reports that effect
+succeeded; describe failure or missing capability honestly. Put this distinction
+in the relevant job instructions, including its closing response.
+
+Give each final answer one owner. If a playbook delivers the answer, keep it
+active and wait for the next visitor message; return to the main agent when a
+new message needs another capability. Remove unconditional "return after
+answering" instructions: they can trigger a second answer even when the tool
+runs only once. If the main agent must deliver the answer instead, hand it the
+result without first delivering the same answer in the playbook. Main routing
+must not re-run a completed request. Check both response count and tool count
+in fresh runtime traces; "do not repeat" prose alone does not prove a fix.
+
 Use descriptive sections and concrete conditions. Tool and destination
 descriptions need WHAT + WHEN; burying routing criteria only in a playbook's
 instructions makes those criteria unavailable to other agents.

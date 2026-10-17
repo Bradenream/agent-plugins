@@ -65,3 +65,10 @@ automated suite. See the committed reports for separately run model simulations
 and the [live product protocol](live-product-protocol.md) for authorized account
 testing. The [2026-10-16 live report](reports/2026-10-16-live-product.md) records
 actual CLI/MCP work, independent runtime checks, and fresh-context retests.
+
+The [quality and unfamiliar-task protocol](quality-product-protocol.md) extends
+this with new-business identity, truthful completion language, repeated changes
+to a populated agent, and repair of unsupported capabilities. It uses separate
+authorized live drafts, never repository tests or CI.
+The [quality report](reports/2026-10-16-quality-product.md) preserves the initial
+failures, targeted collection retests, and sequential handoff repairs.

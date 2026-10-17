@@ -23,6 +23,19 @@ For an unexpected answer, check the actual retrieved source and active prompt
 layer before rewriting persona text. For workflow failures, read ports and
 branch topology rather than infer connections from names.
 
+For repeated replies, count final answers, tool executions, and handoffs within
+one visitor turn. A single tool execution can still produce duplicate answers
+from the playbook and main agent. Read both main routing and the playbook's full
+completion/exit instructions. If a conversational playbook has already answered
+but unconditionally returns to main, remove that conflicting exit: wait for a
+new visitor message and return when that new request needs another capability.
+Adding "do not repeat" only to main leaves the premature handoff intact. Give
+the final answer one owner; if main must answer, the playbook should hand off
+without also answering. Preserve deliberate workflow exits. See
+[prompting](../voiceflow-prompting/SKILL.md) for related instruction guidance.
+Test calculation/task → another capability → recall/new task in one conversation,
+not only fresh sessions, to verify that the fix has not trapped routing.
+
 Report observed evidence separately from hypotheses. Make the smallest
 authorized correction and verify its stored result. A read-back proves saved
 configuration, not runtime success. Ask for or run a scoped test only when it

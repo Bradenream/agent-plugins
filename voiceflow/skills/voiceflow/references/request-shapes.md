@@ -6,6 +6,25 @@ reads; the capitalized values below are placeholders, not customer resources.
 Read only the section relevant to the task. These are examples, not a full API
 catalog or authorization to run them.
 
+## Identity and greeting
+
+The global persona lives in the agent's `prompt`; the opening message and routing
+guidance live in its `instructions`. These are separate from a playbook's
+instructions. Reading only route metadata can hide the sample-company text that
+still controls the greeting.
+
+CLI: `agent get --include-prompt --include-instructions` with project/environment
+flags. MCP `voiceflow_agent` `get` places `includePrompt: true` and
+`includeInstructions: true` on `payload`, alongside project/environment.
+
+Update these fields with `voiceflow_agent` `update` and
+`payload.body: {"prompt":"<global instructions>","instructions":"<main-agent instructions>"}`,
+or CLI `agent update --prompt '<global instructions>' --instructions '<main-agent instructions>'`.
+Read the full text first and preserve unrelated instructions; these fields
+replace their text. Omit settings and route arrays that do not need to change.
+Read back both fields explicitly, then compile before testing a fresh greeting.
+Changing the playbook name or project name alone does not change this identity.
+
 ## MCP envelope and function declarations
 
 MCP operations use `operation.name` and `operation.payload`. Path/query fields
@@ -181,3 +200,22 @@ test. In the live checks, an uncompiled draft still executed the old routing.
 
 Pure function executions and direct KB queries can succeed before compilation;
 they do not prove that a conversation is using the new agent configuration.
+
+For MCP `voiceflow_conversation` `send`, put `projectID`, `environmentAlias`, and
+a fresh synthetic `userID` on `payload`, and use
+`body: {"version":"draft","action":{"type":"launch"}}`.
+Subsequent turns use `action: {"type":"text","payload":"<visitor message>"}`
+with the same user and version. Unlike `send`, `get_state` takes `version: "draft"`
+directly on `payload` with those scope fields. Putting the send version outside
+its body causes a validation error even when the action is correct.
+
+CLI uses `conversation send --user-id '<fresh user>' --version-param draft
+--action '{"type":"launch"}'` with project/environment flags. Supply an explicit
+action; invoking send without one does not start the conversation. Read captures
+with `conversation state get` and the same scope, user, and draft version.
+
+The current runtime was also observed executing a main-agent-only conversation
+with empty route registries. CLI 0.287.0 help warns otherwise. Verify actual
+responses instead of treating the debug line `no workflows or playbooks defined`
+as a failed conversation by itself; preserve existing routes when extending an
+agent regardless.

@@ -14,6 +14,21 @@ Choose a small representative set: happy path, missing information, recovery,
 and a known regression. Define observable success before running. Check the
 intended project/environment and credentials used by the run.
 
+For a new or revised agent, include its fresh greeting and a completed task, not
+only individual function outputs. Check the business identity and whether the
+closing response claims an effect the trace does not support. Follow up with
+questions such as whether anything was submitted or someone will contact the
+customer. For an extension, also exercise an existing route and compare its
+configuration with the pre-edit state.
+
+For collection flows, test a request that already supplies some information and
+a question or correction during collection. Check the retained values and final
+summary, not merely whether the happy-path topology is reachable.
+
+Inspect same-turn handoffs and tool counts as well as response values. A correct
+answer repeated by a routing loop is still a defect; repeated tool execution can
+have additional effects even when a pure fixture makes the result look harmless.
+
 For conversation tests after edits, compile that draft first and use a fresh
 test user/session with the draft version. Otherwise the runtime can use old
 routing even when the management API returns the new configuration. See the

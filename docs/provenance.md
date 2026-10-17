@@ -27,6 +27,15 @@ verification. It contains synthetic examples, not private implementation code
 or customer resource IDs. The [live acceptance report](../evals/reports/2026-10-16-live-product.md)
 records the baseline, corrections, retests, and remaining limits.
 
+Version 0.2.2 adds explicit global-identity read/write fields and draft-conversation
+request shapes from further public CLI/MCP use. Its collection and handoff guidance
+responds to observed runtime failures in unfamiliar synthetic tasks. The
+[quality protocol](../evals/quality-product-protocol.md) separates the initial
+frozen runs, targeted retests, and independent conversation checks. No private
+implementation code or real customer content was used in these additions.
+The [quality report](../evals/reports/2026-10-16-quality-product.md) records the
+observations and distinguishes initial runs from post-failure retests.
+
 ## Packaging references
 
 - [Agent Plugins specification](https://agent-plugins.org/)

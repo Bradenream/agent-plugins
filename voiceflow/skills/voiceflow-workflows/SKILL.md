@@ -15,6 +15,13 @@ Plan the path before mutation: start, decisions, actions, success, error, and
 termination. Create resources first and connect returned IDs; do not fabricate
 ports from labels or assume a step's ID is its block's ID.
 
+A listen step captures the next turn; it does not establish that the turn answers
+the requested field. For conversational intake, preserve details supplied before
+entering the flow, distinguish questions/corrections from answers, and validate
+captured values before advancing. Prefer main-agent or playbook collection when
+flexible dialogue is needed; unconditional message/listen pairs can shift answers
+into the wrong fields after a repeated question or interruption.
+
 When a mutation accepts expectedSteps, pass the current ordered step IDs.
 On a conflict, re-read and reconcile once rather than retrying stale state.
 Inserting, splitting, moving, and deleting steps can change ownership or ports;
