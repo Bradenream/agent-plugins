@@ -1,4 +1,13 @@
 {
-  "name": "voiceflow-plugins", "owner": { "name": "Braden Ream" },
-  "plugins": [{ "name": "voiceflow", "source": "./voiceflow", "description": "Build with Voiceflow." }]
+  "name": "voiceflow-plugins",
+  "owner": {
+    "name": "Voiceflow, Inc."
+  },
+  "plugins": [
+    {
+      "name": "voiceflow",
+      "source": "./voiceflow",
+      "description": "Build with Voiceflow."
+    }
+  ]
 }

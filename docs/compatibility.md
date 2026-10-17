@@ -1,87 +1,52 @@
-# Compatibility and evidence
+# Compatibility and support
 
-This is a private preview. Packaging checks are not a claim that every agent
-model has completed onboarding successfully.
+Current package candidate: **0.4.2**, reviewed 2026-10-16. This is a beta package.
+A source version is not a published release. Support claims below distinguish
+file installation, observed agent behavior, and real host onboarding.
 
-| Surface | Evidence |
-| --- | --- |
-| Claude Code 2.1.124 | Isolated marketplace install of 0.3.0, enabled plugin inventory, all 16 skills and Markdown references match source |
-| Codex CLI 0.162.0-alpha.2 | Isolated marketplace install of 0.3.0, enabled plugin inventory, all 16 skills and Markdown references match source |
-| Cursor | Manifest checked against current documentation; standalone skill installation tested. Interactive discovery has not been tested locally because Cursor is unavailable |
-| macOS arm64 | Real checksum-verified CLI install and existing-binary preservation tested |
-| Linux x86_64 and Windows x86_64 | Real checksum-verified installers, package checks, and CLI contract checks passed in CI |
-| CLI 0.287.0 | Executable help checked; five connection scenarios and four widget request contracts exercised against localhost without contacting Voiceflow |
-| Skill installation | Repeat install, conflict preservation, updates, removal, rollback, path protection, complete tree |
-| Website bundle | Repeat builds produce identical bytes; every emitted setup link resolves and every artifact hash matches |
-| Chat-assistant routing (0.2.0) | Three capability-constrained subagents exercised 12 offline scenarios: seven completed setup and five correctly blocked or requested the missing step; all 12 passed behavioral review |
+| Surface | Current evidence | Status / limit |
+| --- | --- | --- |
+| Claude Code | Isolated native plugin installation, all sixteen skills, references, license notices, and docs MCP configuration | Packaging verified; full fresh-account OAuth and next-chat acceptance still required |
+| Codex CLI | Isolated native plugin installation, all sixteen skills, references, license notices, and docs MCP configuration | Packaging verified; full fresh-account OAuth and next-chat acceptance still required |
+| Cursor | Manifest checks and standalone skill installation | Experimental; interactive discovery not verified locally |
+| Chat assistants with remote MCP | Capability-based setup guide and offline routing evaluations | Experimental; no named chat application's end-to-end onboarding is certified by these simulations |
+| macOS arm64, Linux x86_64, Windows x86_64 | Checksum-verified installers and CLI contracts in local/three-OS CI checks | Installer evidence; not a guarantee for every host or architecture |
+| Other pinned CLI architectures | Release checksums available | Not exercised by the recorded platform runs |
+| CLI 0.287.0 | Account-read and widget request contracts exercised with a localhost fixture | Tested baseline; retain newer compatible installations |
+| Standalone skills | Install, update, conflict preservation, removal, rollback, relative references, and license coverage | File installation verified; host-native discovery is a separate check |
+| Product building and debugging | Authorized live CLI/MCP tasks and independent conversation checks | Task-specific evidence with failures and retests retained, not a universal success rate |
+| Widget guides across eight platforms | Documentation review, package checks, and CLI fixtures | Experimental; live website and model acceptance cases remain unrun |
+| Docs MCP use | Eight focused final runs on 0.4.1 with live public docs and simulated account state | Consultation/attribution evidence; not real OAuth or customer-resolution evidence |
 
-The baseline review is dated **2026-10-16**. Native host verification checks
-installation/discovery files, not model selection or completion quality.
-No real OAuth session or customer mutation was performed by this repository's
-automated tests. Browser OAuth, fresh-chat skill selection, and representative
-product tasks are acceptance checks before a public release.
+The latest recorded native host versions were Claude Code **2.1.124** and Codex
+CLI **0.162.0-alpha.2**. Minimum supported client versions are not established;
+older clients may need the standalone path. Python **3.10+** is required for the
+repository tools and standalone installer, not native plugin use or the CLI.
 
-The [initial complete platform run](https://github.com/Bradenream/agent-plugins/actions/runs/38980919367)
-passed on all three operating systems. All 23 local tests passed (the three Unix
-installer unit tests are intentionally skipped on Windows, whose actual installer
-is tested in its CI job). Downloaded CI artifacts had matching content digests
-across Linux, Windows, and macOS, and every manifest file hash was verified.
+## Evidence and remaining acceptance
 
-CLI 0.287.0 has a JSON passthrough/timeout interaction: a response whose body
-arrives after its headers can be cancelled before JSON output is consumed,
-producing blank output with exit code zero. Setup therefore uses typed TOON
-output and explicitly rejects blank output. The HTTP fixture deliberately splits
-headers and body to retain regression coverage. This repo does not modify the CLI.
+[Historical verification](verification-history.md) retains previous package
+results and limitations. The [acceptance protocols and reports](../evals/README.md)
+record baseline failures separately from post-fix retests. Historical model
+results are not relabeled as evaluations of the newest package.
 
-Run the local checks:
+Before promoting any path from experimental to supported, run fresh OAuth when
+needed, live account verification, guidance discovery in a second conversation,
+and representative tasks in that actual client. Unit tests and subagent
+simulations cannot replace these checks. Public beta distribution may expose
+experimental paths only with these limits stated.
 
-```sh
-python3 scripts/verify_hosts.py
-python3 scripts/verify_cli.py --vf /absolute/path/to/vf
-```
+Run local checks as described in [contributing](../CONTRIBUTING.md). Native host
+verification uses disposable profiles. CLI contract tests use a local HTTP
+fixture and fake credentials; repository tests do not sign in or change accounts.
 
-The first script creates disposable client configurations. The second uses a
-local fixture server and a fake token; it never signs in or contacts Voiceflow.
-Neither installs into the user's real skill directory.
+## Known limitations
 
-See [acceptance cases](../evals/README.md) for the remaining behavior tests.
+CLI 0.287.0 can return blank JSON output when a timeout cancels a response between
+headers and body. The setup guide uses typed TOON output and rejects blank
+responses. The fixture retains coverage for that case; this package does not
+patch the CLI.
 
-For 0.2.0, all 32 local tests pass, including fixture boundary checks. The updated
-package was installed in isolated Codex and Claude Code profiles, with all 15
-skills discovered. The [chat evaluation report](../evals/reports/2026-10-16-chat-setup.md)
-records the actual subagent decisions, fixture issues, and limitations. These
-simulations do not establish compatibility with any named chat application;
-live OAuth and fresh-chat checks remain required before advertising support.
-
-For 0.3.0, all 32 local tests pass. Archive, generated website payload, standalone
-installation, and native Codex/Claude caches include the complete widget guide
-tree. Widget CLI fixtures verify request paths, version selection, stdin patch
-body, and nonempty output. Twelve new widget acceptance cases are specified but
-have not been executed as model evaluations or live platform installations;
-see the [widget protocol](../evals/widget-protocol.md). No website deployment or
-customer-account mutation was part of these checks.
-
-For 0.4.0, all 37 unit tests and all 16 skill validations pass. The docs MCP is bundled in the portable package and Codex/Claude
-adapter. Isolated native installs retained both configurations and all 16
-skills/references. Standalone skill installation still requires the host's
-normal docs connection step. Cursor's declared format is checked against its
-current reference; runtime discovery remains untested locally.
-
-A separate public, read-only probe verified Voiceflow Knowledge MCP 2.1.2,
-its four tools and required context fields, an `ask_voiceflow` response, and
-an exact Widget API page read. The first answer was low-confidence and reported
-`answerable: false`; it was not accepted as a complete implementation answer.
-No account credentials or customer data were sent. Unit checks include no-auth
-docs connection, separate account/docs verification, duplicate rejection, and
-explicit web fallback. The new [docs behavior cases](../evals/docs-protocol.md)
-remain unrun as model evaluations; earlier live results must not be interpreted
-as docs-MCP coverage.
-
-For 0.4.1, all 40 unit tests pass, including standalone version preservation,
-version-drift rejection, chat-readable metadata, and required docs context in
-the offline fixture. Isolated Codex and Claude installs retain all 16 skills and
-their references. The [docs attribution report](../evals/reports/2026-10-16-docs-attribution.md)
-records 10 exploratory and eight final fresh-context runs with live public docs.
-All 15 final docs requests had correct attribution; account state was simulated.
-These results do not establish real OAuth onboarding, customer resolution, or
-production analytics ingestion.
+Chat-only guidance may be session-scoped. A saved connector, sign-in badge, or
+public docs response is not proof of working account access. Setup only claims
+readiness after the actual account read and guidance checks.

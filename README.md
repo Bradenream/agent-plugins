@@ -1,69 +1,103 @@
 # Voiceflow for AI assistants
 
-Connect Voiceflow once. Then tell your assistant what you want to build.
+Connect Voiceflow. Tell your assistant what you want to build.
 
-This private preview provides one capability-based setup guide for coding agents
-and chat assistants, plus a shared skill library packaged for Claude Code, Codex,
-and Cursor. The assistant reuses working connections, chooses the CLI when it has
-a persistent customer terminal, or connects hosted MCP through the host's tools
-or settings. The user only completes steps the host cannot automate, such as
-browser sign-in. Setup does not create a project or require secrets in chat.
+A shared setup guide and sixteen skills help coding agents and chat assistants
+build, customize, test, and improve Voiceflow agents. Setup chooses the connection
+that works in your current app, reuses existing access, and asks you to complete
+browser sign-in only when needed.
 
-## Try the preview
+**Status: beta, preparing for public release.** The implementation is currently
+on `codex/voiceflow-agent-plugin`; access to this checkout is still required.
+The repository remains under Bradenream while it is prepared for transfer to
+Voiceflow. There is no published marketplace listing or website setup URL yet.
+See [compatibility](docs/compatibility.md) for tested and experimental paths.
 
-Give an agent with access to this private repository this prompt:
+## Get started
 
-> Read the setup guide in Bradenream/agent-plugins on branch
-> codex/voiceflow-agent-plugin at
-> voiceflow/skills/voiceflow-setup/references/setup.md and follow it to connect
-> me to Voiceflow. Complete the setup yourself where possible, and then ask
-> what I would like to build or improve.
+Give your assistant this prompt together with this repository or checkout:
 
-The assistant needs an authenticated GitHub reader, local checkout, or the guide
-and its linked Markdown supplied as attachments. This is not yet an anonymous
-public install. For a checkout, ask it to follow the
-[setup guide](voiceflow/skills/voiceflow-setup/references/setup.md).
+> Follow this repository's setup guide at
+> voiceflow/skills/voiceflow-setup/references/setup.md to connect me to Voiceflow.
+> Complete setup where you can, then ask what I would like to build or improve.
 
-Successful setup ends with:
+[Open the setup guide](voiceflow/skills/voiceflow-setup/references/setup.md).
+You need a Voiceflow account (you can create one during browser sign-in) and
+an assistant with either a persistent local terminal or a host that supports
+remote MCP with OAuth. An assistant with only web access can guide you, but
+cannot operate your account. Never paste passwords or tokens into the chat.
+
+Setup verifies a read of your account and access to product guidance. It does
+not create a project or publish anything. When ready, your assistant asks:
 
 > You're connected to Voiceflow. What would you like to build or improve?
 
-## What's included
+Skill persistence depends on the host. A connected conversation does not imply
+that every future conversation has inherited the skills.
 
-- Repeatable setup with live, read-only connection verification.
-- Voiceflow docs MCP bundled in native plugins and included in setup for other
-  hosts, alongside either CLI or account MCP. No docs sign-in is needed.
-- Docs-first guidance in all sixteen skills: unresolved how-tos, implementation
-  questions, and every new troubleshooting issue use current documentation before
-  action, even when a skill already suggests a fix.
-- Hosted MCP setup and recovery for chat assistants, with public website/CLI
-  docs fallbacks when the host cannot expose the docs MCP.
-- Sixteen portable skills for setup, building, prompts, workflows, tools,
-  knowledge, voice, website widgets, debugging, transcripts, evaluations,
-  and environments.
-- Native Claude Code and Codex packages; a Cursor manifest and standalone
-  skill installation for private previews.
-- Checksum-verified CLI installers for macOS, Linux, and Windows.
-- A reproducible website bundle generated from the same setup guide and skills.
+## What can I ask it to do?
 
-Product guidance comes from the [Voiceflow documentation](https://www.voiceflow.com/docs).
-See the [documentation workflow](voiceflow/skills/voiceflow/references/documentation.md),
-[skill index](voiceflow/skills/voiceflow/SKILL.md),
-[compatibility](docs/compatibility.md), [onboarding measurement](docs/measurement.md),
-[release checklist](docs/releasing.md),
-and [website publishing contract](docs/website-publishing.md).
+- “Build a support agent that answers from our help center and hands off when needed.”
+- “Add the chat widget to my Shopify theme and help me customize its appearance.”
+- “Investigate why my agent answers twice after a playbook finishes.”
+- “Create evaluations for our refund flow and explain what needs improvement.”
 
-The [widget skill](voiceflow/skills/voiceflow-widget/SKILL.md) covers customization,
-installation, browser verification, and troubleshooting through CLI or MCP.
-Its platform guides cover Webflow, Framer, WordPress, Shopify, Wix, Squarespace,
-HTML/Astro, and React/Next.js, including a guided paste workflow when the
-assistant cannot edit the site. These are documented implementation paths;
-live platform acceptance remains separate from package and CLI fixture checks.
+These are example requests, not claims that every platform has passed live
+acceptance. Later account changes follow your request and normal host approvals.
 
-## Develop
+## Installation and supported paths
 
-Python 3.10+ is required for repository checks and builds, not normal CLI
-installation or native plugin use. There are no Python package dependencies.
+| Your assistant can… | Setup uses… |
+| --- | --- |
+| Run tools in your persistent local environment | Voiceflow CLI and browser OAuth; native plugins or standalone skills |
+| Connect remote MCP servers | Voiceflow account MCP and browser OAuth; readable skills in the current conversation |
+| Only read web pages | Guided setup instructions; no claim of account access |
+
+The public **Voiceflow Knowledge MCP** supplies current product documentation
+without sign-in alongside either account connection. The assistant consults it
+for unresolved how-tos and every new troubleshooting issue.
+
+For manual installation, updates, and removal, use the
+[client guide](voiceflow/skills/voiceflow-setup/references/clients.md).
+[Compatibility](docs/compatibility.md) separates package installation, model
+behavior, and real client onboarding. Cursor and live widget-platform paths
+remain experimental.
+
+## Skills and guides
+
+The [skill index](voiceflow/skills/voiceflow/SKILL.md) covers setup, building,
+prompts, workflows, functions, integrations, knowledge, messages, voice,
+widgets, debugging, transcripts, evaluations, environments, and wiring.
+
+The [widget guide](voiceflow/skills/voiceflow-widget/SKILL.md) covers Webflow,
+Framer, WordPress, Shopify, Wix, Squarespace, HTML/Astro, and React/Next.js.
+Product knowledge comes from the [Voiceflow documentation](https://www.voiceflow.com/docs).
+
+## Data, permissions, and services
+
+Account access uses Voiceflow's CLI or hosted MCP OAuth. The hosted account MCP
+requests workspace read and write access; setup itself only reads.
+Documentation questions go to Voiceflow's public docs MCP and can be logged with
+package version, skill, task stage, and client/session context to improve docs
+and onboarding. Skills instruct assistants to omit secrets and customer data.
+See [data and services](voiceflow/skills/voiceflow/references/data-and-services.md)
+and the [Voiceflow Privacy Policy](https://www.voiceflow.com/privacy).
+
+This repository's MIT license covers its instructions and utilities. It does
+not make Voiceflow's hosted service or separately distributed CLI open source,
+free of charge, or exempt from their applicable terms and plan limits.
+
+## Help and contribute
+
+- [Support and bug reports](SUPPORT.md)
+- [Report a vulnerability privately](SECURITY.md)
+- [Contribute](CONTRIBUTING.md) · [Code of conduct](CODE_OF_CONDUCT.md)
+- [Changelog](CHANGELOG.md) · [Release and maintenance policy](docs/releasing.md)
+- [Acceptance evidence](evals/README.md) · [Onboarding measurement](docs/measurement.md)
+- [Source provenance](docs/provenance.md) · [Website publishing](docs/website-publishing.md)
+
+For local checks, install Python 3.10+; no Python packages or Voiceflow account
+are required:
 
 ```sh
 python3 scripts/validate.py
@@ -71,11 +105,10 @@ python3 -m unittest discover -s tests -v
 python3 scripts/build.py
 ```
 
-Output goes to `dist/`. Tests use temporary directories and fake credentials;
-they do not sign in or change Voiceflow projects.
+Generated files go to `dist/`. See [contributing](CONTRIBUTING.md) for the full
+workflow and the separate, opt-in host and live acceptance checks.
 
-This is a personal preview, not a published Voiceflow marketplace listing.
-Chat-host paths are evaluated with capability-constrained subagents; support in
-real chat applications requires their own connection and fresh-chat checks.
-Public release, organization transfer, and the website hookup are separate
-steps. See [provenance](docs/provenance.md) for the adaptation history.
+## License
+
+[MIT](LICENSE). Copyright (c) 2026 Voiceflow, Inc.
+The full plugin and each standalone skill include the license notice.

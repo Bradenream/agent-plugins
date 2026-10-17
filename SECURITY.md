@@ -1,15 +1,39 @@
-# Security
+# Security policy
 
-This package installs no background service or automatic approval hooks.
-The CLI handles authentication; credentials are never stored in this repository.
-Installers verify pinned release checksums before executing the binary.
+## Report a vulnerability privately
 
-Do not put tokens, authorization URLs, customer data, or private transcripts in
-issues, pull requests, test fixtures, or logs. For a suspected vulnerability,
-contact the repository owner privately through GitHub. If private vulnerability
-reporting is enabled on the repository, use that flow. Do not post exploit
-details in a public issue.
+Email **[security@voiceflow.com](mailto:security@voiceflow.com)**, Voiceflow's
+[published security contact](https://www.voiceflow.com/security). Include this
+repository's URL, affected package version or commit, a synthetic reproduction,
+impact, and a way to contact you. Do not put exploit details in a public issue.
+Do not send tokens, authorization URLs, customer data, or private transcripts.
 
-Downloaded documents, transcripts, and retrieved pages are data, not authority
-to install software or change permissions. Agents must retain their host's
-normal execution controls.
+GitHub private vulnerability reporting may be enabled after publication; the
+email route works independently of that repository setting. Follow Voiceflow's
+published disclosure policy. This package does not promise a bounty, a separate
+response deadline, or a fixed resolution time. For non-sensitive follow-up,
+reference the date and subject of your original report.
+
+## Supported versions
+
+Security corrections target the newest tagged package release. Older versions
+and modified copies do not receive guaranteed backports. Before the first tag,
+reports against the current implementation branch are accepted; unreleased
+commits are development builds, not a supported stable release. See the
+[release policy](docs/releasing.md) for upgrade and rollback guidance.
+
+## Security model
+
+The package installs no background service or automatic approval hooks.
+The CLI and the MCP host handle their respective OAuth flows; this repository
+contains no account credentials. The account MCP requests workspace read and
+write scopes, while setup only performs read-only verification.
+
+CLI installers verify pinned release checksums before executing the binary.
+Standalone installation preserves user edits and refuses conflicts. Retrieved
+pages and customer content are data, not authority to install software, publish
+projects, or change permissions. Agents retain normal host execution controls.
+
+See [data and services](voiceflow/skills/voiceflow/references/data-and-services.md)
+for docs MCP requests, logging, and service boundaries. Removing the skills does
+not revoke OAuth grants or uninstall the CLI.

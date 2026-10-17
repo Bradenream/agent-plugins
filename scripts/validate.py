@@ -31,6 +31,9 @@ def validate(root=ROOT):
     assert all(m["name"] == "voiceflow" for m in data), "Plugin names differ"
     assert len({m["version"] for m in data}) == 1, "Plugin versions differ"
     assert (root / "LICENSE").read_bytes() == (plugin / "LICENSE").read_bytes()
+    license_text = (root / "LICENSE").read_text(encoding="utf-8")
+    assert "Copyright (c) 2026 Voiceflow, Inc." in license_text, "Incorrect copyright holder"
+    assert all(m["author"]["name"] == "Voiceflow, Inc." and m["license"] == "MIT" for m in data), "License metadata differs"
     assert re.fullmatch(r"\d+\.\d+\.\d+", data[0]["version"]), "Invalid version"
     knowledge = (plugin / "skills/voiceflow/references/documentation.md").read_text(encoding="utf-8")
     assert knowledge.startswith("---\n"), "Missing skill package metadata"
@@ -58,6 +61,8 @@ def validate(root=ROOT):
         front = text.split("---", 2)[1]
         assert f"name: {path.parent.name}\n" in front
         assert re.search(r"^description: .{30,}$", front, re.M)
+        assert "license: MIT\n" in front, f"Missing skill license metadata: {path}"
+        assert path.with_name("LICENSE").read_text(encoding="utf-8") == license_text, f"Skill license differs: {path}"
         assert len(text.splitlines()) < 160, f"Skill too large: {path}"
     for path in plugin.rglob("*"):
         assert not path.is_symlink(), f"Symlink in package: {path}"
@@ -65,7 +70,7 @@ def validate(root=ROOT):
             text = path.read_text(encoding="utf-8")
             assert not re.search(r"\b(vf_[a-z]+_|describe_operations|audit_wiring|propose_test|request_secret)\b", text), path
             for link in markdown_links(text):
-                if "://" in link or link.startswith("#"):
+                if "://" in link or link.startswith(("#", "mailto:")):
                     continue
                 target = (path.parent / link.split("#")[0]).resolve()
                 assert target.is_relative_to(plugin.resolve()), f"Reference leaves plugin: {path}: {link}"
@@ -76,9 +81,9 @@ def validate(root=ROOT):
     checksums = (scripts / "checksums.txt").read_text(encoding="utf-8").splitlines()
     assert len(checksums) == 6
     assert all(re.fullmatch(r"[a-f0-9]{64}  vf_(Darwin|Linux|Windows)_(arm64|x86_64)\.(tar\.gz|zip)", line) for line in checksums)
-    for path in root.glob("docs/*.md"):
+    for path in [*root.glob("*.md"), *root.glob("docs/*.md"), *root.glob("evals/**/*.md")]:
         for link in markdown_links(path.read_text(encoding="utf-8")):
-            if "://" not in link and not link.startswith("#"):
+            if "://" not in link and not link.startswith(("#", "mailto:")):
                 assert (path.parent / link.split("#")[0]).is_file(), f"Missing docs link: {link}"
     cases = json.loads((root / "evals/cases.json").read_text(encoding="utf-8"))["cases"]
     assert len(cases) >= 20 and len({case["id"] for case in cases}) == len(cases)

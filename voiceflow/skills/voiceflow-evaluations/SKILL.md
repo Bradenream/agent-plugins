@@ -1,6 +1,7 @@
 ---
 name: voiceflow-evaluations
 description: Create or run Voiceflow saved tests and evaluations, define quality criteria, and interpret test results without overstating coverage.
+license: MIT
 ---
 
 # Tests and evaluations

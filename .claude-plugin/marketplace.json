@@ -1,5 +1,16 @@
 {
-  "name": "voiceflow-plugins", "owner": { "name": "Braden Ream" },
-  "metadata": { "description": "Voiceflow skills, private preview." },
-  "plugins": [{ "name": "voiceflow", "source": "./voiceflow", "description": "Build with Voiceflow." }]
+  "name": "voiceflow-plugins",
+  "owner": {
+    "name": "Voiceflow, Inc."
+  },
+  "metadata": {
+    "description": "Voiceflow skills for AI assistants."
+  },
+  "plugins": [
+    {
+      "name": "voiceflow",
+      "source": "./voiceflow",
+      "description": "Build with Voiceflow."
+    }
+  ]
 }

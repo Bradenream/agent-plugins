@@ -103,3 +103,13 @@ separate version file. The final inline metadata design passed all eight focused
 attribution/consultation checks; the original failures remain in the
 [report](../evals/reports/2026-10-16-docs-attribution.md). Live public docs were used;
 account state was synthetic, with no customer mutation or new authentication.
+
+## Public distribution preparation (0.4.2)
+
+The copyright holder and package author metadata are Voiceflow, Inc. Each skill
+now carries the same MIT notice as the root package, including standalone copies.
+Support and security contacts were verified against Voiceflow's public docs and
+security page on 2026-10-16. Public-facing data guidance points to the existing
+Voiceflow privacy policy and service terms; it does not create a new policy.
+Release tooling prepares verified archives and an optional unpublished draft;
+publication, transfer, and website deployment remain separate steps.

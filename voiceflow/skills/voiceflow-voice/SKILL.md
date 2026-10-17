@@ -1,6 +1,7 @@
 ---
 name: voiceflow-voice
 description: Configure or improve Voiceflow agents for spoken conversations, voice settings, turn handling, and phone interactions.
+license: MIT
 ---
 
 # Spoken conversations

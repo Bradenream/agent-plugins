@@ -5,6 +5,12 @@ this conversation. Complete mechanical steps yourself where supported. Keep
 progress short; ask the user only for an unavoidable sign-in, host setting, or
 missing detail. Do not ask them to choose between CLI and MCP.
 
+Use the guide and linked files from the supplied checkout, repository revision,
+or versioned website bundle. Do not assume the default branch or an unpublished
+website URL contains the requested version. Package licensing, account permissions,
+and docs request handling are described in
+[data and services](../../voiceflow/references/data-and-services.md).
+
 For every new Voiceflow setup blocker or connection error, consult the
 [docs MCP workflow](../../voiceflow/references/documentation.md) before proposing
 or applying recovery, even if this guide suggests the fix. Use its package/skill
@@ -71,9 +77,10 @@ links only when a later task needs them. These are Markdown instructions; a
 native skill loader is not required to read them.
 
 **Clients with persistent skill/plugin support:** use [client installation](clients.md)
-for this host only. If already installed, reuse the adjacent files. In this
-private preview, use an authenticated checkout of `Bradenream/agent-plugins` on
-branch `codex/voiceflow-agent-plugin`; `main` does not contain the preview.
+for this host only. If already installed, reuse the adjacent files. Use the same
+repository revision as the guide; an accessible checkout needs no additional
+GitHub sign-in. If repository access is restricted, use an existing authenticated
+reader or supplied files rather than requesting a token.
 For the published website bundle, download sibling `voiceflow.zip` and
 `manifest.json` from the same `/agents/` location and verify the archive SHA-256
 before extraction. Preserve user changes and avoid duplicate plugin/skill installs.
@@ -92,7 +99,7 @@ adding duplicates. If the host cannot expose docs MCP, verify the public-docs
 or CLI-docs fallback and accurately describe that limitation; do not block
 otherwise usable account access or claim the docs MCP is connected.
 
-Private preview access can fail independently of Voiceflow sign-in. Use an
+Repository access can fail independently of Voiceflow sign-in. Use an
 existing authenticated repository connection or ask for the guide and linked
 Markdown as attachments. Never ask for a GitHub token in chat or claim the
 unpublished website bundle exists. If no guidance source is accessible, report

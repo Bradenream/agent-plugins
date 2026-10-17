@@ -30,7 +30,7 @@ host's installation policy or change trust settings.
 
 ## Cursor and standalone skills
 
-This private preview does not depend on a public marketplace listing. With
+Standalone installation does not depend on a marketplace listing. With
 Python 3.10+ already available, use the helper for the current client:
 
 ```sh
@@ -43,7 +43,8 @@ a refusal. `--target /absolute/directory` supports custom locations and tests.
 
 Without Python, copy the whole `voiceflow/skills/` tree using the agent's file
 tools, checking all destinations before copying. Preserve identical files and
-refuse conflicts. Copy the entire skill tree to keep relative references intact.
+refuse conflicts. Copy the entire skill tree, including each skill's LICENSE,
+to retain its notices and relative references.
 
 | Client | Default user skill directory |
 | --- | --- |

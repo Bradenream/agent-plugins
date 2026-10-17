@@ -1,6 +1,7 @@
 ---
 name: voiceflow-setup
 description: Connect an assistant to Voiceflow using available account tools, hosted MCP, or a persistent CLI environment. Verify access and load guidance appropriate to this host. Use for initial setup or connection failures, not for building a project.
+license: MIT
 ---
 
 # Connect to Voiceflow

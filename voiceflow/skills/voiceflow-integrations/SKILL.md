@@ -1,6 +1,7 @@
 ---
 name: voiceflow-integrations
 description: Connect Voiceflow integrations, API tools, MCP tools, and secret-backed credentials. Use for external services or missing tool connections.
+license: MIT
 ---
 
 # External services

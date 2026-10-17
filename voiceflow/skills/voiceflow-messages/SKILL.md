@@ -1,6 +1,7 @@
 ---
 name: voiceflow-messages
 description: Create or edit reusable Voiceflow messages, prompts, and text referenced by workflow steps or tool messages.
+license: MIT
 ---
 
 # Messages and reusable prompts

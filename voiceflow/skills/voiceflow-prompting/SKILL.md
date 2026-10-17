@@ -1,6 +1,7 @@
 ---
 name: voiceflow-prompting
 description: Write or revise Voiceflow global prompts, main-agent routing instructions, and playbook instructions with correctly bound resource references.
+license: MIT
 ---
 
 # Write instructions

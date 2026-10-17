@@ -1,6 +1,7 @@
 ---
 name: voiceflow-wiring
 description: Connect Voiceflow function/API tool inputs, secrets, captured outputs, and project variables; diagnose empty values or incorrect tool bindings.
+license: MIT
 ---
 
 # Wire tools and state

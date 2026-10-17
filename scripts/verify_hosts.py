@@ -39,8 +39,10 @@ def main():
             assert len(cached) == 1
             assert {path.parent.name for path in cached[0].glob("*/SKILL.md")} == expected
             assert (cached[0] / "voiceflow-setup/references/setup.md").is_file()
-            for source in skills.rglob("*.md"):
-                assert (cached[0] / source.relative_to(skills)).read_bytes() == source.read_bytes()
+            for source in skills.rglob("*"):
+                if source.is_file() and (source.suffix == ".md" or source.name == "LICENSE"):
+                    assert (cached[0] / source.relative_to(skills)).read_bytes() == source.read_bytes()
+            assert (cached[0].parent / "LICENSE").read_bytes() == (ROOT / "LICENSE").read_bytes()
             for name in ("mcp.json", ".mcp.json"):
                 assert (cached[0].parent / name).read_bytes() == (ROOT / "voiceflow" / name).read_bytes()
             print(f"{host}: installed, enabled, all {len(expected)} skills/references and docs MCP configurations match source")

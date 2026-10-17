@@ -25,6 +25,9 @@ def inventory(source):
             result[path.relative_to(source).as_posix()] = path.read_bytes()
     if "voiceflow/SKILL.md" not in result:
         raise ValueError("The complete Voiceflow skill tree is required")
+    for name in result:
+        if name.endswith("/SKILL.md") and Path(name).with_name("LICENSE").as_posix() not in result:
+            raise ValueError(f"Missing license for skill: {name}")
     return result
 
 

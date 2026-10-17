@@ -1,6 +1,7 @@
 ---
 name: voiceflow-transcripts
 description: Inspect and summarize Voiceflow conversation transcripts for a user-selected period, issue, or conversation; identify evidence-backed patterns.
+license: MIT
 ---
 
 # Conversation evidence

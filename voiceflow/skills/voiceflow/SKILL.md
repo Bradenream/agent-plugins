@@ -1,6 +1,7 @@
 ---
 name: voiceflow
 description: Answer Voiceflow product and how-to questions, or build, customize, deploy, inspect, and debug agents and website widgets. Routes tasks to focused skills and current documentation.
+license: MIT
 ---
 
 # Work with Voiceflow

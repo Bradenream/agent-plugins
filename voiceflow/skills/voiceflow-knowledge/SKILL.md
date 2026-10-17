@@ -1,6 +1,7 @@
 ---
 name: voiceflow-knowledge
 description: Import, maintain, and query Voiceflow knowledge-base documents. Use for grounding, missing answers, stale content, or retrieval quality.
+license: MIT
 ---
 
 # Knowledge base

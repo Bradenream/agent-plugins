@@ -1,10 +1,11 @@
 {
   "name": "voiceflow",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Connect to Voiceflow, then build and improve agents with shared product guidance.",
   "author": {
-    "name": "Braden Ream"
+    "name": "Voiceflow, Inc."
   },
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json"
+  "mcpServers": "./.mcp.json",
+  "license": "MIT"
 }

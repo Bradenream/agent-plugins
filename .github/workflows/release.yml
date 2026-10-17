@@ -1,0 +1,75 @@
+name: Prepare draft package release
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: Approved full source commit SHA
+        required: true
+        type: string
+      version:
+        description: Package version, without v
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: draft-release-${{ inputs.version }}
+  cancel-in-progress: false
+jobs:
+  validate-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate release identifiers
+        env:
+          RELEASE_COMMIT: ${{ inputs.commit }}
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          python3 - <<'PY'
+          import os, re
+          assert re.fullmatch(r'[a-f0-9]{40}', os.environ['RELEASE_COMMIT']), 'Use a full commit SHA'
+          assert re.fullmatch(r'\d+\.\d+\.\d+', os.environ['RELEASE_VERSION']), 'Use a package version without v'
+          PY
+  checks:
+    needs: validate-inputs
+    uses: ./.github/workflows/check.yml
+    with:
+      source_ref: ${{ inputs.commit }}
+  draft:
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ inputs.commit }}
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - name: Prepare verified assets
+        env:
+          RELEASE_COMMIT: ${{ inputs.commit }}
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: python scripts/prepare_release.py --expected-version "$RELEASE_VERSION" --expected-commit "$RELEASE_COMMIT"
+      - name: Create an unpublished beta release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_COMMIT: ${{ inputs.commit }}
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          tag="v$RELEASE_VERSION"
+          existing_tags="$(git ls-remote --tags origin "refs/tags/$tag" "refs/tags/$tag^{}")"
+          if [ -n "$existing_tags" ]; then
+            echo 'Refusing to replace an existing tag.' >&2
+            exit 1
+          fi
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo 'Refusing to replace an existing release or draft.' >&2
+            exit 1
+          fi
+          gh release create "$tag" --target "$RELEASE_COMMIT" --draft --prerelease \
+            --title "Voiceflow $tag (beta)" --notes-file dist/release/release-notes.md \
+            dist/release/*.zip dist/release/manifest.json dist/release/SHA256SUMS

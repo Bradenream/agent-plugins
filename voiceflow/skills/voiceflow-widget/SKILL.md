@@ -1,6 +1,7 @@
 ---
 name: voiceflow-widget
 description: Customize, install, and troubleshoot the Voiceflow chat or voice widget on websites. Use for embedding agents, matching a site's brand, website launchers, and browser integration.
+license: MIT
 ---
 
 # Put a Voiceflow agent on a website

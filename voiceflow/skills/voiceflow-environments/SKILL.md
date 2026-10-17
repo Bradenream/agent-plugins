@@ -1,6 +1,7 @@
 ---
 name: voiceflow-environments
 description: Resolve Voiceflow environment aliases and drafts, clone environments, compare changes, and manage explicitly requested merges or publishing.
+license: MIT
 ---
 
 # Environments and release actions

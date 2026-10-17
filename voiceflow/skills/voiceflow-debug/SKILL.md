@@ -1,6 +1,7 @@
 ---
 name: voiceflow-debug
 description: Diagnose broken Voiceflow behavior from configuration, traces, and transcripts. Use for wrong routing, failed tools, empty values, or unexpected answers.
+license: MIT
 ---
 
 # Diagnose before editing

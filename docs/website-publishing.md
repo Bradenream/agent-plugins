@@ -48,6 +48,7 @@ if the website supports them. Do not update a manifest before its archive.
 6. Keep the previous bundle for an atomic rollback. A rollback does not
    automatically downgrade plugins already installed by customers.
 
-Before public publication, replace preview-branch acquisition language in the
-canonical guide with the stable public source. The rest of the install and
-verification flow remains shared.
+Before public publication, promote the approved implementation and verify the
+stable public source. The canonical guide works from the supplied revision;
+keep the whole bundle together so its relative references and license notices
+resolve. The rest of the install and verification flow remains shared.

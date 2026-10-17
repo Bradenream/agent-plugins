@@ -1,6 +1,7 @@
 ---
 name: voiceflow-workflows
 description: Read or edit Voiceflow workflow canvas blocks, steps, ports, branches, and connections. Use for deterministic flows or broken workflow routing.
+license: MIT
 ---
 
 # Workflows

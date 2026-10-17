@@ -1,6 +1,7 @@
 ---
 name: voiceflow-build
 description: Build or extend Voiceflow agents and playbooks, choose the right architecture, and connect routing and tools. Use after the user describes what they want to build.
+license: MIT
 ---
 
 # Build an agent

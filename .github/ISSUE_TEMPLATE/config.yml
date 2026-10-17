@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Voiceflow product support
+    url: https://www.voiceflow.com/docs/documentation/introduction
+    about: For account, billing, access, or product help, use the support contact in the docs.
+  - name: Report a security vulnerability
+    url: https://www.voiceflow.com/security
+    about: Use Voiceflow's private security contact; do not open a public issue.

@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -24,6 +25,8 @@ installer = load("installer", SETUP / "install_skills.py")
 connection = load("connection", SETUP / "check_connection.py")
 builder = load("builder", ROOT / "scripts/build.py")
 validator = load("validator", ROOT / "scripts/validate.py")
+sys.path.insert(0, str(ROOT / "scripts"))
+release = load("release", ROOT / "scripts/prepare_release.py")
 
 
 class SkillInstallTests(unittest.TestCase):
@@ -36,6 +39,7 @@ class SkillInstallTests(unittest.TestCase):
         self.skill = self.source / "voiceflow/SKILL.md"
         self.skill.parent.mkdir(parents=True)
         self.skill.write_text("original")
+        self.skill.with_name("LICENSE").write_bytes((ROOT / "LICENSE").read_bytes())
 
     def test_repeat_and_uninstall_preserve_unrelated_files(self):
         self.assertEqual(installer.install(self.source, self.target), "installed")
@@ -45,6 +49,27 @@ class SkillInstallTests(unittest.TestCase):
         self.assertEqual(installer.install(self.source, self.target, uninstall=True), "removed")
         self.assertEqual(unrelated.read_text(encoding="utf-8"), "keep")
         self.assertFalse((self.target / "voiceflow/SKILL.md").exists())
+        self.assertFalse((self.target / "voiceflow/LICENSE").exists())
+
+    def test_missing_license_fails_before_installing_any_file(self):
+        self.skill.with_name("LICENSE").unlink()
+        with self.assertRaisesRegex(ValueError, "Missing license"):
+            installer.install(self.source, self.target)
+        self.assertFalse(self.target.exists())
+
+    def test_upgrade_adds_license_to_a_legacy_install(self):
+        installer.install(self.source, self.target)
+        receipt_path = self.target / installer.RECEIPT
+        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        del receipt["files"]["voiceflow/LICENSE"]
+        receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+        (self.target / "voiceflow/LICENSE").unlink()
+        self.assertEqual(installer.install(self.source, self.target, update=True), "installed")
+        self.assertEqual((self.target / "voiceflow/LICENSE").read_bytes(), (ROOT / "LICENSE").read_bytes())
+        (self.target / "voiceflow/LICENSE").write_text("local notice", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "Local change"):
+            installer.install(self.source, self.target, update=True)
+        self.assertEqual((self.target / "voiceflow/LICENSE").read_text(encoding="utf-8"), "local notice")
 
     def test_conflict_fails_before_any_write(self):
         self.target.mkdir()
@@ -130,6 +155,8 @@ class SkillInstallTests(unittest.TestCase):
         for source in (ROOT / "voiceflow/skills").rglob("*.md"):
             installed = self.target / source.relative_to(ROOT / "voiceflow/skills")
             self.assertEqual(installed.read_bytes(), source.read_bytes())
+        for skill in self.target.glob("*/SKILL.md"):
+            self.assertEqual(skill.with_name("LICENSE").read_bytes(), (ROOT / "LICENSE").read_bytes())
 
 
 class ConnectionTests(unittest.TestCase):
@@ -197,6 +224,11 @@ class PublicationTests(unittest.TestCase):
         with zipfile.ZipFile(site / "voiceflow.zip") as archive:
             self.assertEqual(archive.namelist(), sorted(archive.namelist()))
             self.assertEqual(len([n for n in archive.namelist() if n.endswith("/SKILL.md")]), 16)
+            licenses = [n for n in archive.namelist() if n.endswith("/LICENSE")]
+            self.assertEqual(len(licenses), 17)
+            for name in licenses:
+                self.assertEqual(archive.read(name), (ROOT / "LICENSE").read_bytes())
+                self.assertEqual((site / name).read_bytes(), (ROOT / "LICENSE").read_bytes())
             for source in (self.root / "voiceflow/skills").rglob("*.md"):
                 name = source.relative_to(self.root).as_posix()
                 self.assertEqual(archive.read(name), source.read_bytes())
@@ -255,6 +287,75 @@ class RepositoryTests(unittest.TestCase):
             record.write_text("---\npackage: voiceflow\nversion: 0.0.0\n---" + body)
             with self.assertRaisesRegex(AssertionError, "Skill package version differs"):
                 validator.validate(root)
+
+
+class ReleaseTests(unittest.TestCase):
+    def setUp(self):
+        self.scratch = tempfile.TemporaryDirectory()
+        self.addCleanup(self.scratch.cleanup)
+        self.root = Path(self.scratch.name)
+        shutil.copytree(ROOT / "voiceflow", self.root / "voiceflow",
+                        ignore=shutil.ignore_patterns("__pycache__"))
+        self.site = builder.build(self.root)
+        self.manifest_path = self.site / "manifest.json"
+        self.manifest = json.loads(self.manifest_path.read_text(encoding="utf-8"))
+        self.commit = "a" * 40
+        self.version = self.manifest["version"]
+        self.manifest.update(sourceCommit=self.commit, hasUncommittedChanges=False)
+        self.save_manifest()
+        self.output = self.root / "release"
+        self.changelog = f"# Changelog\n\n## {self.version} — Unreleased\n\n- A tested change.\n"
+
+    def save_manifest(self):
+        self.manifest_path.write_text(json.dumps(self.manifest), encoding="utf-8")
+
+    def prepare(self, **options):
+        args = dict(site=self.site, output=self.output, changelog=self.changelog,
+                    expected_version=self.version, expected_commit=self.commit)
+        return release.prepare_assets(**(args | options))
+
+    def test_assets_are_complete_verified_and_reproducible(self):
+        self.prepare()
+        for line in (self.output / "SHA256SUMS").read_text(encoding="utf-8").splitlines():
+            checksum, name = line.split("  ")
+            self.assertEqual(release.sha((self.output / name).read_bytes()), checksum)
+        with zipfile.ZipFile(self.output / f"voiceflow-site-{self.version}.zip") as archive:
+            self.assertEqual(archive.read("agents/manifest.json"), self.manifest_path.read_bytes())
+            self.assertEqual(archive.read("agents/voiceflow/LICENSE"), (ROOT / "LICENSE").read_bytes())
+        self.assertEqual((self.output / f"voiceflow-{self.version}.zip").read_bytes(),
+                         (self.site / "voiceflow.zip").read_bytes())
+        other = self.root / "repeat"
+        self.prepare(output=other)
+        self.assertEqual({p.name: p.read_bytes() for p in self.output.iterdir()},
+                         {p.name: p.read_bytes() for p in other.iterdir()})
+
+    def test_dirty_or_mismatched_source_is_rejected_before_output(self):
+        self.manifest["hasUncommittedChanges"] = True
+        self.save_manifest()
+        with self.assertRaisesRegex(ValueError, "clean"):
+            self.prepare()
+        self.manifest["hasUncommittedChanges"] = False
+        self.save_manifest()
+        for options in ({"expected_version": "9.9.9"}, {"expected_commit": "b" * 40}):
+            with self.assertRaises(ValueError):
+                self.prepare(**options)
+        self.assertFalse(self.output.exists())
+
+    def test_tampered_asset_and_missing_notes_are_rejected(self):
+        with self.assertRaisesRegex(ValueError, "CHANGELOG"):
+            self.prepare(changelog="# Empty\n")
+        (self.site / "voiceflow.zip").write_bytes(b"tampered")
+        with self.assertRaisesRegex(ValueError, "verification failed"):
+            self.prepare()
+        self.assertFalse(self.output.exists())
+
+    def test_existing_output_is_preserved(self):
+        self.output.mkdir()
+        marker = self.output / "keep"
+        marker.write_text("existing", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "already exists"):
+            self.prepare()
+        self.assertEqual(marker.read_text(encoding="utf-8"), "existing")
 
 
 @unittest.skipIf(os.name == "nt", "Unix installer; Windows installer runs in Windows CI")

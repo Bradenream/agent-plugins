@@ -1,6 +1,7 @@
 ---
 name: voiceflow-functions
 description: Create or debug Voiceflow function code, sandbox behavior, fetch parsing, outputs, and exit paths. Use when logic cannot be handled by an existing integration or one API request.
+license: MIT
 ---
 
 # Function code
