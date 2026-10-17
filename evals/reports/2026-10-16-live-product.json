@@ -1,0 +1,2658 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-16",
+  "timezone": "America/Toronto",
+  "baselinePluginVersion": "0.2.0",
+  "baselinePluginCommit": "df75808bdff7c7f5b5a30b44894dad09c50b7d8f",
+  "host": "Codex CLI 0.162.0-alpha.2",
+  "os": "macOS 26.4",
+  "cliVersion": "0.287.0",
+  "baselineSkillHashes": {
+    "voiceflow/skills/voiceflow/SKILL.md": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356",
+    "voiceflow/skills/voiceflow/references/operations.md": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991",
+    "voiceflow/skills/voiceflow-build/SKILL.md": "bb557b4ff6ebfb2bf6261e4bba03d6bdbba65261b19914b6b608da632d8aaffb",
+    "voiceflow/skills/voiceflow-debug/SKILL.md": "9d38167e3c109cd594a3b1ec77cc48c7c2f2ef57fee414d9bbb8a804663f84d0",
+    "voiceflow/skills/voiceflow-environments/SKILL.md": "f1c7a917a4834d17b130485efe64d2052e92cfda8b1574ac21aec1dd70e13e54",
+    "voiceflow/skills/voiceflow-evaluations/SKILL.md": "d1f2b13cc8d2d3832464a615fff2aa11e049aef602a02b4cafbafada4927dfbb",
+    "voiceflow/skills/voiceflow-functions/SKILL.md": "76f1c41c4b37846b6d93bdb0996399eb6b9c39f0b323c9a650f04837c98c8f47",
+    "voiceflow/skills/voiceflow-integrations/SKILL.md": "528945e523eda6225973c5ad3e241624c2804392096a1042b2c644e10a83c062",
+    "voiceflow/skills/voiceflow-knowledge/SKILL.md": "63477c2413099b0dc8ebaebc5597ee11c58dcb68635ee4204f006bb2cfb4d7f1",
+    "voiceflow/skills/voiceflow-messages/SKILL.md": "bd1f686bd332625842345b73449da9889dc9974159652c91434400829256984e",
+    "voiceflow/skills/voiceflow-prompting/SKILL.md": "adb334d0e80f8c6596209a9166a157034cb7957e287cfb6b98c8f9598c795f54",
+    "voiceflow/skills/voiceflow-setup/SKILL.md": "a5e01bc4f9483d023c66cae463d9a190c33833d382d88c4d3481c6b3a098cbc3",
+    "voiceflow/skills/voiceflow-setup/references/cli.md": "dc9d1c07b059b47904e462d5356f250b1494986bb1172fb68d0854d09b1eba41",
+    "voiceflow/skills/voiceflow-setup/references/clients.md": "b60a67915a80307a59ab8c8e42d7a29f5d0046d7798078e686f4e4f463cca323",
+    "voiceflow/skills/voiceflow-setup/references/installation.md": "e16441c9a8e998405a602ec373eceb86864273b791fd7d89c9bd47fbb8acdb24",
+    "voiceflow/skills/voiceflow-setup/references/mcp.md": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc",
+    "voiceflow/skills/voiceflow-setup/references/setup.md": "a57a1d5963533dd1cdbc85e5de6dc55644bfddf8b3dfc62a2c7b350b124d880a",
+    "voiceflow/skills/voiceflow-transcripts/SKILL.md": "a68a0f4e7428a9f9dd127c1b178e6d892aba29c53f100fe51cdbffb64ac6b42f",
+    "voiceflow/skills/voiceflow-voice/SKILL.md": "745a6eb151d382c68d46c03fef742ab1a719d8b504d74b7a580c00dd4c7d4c5b",
+    "voiceflow/skills/voiceflow-wiring/SKILL.md": "91d921134f626c92a63c5ed903d58d7182b79c0196426eca77008168c809ae5f",
+    "voiceflow/skills/voiceflow-workflows/SKILL.md": "fb5f188056996f676f0fdfdbf412b50b79eb1c9861e7d0e54e37b74e9f042ee2"
+  },
+  "retestSkillHashes": {
+    "voiceflow/skills/voiceflow/SKILL.md": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356",
+    "voiceflow/skills/voiceflow/references/operations.md": "ab724676d59ad8d2e70491e33dbab839ceb987e3f60fda6d5b06ff8a610b134f",
+    "voiceflow/skills/voiceflow/references/request-shapes.md": "29d98dcdb0febcc0091896390a1d2d010f5b0f678f57e4300f2648b9a4dd2283",
+    "voiceflow/skills/voiceflow-build/SKILL.md": "3a58463729b574ddd5da879d182129ede6b8ba1beab6561f4a848c892bfbab05",
+    "voiceflow/skills/voiceflow-debug/SKILL.md": "9d38167e3c109cd594a3b1ec77cc48c7c2f2ef57fee414d9bbb8a804663f84d0",
+    "voiceflow/skills/voiceflow-environments/SKILL.md": "25cecefb33620ed8df23cb5b540509819793701fb6c16d2e64f6cb3200094e30",
+    "voiceflow/skills/voiceflow-evaluations/SKILL.md": "b8bc369c9e353c57d4860f1862bb3e91884a0fb892123ff9263de91e4df730f9",
+    "voiceflow/skills/voiceflow-functions/SKILL.md": "76f1c41c4b37846b6d93bdb0996399eb6b9c39f0b323c9a650f04837c98c8f47",
+    "voiceflow/skills/voiceflow-integrations/SKILL.md": "528945e523eda6225973c5ad3e241624c2804392096a1042b2c644e10a83c062",
+    "voiceflow/skills/voiceflow-knowledge/SKILL.md": "fd075c8208f6e367c8290d25d16fec829d3e8bd8a5d66cce5ac4f6c3769ed3d9",
+    "voiceflow/skills/voiceflow-messages/SKILL.md": "bd1f686bd332625842345b73449da9889dc9974159652c91434400829256984e",
+    "voiceflow/skills/voiceflow-prompting/SKILL.md": "adb334d0e80f8c6596209a9166a157034cb7957e287cfb6b98c8f9598c795f54",
+    "voiceflow/skills/voiceflow-setup/SKILL.md": "a5e01bc4f9483d023c66cae463d9a190c33833d382d88c4d3481c6b3a098cbc3",
+    "voiceflow/skills/voiceflow-setup/references/cli.md": "dc9d1c07b059b47904e462d5356f250b1494986bb1172fb68d0854d09b1eba41",
+    "voiceflow/skills/voiceflow-setup/references/clients.md": "b60a67915a80307a59ab8c8e42d7a29f5d0046d7798078e686f4e4f463cca323",
+    "voiceflow/skills/voiceflow-setup/references/installation.md": "e16441c9a8e998405a602ec373eceb86864273b791fd7d89c9bd47fbb8acdb24",
+    "voiceflow/skills/voiceflow-setup/references/mcp.md": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc",
+    "voiceflow/skills/voiceflow-setup/references/setup.md": "a57a1d5963533dd1cdbc85e5de6dc55644bfddf8b3dfc62a2c7b350b124d880a",
+    "voiceflow/skills/voiceflow-transcripts/SKILL.md": "a68a0f4e7428a9f9dd127c1b178e6d892aba29c53f100fe51cdbffb64ac6b42f",
+    "voiceflow/skills/voiceflow-voice/SKILL.md": "745a6eb151d382c68d46c03fef742ab1a719d8b504d74b7a580c00dd4c7d4c5b",
+    "voiceflow/skills/voiceflow-wiring/SKILL.md": "2c2787256908941e9a521fde930600f8865b0fe2c2257c88a9853f0d2a93309d",
+    "voiceflow/skills/voiceflow-workflows/SKILL.md": "270dd86e26639e998a36d367e9604a40bacb09b9089c099b1fb654ef7a37e128"
+  },
+  "runs": [
+    {
+      "key": "cli-luna-low",
+      "phase": "baseline",
+      "pluginVersion": "0.2.0",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "transport": "cli",
+      "seconds": 314.98,
+      "status": "completed",
+      "requestSHA256": "b0548dacc015c8d1387d37ccdd2f7a9ebde37905f423b1ffbff64e1c06786c13",
+      "actorCompiled": false,
+      "approvalDeclines": 0,
+      "usage": [
+        {
+          "input_tokens": 4426457,
+          "cached_input_tokens": 4337664,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 19785,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "completedCommands": 101,
+      "completedMCPCalls": 0,
+      "checks": {
+        "appointment": {
+          "exists": true,
+          "registered": true,
+          "instructions": "# Appointment request\\n\\nCollect the customer\u2019s name and preferred day. Ask for one piece of information at a time: ask for the name first, wait for the answer, then ask for the preferred day. Once both are provided, summarize them and confirm that the appointment request is ready for review. Do not claim that an appointment has been booked or confirmed as an actual booking."
+        },
+        "wiring": {
+          "playbookExists": true,
+          "registered": true,
+          "functionExists": true,
+          "attached": false,
+          "inputBindingMatchesDeclaredUUID": false,
+          "captureMatches": {
+            "last_order_id": false,
+            "last_order_status": false
+          },
+          "description": null
+        },
+        "workflows": [
+          {
+            "name": "Confirmation workflow",
+            "registered": true,
+            "entryConnected": true,
+            "counts": {
+              "blocks": 1,
+              "steps": 1,
+              "unreachableBlocks": 0,
+              "danglingLinks": 0
+            },
+            "stepKinds": [
+              "end"
+            ],
+            "messageTexts": [],
+            "warnings": []
+          }
+        ],
+        "knowledge": {
+          "documents": [
+            {
+              "name": "policy.txt",
+              "status": "SUCCESS"
+            },
+            {
+              "name": "cli-luna-low-policy.txt",
+              "status": "SUCCESS"
+            }
+          ],
+          "retrievalMatches": [
+            {
+              "source": "policy.txt",
+              "content": "Cedar Supplies fictional test policy (CEDAR-CLI-LUNA-LOW). Unused items can be returned within 17 days of purchase. Return shipping is free. The support reference code is CEDAR-CLI-LUNA-LOW. This policy is synthetic acceptance-test data."
+            },
+            {
+              "source": "cli-luna-low-policy.txt",
+              "content": "Cedar Supplies fictional test policy (CEDAR-CLI-LUNA-LOW). Unused items can be returned within 17 days of purchase. Return shipping is free. The support reference code is CEDAR-CLI-LUNA-LOW. This policy is synthetic acceptance-test data."
+            }
+          ]
+        },
+        "pureExecutions": [
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  ADA@EXAMPLE.TEST  "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "ada@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  BoB@Example.Test "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "bob@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-101"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-101",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-202"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-202",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          }
+        ],
+        "environment": {
+          "trafficPercentage": 0,
+          "releaseIDsUnchanged": true
+        }
+      },
+      "conversationChecks": [
+        {
+          "case": "appointment",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Acme Corp support. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "I would like to request an appointment."
+              },
+              "messages": [
+                "Happy to help with that! First, could I get your name?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_appointment_booking"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My name is Ada."
+              },
+              "messages": [
+                "Thanks, Ada! What day works best for your appointment?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My preferred day is Tuesday."
+              },
+              "messages": [
+                "Here's what I have: Ada, preferred day Tuesday. Your appointment request is ready for review \u2014 just to be clear, this isn't a confirmed booking yet. Is there anything else I can help you with?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            }
+          ]
+        }
+      ],
+      "evidenceSHA256": {
+        ".jsonl": "4d1ca688defa19e50b35b1cbe9f0c046f3ae6b7d87ebb4585378de24908436c4",
+        "-final.txt": "26e4d60c8eb80e556d9a388a655190b565fa6a1af47d5ce6fad8ab3049d71ebd",
+        "-fixture.json": "c855e46cfb3e97b59e50c33048f359a8c11d4c85e15458b68cfde525a1f304de",
+        "-verified.json": "ffebe3ab5ae1effc9631963d3c8bdd2627ea5815f4da065e2a26fcbfbca92953",
+        "-conversations.json": "84c560dd7e31e5ac140754c9366a7d3d339f458657f7e3cbe69ee4e99404ccb3"
+      },
+      "functionalResults": {
+        "appointment": "pass",
+        "wiring": "incomplete",
+        "workflow": "incomplete",
+        "knowledge": "pass",
+        "debug": "pass"
+      },
+      "finalEnvironment": {
+        "trafficPercentage": 0,
+        "releaseCount": 1,
+        "originalReleaseRetained": true
+      },
+      "qualityWarnings": [
+        "Default Acme Corp identity appeared in a runtime greeting.",
+        "An extra policy import remains in the test draft."
+      ]
+    },
+    {
+      "key": "cli-luna-medium",
+      "phase": "baseline",
+      "pluginVersion": "0.2.0",
+      "model": "gpt-6-luna",
+      "reasoning": "medium",
+      "transport": "cli",
+      "seconds": 164.91,
+      "status": "completed",
+      "requestSHA256": "dd33ab9233086a9cb4e2961e1ce7eb8ff77dd6cb9b416616a7a49fff6742986d",
+      "actorCompiled": false,
+      "approvalDeclines": 0,
+      "usage": [
+        {
+          "input_tokens": 1299371,
+          "cached_input_tokens": 1236352,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 10716,
+          "reasoning_output_tokens": 1978
+        }
+      ],
+      "completedCommands": 109,
+      "completedMCPCalls": 0,
+      "checks": {
+        "appointment": {
+          "exists": true,
+          "registered": true,
+          "instructions": "Ask for the customer's name first, then ask for their preferred day, one question at a time. Once both are provided, confirm that the appointment request has been recorded for review. Do not claim that an appointment is booked or confirmed."
+        },
+        "wiring": {
+          "playbookExists": true,
+          "registered": true,
+          "functionExists": true,
+          "attached": false,
+          "inputBindingMatchesDeclaredUUID": false,
+          "captureMatches": {
+            "last_order_id": false,
+            "last_order_status": false
+          },
+          "description": null
+        },
+        "workflows": [],
+        "knowledge": {
+          "documents": [
+            {
+              "name": "cli-luna-medium-policy.txt",
+              "status": "SUCCESS"
+            }
+          ],
+          "retrievalMatches": [
+            {
+              "source": "cli-luna-medium-policy.txt",
+              "content": "Cedar Supplies fictional test policy (CEDAR-CLI-LUNA-MEDIUM). Unused items can be returned within 17 days of purchase. Return shipping is free. The support reference code is CEDAR-CLI-LUNA-MEDIUM. This policy is synthetic acceptance-test data."
+            }
+          ]
+        },
+        "pureExecutions": [
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  ADA@EXAMPLE.TEST  "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "ada@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  BoB@Example.Test "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "bob@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-101"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-101",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-202"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-202",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          }
+        ],
+        "environment": {
+          "trafficPercentage": 0,
+          "releaseIDsUnchanged": true
+        }
+      },
+      "conversationChecks": [
+        {
+          "case": "appointment",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with whatever you need. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "I would like to request an appointment."
+              },
+              "messages": [
+                "Great, I'd be happy to help with that. Could I get your name first?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_appointment_booking"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My name is Ada."
+              },
+              "messages": [
+                "Thanks, Ada! What day works best for your appointment?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My preferred day is Tuesday."
+              },
+              "messages": [
+                "Perfect \u2014 I've recorded your appointment request for Tuesday, Ada. It's been submitted for review, and someone will follow up with you to confirm the details.\n\nIs there anything else I can help you with?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            }
+          ]
+        }
+      ],
+      "evidenceSHA256": {
+        ".jsonl": "fc80afb6fd9f2edb82c4c55873fc75d93c63c955c84f861abe939cbb9c9a2db7",
+        "-final.txt": "2b2cd752937a3cbd19d4f2de69df6f428078c641ebbdae489e4766a74f233d9c",
+        "-fixture.json": "0ef9105768b4367f7207403f2c1296e205d1e91bc291d543fda1d5bd0943ca3a",
+        "-verified.json": "12e21265e95c0b395193747afc3e228e8e715e3d922fd3bac9ea889cc101fe42",
+        "-conversations.json": "0d4c36fc8e60ae431a16c425fa716c56a429ecc4c00f45e21e1192236bab5b10"
+      },
+      "functionalResults": {
+        "appointment": "pass",
+        "wiring": "incomplete",
+        "workflow": "incomplete",
+        "knowledge": "pass",
+        "debug": "pass"
+      },
+      "finalEnvironment": {
+        "trafficPercentage": 0,
+        "releaseCount": 1,
+        "originalReleaseRetained": true
+      },
+      "qualityWarnings": [
+        "Runtime appointment summary promised submission or human follow-up without a supporting action."
+      ]
+    },
+    {
+      "key": "cli-sol-low",
+      "phase": "baseline",
+      "pluginVersion": "0.2.0",
+      "model": "gpt-6.1-sol",
+      "reasoning": "low",
+      "transport": "cli",
+      "seconds": 220.48,
+      "status": "completed",
+      "requestSHA256": "f2c045cba3eefb33b5f8c37e32c5dbcfb23a7a5ebd7fd01b87005001f54f4737",
+      "actorCompiled": false,
+      "approvalDeclines": 0,
+      "usage": [
+        {
+          "input_tokens": 1169141,
+          "cached_input_tokens": 1112192,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 9988,
+          "reasoning_output_tokens": 672
+        }
+      ],
+      "completedCommands": 36,
+      "completedMCPCalls": 0,
+      "checks": {
+        "appointment": {
+          "exists": true,
+          "registered": true,
+          "instructions": "Collect the customer name and preferred day, asking one question at a time. Ask only for information still missing. Once both are known, repeat the name and preferred day and confirm this is an appointment REQUEST for review. Clearly state that no appointment has been booked or availability confirmed. Never claim an actual booking."
+        },
+        "wiring": {
+          "playbookExists": true,
+          "registered": true,
+          "functionExists": true,
+          "attached": true,
+          "inputBindingMatchesDeclaredUUID": true,
+          "captureMatches": {
+            "last_order_id": true,
+            "last_order_status": true
+          },
+          "description": "Look up a fictional order status when the customer provides an order ID."
+        },
+        "workflows": [
+          {
+            "name": "Confirmation",
+            "registered": true,
+            "entryConnected": true,
+            "counts": {
+              "blocks": 1,
+              "steps": 1,
+              "unreachableBlocks": 0,
+              "danglingLinks": 0
+            },
+            "stepKinds": [
+              "end"
+            ],
+            "messageTexts": [
+              "Your request is ready for review."
+            ],
+            "warnings": []
+          }
+        ],
+        "knowledge": {
+          "documents": [
+            {
+              "name": "cli-sol-low-policy.txt",
+              "status": "SUCCESS"
+            }
+          ],
+          "retrievalMatches": [
+            {
+              "source": "cli-sol-low-policy.txt",
+              "content": "Cedar Supplies fictional test policy (CEDAR-CLI-SOL-LOW). Unused items can be returned within 17 days of purchase. Return shipping is free. The support reference code is CEDAR-CLI-SOL-LOW. This policy is synthetic acceptance-test data."
+            }
+          ]
+        },
+        "pureExecutions": [
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  ADA@EXAMPLE.TEST  "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "ada@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  BoB@Example.Test "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "bob@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-101"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-101",
+              "status": "processing"
+            },
+            "path": null,
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-202"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-202",
+              "status": "processing"
+            },
+            "path": null,
+            "error": null
+          }
+        ],
+        "environment": {
+          "trafficPercentage": 0,
+          "releaseIDsUnchanged": true
+        }
+      },
+      "conversationChecks": [
+        {
+          "case": "appointment",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Cedar Supplies \u2014 whether you need to request an appointment, check on an order, or get answers to policy questions. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "I would like to request an appointment."
+              },
+              "messages": [
+                "Happy to help with that! To get started, could I have your name?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_appointment_booking"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My name is Ada."
+              },
+              "messages": [
+                "Thanks, Ada! What day works best for your appointment?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My preferred day is Tuesday."
+              },
+              "messages": [
+                "Thanks, Ada! Just to confirm: you'd like to request an appointment on Tuesday.\n\nPlease note this is a request for review only \u2014 no appointment has been booked and availability hasn't been confirmed yet.",
+                "Your request is ready for review."
+              ],
+              "ended": true,
+              "calledTools": [
+                "transfer_to_workflow_confirmation"
+              ],
+              "capturedVariables": {}
+            }
+          ]
+        },
+        {
+          "case": "orders",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Cedar Supplies \u2014 whether you need an appointment, have questions about an order, or want to check on our policies.\n\nWhat can I help you with today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "What is the status of my order EVAL-101?"
+              },
+              "messages": [
+                "Your order EVAL-101 is currently in processing. Is there anything else I can help you with?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_order_support",
+                "lookup_order"
+              ],
+              "capturedVariables": {
+                "last_order_id": "EVAL-101",
+                "last_order_status": "processing"
+              }
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "And what is the status of order EVAL-202?"
+              },
+              "messages": [
+                "Order EVAL-202 is also in processing. Anything else I can check for you?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "lookup_order"
+              ],
+              "capturedVariables": {
+                "last_order_id": "EVAL-202",
+                "last_order_status": "processing"
+              }
+            }
+          ]
+        },
+        {
+          "case": "confirmation",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Cedar Supplies \u2014 whether you need to request an appointment, check on an order, or have questions about our policies.\n\nWhat can I help you with today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "Please run the Confirmation workflow now."
+              },
+              "messages": [
+                "Your request is ready for review."
+              ],
+              "ended": true,
+              "calledTools": [
+                "transfer_to_workflow_confirmation"
+              ],
+              "capturedVariables": {}
+            }
+          ]
+        }
+      ],
+      "evidenceSHA256": {
+        ".jsonl": "99dd902c1e2f121b6bcda8762f45873fbc646e200c604a308575386fa2435031",
+        "-final.txt": "4762d46209be9c71300b9588541227d925c51b859f0a620fd5eba71c7f407773",
+        "-fixture.json": "93b0ebee702a3196479c792a0834bc60464f7e1dfe1d4093d8df2da4bc041acb",
+        "-verified.json": "aba477b83504b9b79c9d6a52bcd4f9d338ca5c532b70dce4f36b3ae2b24da25a",
+        "-conversations.json": "635736d2aad7ea132859f8c2f27c3b1a14115cbc1ea0053676349c7f3a08a5e6"
+      },
+      "functionalResults": {
+        "appointment": "pass",
+        "wiring": "pass",
+        "workflow": "pass",
+        "knowledge": "pass",
+        "debug": "pass"
+      },
+      "finalEnvironment": {
+        "trafficPercentage": 0,
+        "releaseCount": 1,
+        "originalReleaseRetained": true
+      },
+      "qualityWarnings": []
+    },
+    {
+      "key": "cli-sol-medium",
+      "phase": "baseline",
+      "pluginVersion": "0.2.0",
+      "model": "gpt-6.1-sol",
+      "reasoning": "medium",
+      "transport": "cli",
+      "seconds": 188.73,
+      "status": "completed",
+      "requestSHA256": "1830afc21a3ff002020607bc7b32fd912e9b68f0d650073004b6616c96704ab6",
+      "actorCompiled": false,
+      "approvalDeclines": 0,
+      "usage": [
+        {
+          "input_tokens": 1245460,
+          "cached_input_tokens": 1141120,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 6570,
+          "reasoning_output_tokens": 332
+        }
+      ],
+      "completedCommands": 31,
+      "completedMCPCalls": 0,
+      "checks": {
+        "appointment": {
+          "exists": true,
+          "registered": true,
+          "instructions": "Prepare an appointment request. Collect the customer name and preferred day, asking only one question per turn. Reuse details already provided and ask only for missing details. Once both are available, confirm the name and preferred day and explicitly say: This is an appointment request only; no appointment has been booked. Never claim a booking, reserved slot, availability check, or submission to an external service. Allow corrections and reconfirm the request."
+        },
+        "wiring": {
+          "playbookExists": true,
+          "registered": true,
+          "functionExists": true,
+          "attached": true,
+          "inputBindingMatchesDeclaredUUID": true,
+          "captureMatches": {
+            "last_order_id": true,
+            "last_order_status": true
+          },
+          "description": "Return the supplied fictional order ID and processing status. Use after collecting orderId when the customer asks for order status."
+        },
+        "workflows": [
+          {
+            "name": "Confirmation",
+            "registered": true,
+            "entryConnected": true,
+            "counts": {
+              "blocks": 1,
+              "steps": 1,
+              "unreachableBlocks": 0,
+              "danglingLinks": 0
+            },
+            "stepKinds": [
+              "end"
+            ],
+            "messageTexts": [
+              "Your request is ready for review."
+            ],
+            "warnings": []
+          }
+        ],
+        "knowledge": {
+          "documents": [
+            {
+              "name": "cli-sol-medium-policy.txt",
+              "status": "SUCCESS"
+            }
+          ],
+          "retrievalMatches": [
+            {
+              "source": "cli-sol-medium-policy.txt",
+              "content": "Cedar Supplies fictional test policy (CEDAR-CLI-SOL-MEDIUM). Unused items can be returned within 17 days of purchase. Return shipping is free. The support reference code is CEDAR-CLI-SOL-MEDIUM. This policy is synthetic acceptance-test data."
+            }
+          ]
+        },
+        "pureExecutions": [
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  ADA@EXAMPLE.TEST  "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "ada@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  BoB@Example.Test "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "bob@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-101"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-101",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-202"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-202",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          }
+        ],
+        "environment": {
+          "trafficPercentage": 0,
+          "releaseIDsUnchanged": true
+        }
+      },
+      "conversationChecks": [
+        {
+          "case": "appointment",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Cedar Supplies \u2014 I can assist with appointment requests, order support, or answer questions about our policies.\n\nWhat can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "I would like to request an appointment."
+              },
+              "messages": [
+                "Happy to help with that! To get started, could you tell me your name?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_appointment_booking"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My name is Ada."
+              },
+              "messages": [
+                "Thanks, Ada! What day would you prefer for the appointment?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My preferred day is Tuesday."
+              },
+              "messages": [
+                "Great \u2014 here's what I have for your appointment request:\n\nName: Ada\nPreferred day: Tuesday\n\nJust to be clear, this is an appointment request only; no appointment has been booked.\n\nWould you like to make any changes, or is this good to go?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            }
+          ]
+        },
+        {
+          "case": "orders",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Cedar Supplies \u2014 appointments, orders, and policy questions. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "What is the status of my order EVAL-101?"
+              },
+              "messages": [
+                "Good news \u2014 order EVAL-101 is currently processing. Anything else I can help you with?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_order_support",
+                "lookup_order"
+              ],
+              "capturedVariables": {
+                "last_order_id": "EVAL-101",
+                "last_order_status": "processing"
+              }
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "And what is the status of order EVAL-202?"
+              },
+              "messages": [
+                "Order EVAL-202 is also in processing status. Anything else you'd like to check?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "lookup_order"
+              ],
+              "capturedVariables": {
+                "last_order_id": "EVAL-202",
+                "last_order_status": "processing"
+              }
+            }
+          ]
+        },
+        {
+          "case": "confirmation",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Cedar Supplies \u2014 whether you need to request an appointment, check on an order, or have questions about our policies. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "Please run the Confirmation workflow now."
+              },
+              "messages": [
+                "Your request is ready for review."
+              ],
+              "ended": true,
+              "calledTools": [
+                "transfer_to_workflow_confirmation"
+              ],
+              "capturedVariables": {}
+            }
+          ]
+        }
+      ],
+      "evidenceSHA256": {
+        ".jsonl": "ef3c253c1f34f977d048978303a4a869ad2a9714a14fa0c07c766fe638a9437c",
+        "-final.txt": "8e8ec181c8802b11c8641a3a9c1724862a76bdd0f721eddf148f56f40c4d599c",
+        "-fixture.json": "142a129b04ef031380e1dd1a567f035726d50b48d3e54a9b7daa026c56faec54",
+        "-verified.json": "7bd9799e2cc1bcd6e9bb01fae26147ac6741cab4e7112207f76726bdaad8086d",
+        "-conversations.json": "6d4a9cc43c32c4dd23d3bf27e17aa4b9c34156c56d3aa295208fa4038b41d076"
+      },
+      "functionalResults": {
+        "appointment": "pass",
+        "wiring": "pass",
+        "workflow": "pass",
+        "knowledge": "pass",
+        "debug": "pass"
+      },
+      "finalEnvironment": {
+        "trafficPercentage": 0,
+        "releaseCount": 1,
+        "originalReleaseRetained": true
+      },
+      "qualityWarnings": []
+    },
+    {
+      "key": "mcp-luna-low",
+      "phase": "baseline",
+      "pluginVersion": "0.2.0",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "transport": "mcp",
+      "seconds": 56.61,
+      "status": "completed",
+      "requestSHA256": "8fa5d892820f12d7b606c6bb93ab33946606650e270d46ccf39b43a355ed9aa7",
+      "actorCompiled": false,
+      "approvalDeclines": 0,
+      "usage": [
+        {
+          "input_tokens": 628473,
+          "cached_input_tokens": 583424,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2596,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "completedCommands": 2,
+      "completedMCPCalls": 16,
+      "checks": {
+        "appointment": {
+          "exists": false,
+          "registered": false,
+          "instructions": null
+        },
+        "wiring": {
+          "playbookExists": false,
+          "registered": false,
+          "functionExists": false,
+          "attached": false,
+          "inputBindingMatchesDeclaredUUID": false,
+          "captureMatches": {
+            "last_order_id": false,
+            "last_order_status": false
+          },
+          "description": null
+        },
+        "workflows": [],
+        "knowledge": {
+          "documents": [],
+          "retrievalMatches": []
+        },
+        "pureExecutions": [
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  ADA@EXAMPLE.TEST  "
+            },
+            "success": false,
+            "outputs": {},
+            "path": null,
+            "error": "[ERROR]: Encountered an error in a Function step. Function produced an uncaught exception: ReferenceError :: Buffer is not defined"
+          },
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  BoB@Example.Test "
+            },
+            "success": false,
+            "outputs": {},
+            "path": null,
+            "error": "[ERROR]: Encountered an error in a Function step. Function produced an uncaught exception: ReferenceError :: Buffer is not defined"
+          }
+        ],
+        "environment": {
+          "trafficPercentage": 0,
+          "releaseIDsUnchanged": true
+        }
+      },
+      "conversationChecks": [],
+      "evidenceSHA256": {
+        ".jsonl": "c56c63930cfaca902ed4016200eed7629ab45bd1875b63dfa99f510ac48a8b13",
+        "-final.txt": "a3fd808532f3e37a390166820fa2159c216ce78fe7ebaea5c84c8e0afeabc054",
+        "-fixture.json": "bdeba24da1ea55dd981f52712369d1b7424a686069e848d4f6b3351d7f22519e",
+        "-verified.json": "132a5d6873c80c8a4a1a7ef4b34aec91ce596eccec835c877bc7723eee864f2d"
+      },
+      "functionalResults": {
+        "appointment": "incomplete",
+        "wiring": "incomplete",
+        "workflow": "incomplete",
+        "knowledge": "incomplete",
+        "debug": "incomplete"
+      },
+      "finalEnvironment": {
+        "trafficPercentage": 0,
+        "releaseCount": 1,
+        "originalReleaseRetained": true
+      },
+      "qualityWarnings": []
+    },
+    {
+      "key": "mcp-luna-medium",
+      "phase": "baseline",
+      "pluginVersion": "0.2.0",
+      "model": "gpt-6-luna",
+      "reasoning": "medium",
+      "transport": "mcp",
+      "seconds": 327.53,
+      "status": "completed",
+      "requestSHA256": "2cb3facfbc3d7488ffc764090f9db77b7ed6ca0ef1823d05c591f5423291712c",
+      "actorCompiled": true,
+      "approvalDeclines": 0,
+      "usage": [
+        {
+          "input_tokens": 3851809,
+          "cached_input_tokens": 3769344,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 18365,
+          "reasoning_output_tokens": 6868
+        }
+      ],
+      "completedCommands": 3,
+      "completedMCPCalls": 92,
+      "checks": {
+        "appointment": {
+          "exists": true,
+          "registered": true,
+          "instructions": "## Context\n\nHelp Cedar Supplies customers submit an appointment request.\n\n## Flow\n\nAsk for the customer's name if missing. Ask for their preferred day if missing. Ask one question per turn. Once both are known, confirm that the appointment request has been received for review.\n\n## Rules\n\n> Do not claim that an appointment has been booked or confirmed as an actual booking. This playbook only records and confirms a request.\n\n## Edge cases\n\nIf the customer gives both details at once, accept them without asking again. If a detail is unclear, ask only for that detail.\n\n## Exit\n\nAfter confirming the request, return control to the main agent."
+        },
+        "wiring": {
+          "playbookExists": true,
+          "registered": true,
+          "functionExists": true,
+          "attached": true,
+          "inputBindingMatchesDeclaredUUID": true,
+          "captureMatches": {
+            "last_order_id": true,
+            "last_order_status": true
+          },
+          "description": "Looks up the order ID supplied by the customer and returns its test status. Use when the customer has provided an order ID."
+        },
+        "workflows": [
+          {
+            "name": "Confirmation",
+            "registered": true,
+            "entryConnected": true,
+            "counts": {
+              "blocks": 1,
+              "steps": 2,
+              "unreachableBlocks": 0,
+              "danglingLinks": 0
+            },
+            "stepKinds": [
+              "message",
+              "end"
+            ],
+            "messageTexts": [
+              "Your request is ready for review."
+            ],
+            "warnings": []
+          }
+        ],
+        "knowledge": {
+          "documents": [
+            {
+              "name": "undefined",
+              "status": "SUCCESS"
+            },
+            {
+              "name": "mcp-luna-medium-policy.txt",
+              "status": "SUCCESS"
+            }
+          ],
+          "retrievalMatches": [
+            {
+              "source": "mcp-luna-medium-policy.txt",
+              "content": "Cedar Supplies fictional test policy (CEDAR-MCP-LUNA-MEDIUM). Unused items can be returned within 17 days of purchase. Return shipping is free. The support reference code is CEDAR-MCP-LUNA-MEDIUM. This policy is synthetic acceptance-test data."
+            },
+            {
+              "source": "undefined",
+              "content": "Cedar Supplies fictional test policy (CEDAR-MCP-LUNA-MEDIUM). Unused items can be returned within 17 days of purchase. Return shipping is free. The support reference code is CEDAR-MCP-LUNA-MEDIUM. This policy is synthetic acceptance-test data."
+            }
+          ]
+        },
+        "pureExecutions": [
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  ADA@EXAMPLE.TEST  "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "ada@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  BoB@Example.Test "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "bob@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-101"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-101",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-202"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-202",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          }
+        ],
+        "environment": {
+          "trafficPercentage": 0,
+          "releaseIDsUnchanged": true
+        }
+      },
+      "conversationChecks": [
+        {
+          "case": "appointment",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Cedar Supplies questions, orders, appointments, and more. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "I would like to request an appointment."
+              },
+              "messages": [
+                "Happy to help with that! Can I get your name for the appointment request?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_appointment_booking"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My name is Ada."
+              },
+              "messages": [
+                "Thanks, Ada! What day would you prefer for your appointment?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My preferred day is Tuesday."
+              },
+              "messages": [
+                "Got it, Ada \u2014 I've recorded your appointment request for Tuesday. It's been submitted for review, and you'll hear back once it's been processed.\n\nIs there anything else I can help you with today?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            }
+          ]
+        },
+        {
+          "case": "orders",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Cedar Supplies \u2014 whether it's questions about our products, orders, or scheduling an appointment. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "What is the status of my order EVAL-101?"
+              },
+              "messages": [
+                "Your order EVAL-101 is currently in processing. Is there anything else I can help you with?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_order_support",
+                "lookup_order"
+              ],
+              "capturedVariables": {
+                "last_order_id": "EVAL-101",
+                "last_order_status": "processing"
+              }
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "And what is the status of order EVAL-202?"
+              },
+              "messages": [
+                "Order EVAL-202 is also in processing. Anything else I can help with?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "lookup_order"
+              ],
+              "capturedVariables": {
+                "last_order_id": "EVAL-202",
+                "last_order_status": "processing"
+              }
+            }
+          ]
+        },
+        {
+          "case": "confirmation",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Cedar Supplies questions, appointments, or order support. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "Please run the Confirmation workflow now."
+              },
+              "messages": [
+                "Your request is ready for review."
+              ],
+              "ended": true,
+              "calledTools": [
+                "transfer_to_workflow_confirmation"
+              ],
+              "capturedVariables": {}
+            }
+          ]
+        }
+      ],
+      "evidenceSHA256": {
+        ".jsonl": "f566deb02b0061e22739fef183413825e8daadc638830bfb5be98caf8ec72fb0",
+        "-final.txt": "b5d49eaa552a693b765efa98c78689f6d64ae90d4ec18ed31c57f68d2c9e89c8",
+        "-fixture.json": "33d41a0a52a81058a08febc570acb429d4b1a500f968747835d04e8f4927547c",
+        "-verified.json": "a0457cb6fbf41a537737a9778e7ef711c7b26904330be5d3b8a866bd054560ed",
+        "-conversations.json": "7e1d4b10eb26feb1e92f1d8aff6b006dbd8d9c2c12074436f2f0e0474e8f877b"
+      },
+      "functionalResults": {
+        "appointment": "pass",
+        "wiring": "pass",
+        "workflow": "pass",
+        "knowledge": "pass",
+        "debug": "pass"
+      },
+      "finalEnvironment": {
+        "trafficPercentage": 0,
+        "releaseCount": 1,
+        "originalReleaseRetained": true
+      },
+      "qualityWarnings": [
+        "Runtime appointment summary promised submission or human follow-up without a supporting action.",
+        "An extra policy import remains in the test draft."
+      ]
+    },
+    {
+      "key": "mcp-sol-low",
+      "phase": "baseline",
+      "pluginVersion": "0.2.0",
+      "model": "gpt-6.1-sol",
+      "reasoning": "low",
+      "transport": "mcp",
+      "seconds": 208.37,
+      "status": "completed",
+      "requestSHA256": "1d75366b181b92d1974af16faf3443f264fff6b595b2a9910f08659e800072fb",
+      "actorCompiled": true,
+      "approvalDeclines": 0,
+      "usage": [
+        {
+          "input_tokens": 887029,
+          "cached_input_tokens": 834816,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 6796,
+          "reasoning_output_tokens": 392
+        }
+      ],
+      "completedCommands": 3,
+      "completedMCPCalls": 63,
+      "checks": {
+        "appointment": {
+          "exists": true,
+          "registered": true,
+          "instructions": "## Procedure\n\nCollect the customer's name and preferred day for a Cedar Supplies appointment request. Ask one question per turn: first ask for their name if missing, then ask for their preferred day if missing. Reuse information already supplied. Once both are known, summarize the name and day and confirm this is an appointment REQUEST ready for review, not a confirmed booking. Never claim availability, an actual booking, or that a calendar was updated. Do not re-greet."
+        },
+        "wiring": {
+          "playbookExists": true,
+          "registered": true,
+          "functionExists": true,
+          "attached": true,
+          "inputBindingMatchesDeclaredUUID": true,
+          "captureMatches": {
+            "last_order_id": true,
+            "last_order_status": true
+          },
+          "description": "Return a fictional order's ID and processing status when the customer requests order status and provides an order ID."
+        },
+        "workflows": [
+          {
+            "name": "Confirmation",
+            "registered": true,
+            "entryConnected": true,
+            "counts": {
+              "blocks": 1,
+              "steps": 2,
+              "unreachableBlocks": 0,
+              "danglingLinks": 0
+            },
+            "stepKinds": [
+              "message",
+              "end"
+            ],
+            "messageTexts": [
+              "Your request is ready for review."
+            ],
+            "warnings": []
+          }
+        ],
+        "knowledge": {
+          "documents": [],
+          "retrievalMatches": []
+        },
+        "pureExecutions": [
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  ADA@EXAMPLE.TEST  "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "ada@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  BoB@Example.Test "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "bob@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-101"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-101",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-202"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-202",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          }
+        ],
+        "environment": {
+          "trafficPercentage": 0,
+          "releaseIDsUnchanged": true
+        }
+      },
+      "conversationChecks": [
+        {
+          "case": "appointment",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm with Cedar Supplies support. How can I help you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "I would like to request an appointment."
+              },
+              "messages": [
+                "Happy to help with that! First, could I get your name for the request?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_appointment_booking"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My name is Ada."
+              },
+              "messages": [
+                "Thanks, Ada! What day would you prefer for your appointment?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My preferred day is Tuesday."
+              },
+              "messages": [
+                "Here's a summary of your appointment request for Cedar Supplies:\n\nName: Ada\nPreferred day: Tuesday\n\nJust to be clear, this is a request ready for review \u2014 it's not a confirmed booking yet. Would you like me to submit it for review?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            }
+          ]
+        },
+        {
+          "case": "orders",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm with Cedar Supplies support. How can I help you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "What is the status of my order EVAL-101?"
+              },
+              "messages": [
+                "I looked up order EVAL-101 and it's currently in processing. Just a heads-up \u2014 this lookup shows processing status only, not live fulfillment data.\n\nAnything else I can help with?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_order_support",
+                "lookup_order"
+              ],
+              "capturedVariables": {
+                "last_order_id": "EVAL-101",
+                "last_order_status": "processing"
+              }
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "And what is the status of order EVAL-202?"
+              },
+              "messages": [
+                "Order EVAL-202 is also in processing. Same caveat applies \u2014 this shows processing status, not live fulfillment data.\n\nAnything else you'd like me to check?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "lookup_order"
+              ],
+              "capturedVariables": {
+                "last_order_id": "EVAL-202",
+                "last_order_status": "processing"
+              }
+            }
+          ]
+        },
+        {
+          "case": "confirmation",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm with Cedar Supplies support. How can I help you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "Please run the Confirmation workflow now."
+              },
+              "messages": [
+                "Your request is ready for review."
+              ],
+              "ended": true,
+              "calledTools": [
+                "transfer_to_workflow_confirmation"
+              ],
+              "capturedVariables": {}
+            }
+          ]
+        }
+      ],
+      "evidenceSHA256": {
+        ".jsonl": "d59214366c0bcd368272edca70d396b613ff42d240aec6c193fdc7266768d582",
+        "-final.txt": "e27a39aee3442c3b7bffc009fce0f194c18acbafb1ab2fac710f2604a7d8cae8",
+        "-fixture.json": "2b110d41fbc12ca9d77c66addb83d17a58c0ed23640a52c6fd121e8ee9b8dcad",
+        "-verified.json": "e51071827a16096be12e924bb46813b5c62676717aade95f6375a294a68f2d19",
+        "-conversations.json": "d8399bb766a64e9f3dfee23fffeafb24a67d44540495b2ea2db7569cdc50d855"
+      },
+      "functionalResults": {
+        "appointment": "pass",
+        "wiring": "pass",
+        "workflow": "pass",
+        "knowledge": "incomplete",
+        "debug": "pass"
+      },
+      "finalEnvironment": {
+        "trafficPercentage": 0,
+        "releaseCount": 1,
+        "originalReleaseRetained": true
+      },
+      "qualityWarnings": [
+        "Runtime appointment summary offered submission without an implemented submission action."
+      ]
+    },
+    {
+      "key": "mcp-sol-medium",
+      "phase": "baseline",
+      "pluginVersion": "0.2.0",
+      "model": "gpt-6.1-sol",
+      "reasoning": "medium",
+      "transport": "mcp",
+      "seconds": 251.74,
+      "status": "completed",
+      "requestSHA256": "4efe053b671b734ce5a5b57d07e0d2da5e2c9093c76b03e21f0ef976e9d15390",
+      "actorCompiled": true,
+      "approvalDeclines": 0,
+      "usage": [
+        {
+          "input_tokens": 1075648,
+          "cached_input_tokens": 1011712,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 8230,
+          "reasoning_output_tokens": 882
+        }
+      ],
+      "completedCommands": 4,
+      "completedMCPCalls": 71,
+      "checks": {
+        "appointment": {
+          "exists": true,
+          "registered": true,
+          "instructions": "## Goal\n\nCollect the customer's name and preferred day for a Cedar Supplies appointment request.\n\n## Procedure\n\nAsk for the customer's name if missing. Ask only one question per turn and wait for the answer. Then ask for their preferred day if missing, in a separate turn. Reuse details already provided; do not ask again.\nOnce both are known, confirm the appointment REQUEST by repeating the name and preferred day. Explicitly say this is a request for review and that an appointment has not been booked. Never claim availability, a reservation, or an actual booking. Do not contact any external service."
+        },
+        "wiring": {
+          "playbookExists": true,
+          "registered": true,
+          "functionExists": true,
+          "attached": true,
+          "inputBindingMatchesDeclaredUUID": true,
+          "captureMatches": {
+            "last_order_id": true,
+            "last_order_status": true
+          },
+          "description": "Returns a fictional order's supplied ID and processing status; use once an order ID is known and the customer asks about order status."
+        },
+        "workflows": [
+          {
+            "name": "Confirmation",
+            "registered": true,
+            "entryConnected": true,
+            "counts": {
+              "blocks": 1,
+              "steps": 2,
+              "unreachableBlocks": 0,
+              "danglingLinks": 0
+            },
+            "stepKinds": [
+              "message",
+              "end"
+            ],
+            "messageTexts": [
+              "Your request is ready for review."
+            ],
+            "warnings": []
+          }
+        ],
+        "knowledge": {
+          "documents": [],
+          "retrievalMatches": []
+        },
+        "pureExecutions": [
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-101"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-101",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-202"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-202",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  ADA@EXAMPLE.TEST  "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "ada@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  BoB@Example.Test "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "bob@example.test"
+            },
+            "path": "success",
+            "error": null
+          }
+        ],
+        "environment": {
+          "trafficPercentage": 0,
+          "releaseIDsUnchanged": true
+        }
+      },
+      "conversationChecks": [
+        {
+          "case": "appointment",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Cedar Supplies support. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "I would like to request an appointment."
+              },
+              "messages": [
+                "Happy to help with that! To get started, could you tell me your name?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_appointment_booking"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My name is Ada."
+              },
+              "messages": [
+                "Thanks, Ada! What day would you prefer for the appointment?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My preferred day is Tuesday."
+              },
+              "messages": [
+                "Thanks, Ada! Just to confirm: you're requesting an appointment for Tuesday. This is a request for review only \u2014 nothing has been booked yet, and I can't guarantee availability at this point.\n\nWould you like me to submit this request for review?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            }
+          ]
+        },
+        {
+          "case": "orders",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Cedar Supplies support. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "What is the status of my order EVAL-101?"
+              },
+              "messages": [
+                "Your order EVAL-101 is currently in processing. Is there anything else I can help you with?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_order_support",
+                "lookup_order"
+              ],
+              "capturedVariables": {
+                "last_order_id": "EVAL-101",
+                "last_order_status": "processing"
+              }
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "And what is the status of order EVAL-202?"
+              },
+              "messages": [
+                "Order EVAL-202 is also in processing. Anything else I can check for you?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "lookup_order"
+              ],
+              "capturedVariables": {
+                "last_order_id": "EVAL-202",
+                "last_order_status": "processing"
+              }
+            }
+          ]
+        },
+        {
+          "case": "confirmation",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Cedar Supplies support. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "Please run the Confirmation workflow now."
+              },
+              "messages": [
+                "Your request is ready for review."
+              ],
+              "ended": true,
+              "calledTools": [
+                "transfer_to_workflow_confirmation"
+              ],
+              "capturedVariables": {}
+            }
+          ]
+        }
+      ],
+      "evidenceSHA256": {
+        ".jsonl": "06f3e298d56bceff1f59562188318550e978eea44d41b810df322bc4a8938a42",
+        "-final.txt": "d658be4cc076a304e1c3621c82c3010b89274886db7aa79b71f384c553e2baa0",
+        "-fixture.json": "204c1127ce26ec023cdd86ea584bad990f65ba18252813793e7e1f4acda66dd4",
+        "-verified.json": "c4a8eedd9327e9b37e9822f1fae97d9efccc9b76fff0b9378351592c118330f9",
+        "-conversations.json": "1c82ae086b293dd0142c534937f4e43df943c1497294b7f49c001e9cd9e27dd4"
+      },
+      "functionalResults": {
+        "appointment": "pass",
+        "wiring": "pass",
+        "workflow": "pass",
+        "knowledge": "incomplete",
+        "debug": "pass"
+      },
+      "finalEnvironment": {
+        "trafficPercentage": 0,
+        "releaseCount": 1,
+        "originalReleaseRetained": true
+      },
+      "qualityWarnings": [
+        "Runtime appointment summary offered submission without an implemented submission action."
+      ]
+    },
+    {
+      "key": "cli-luna-low-retest",
+      "phase": "retest",
+      "pluginVersion": "0.2.1",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "transport": "cli",
+      "seconds": 153.29,
+      "status": "completed",
+      "requestSHA256": "d61f5c51292ce3cb6541d53baa7a59c0f89b82d2a6b43788df2f292f3f167a11",
+      "actorCompiled": true,
+      "approvalDeclines": 2,
+      "usage": [
+        {
+          "input_tokens": 1917566,
+          "cached_input_tokens": 1855488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 11372,
+          "reasoning_output_tokens": 4
+        }
+      ],
+      "completedCommands": 42,
+      "completedMCPCalls": 0,
+      "checks": {
+        "appointment": {
+          "exists": true,
+          "registered": true,
+          "instructions": "# Appointment request\n\nCollect the customer name and preferred day one question at a time. If a value is missing, ask only for that value before asking for the other. When both are provided, summarize them and confirm that this is an appointment request only; do not claim an appointment is booked or submitted."
+        },
+        "wiring": {
+          "playbookExists": true,
+          "registered": true,
+          "functionExists": true,
+          "attached": true,
+          "inputBindingMatchesDeclaredUUID": true,
+          "captureMatches": {
+            "last_order_id": true,
+            "last_order_status": true
+          },
+          "description": "Look up a synthetic order status when the customer has provided an order ID and asks about its status; this pure function does not contact a real order system."
+        },
+        "workflows": [
+          {
+            "name": "Confirmation",
+            "registered": true,
+            "entryConnected": true,
+            "counts": {
+              "blocks": 1,
+              "steps": 2,
+              "unreachableBlocks": 0,
+              "danglingLinks": 0
+            },
+            "stepKinds": [
+              "message",
+              "end"
+            ],
+            "messageTexts": [
+              "Your request is ready for review."
+            ],
+            "warnings": []
+          }
+        ],
+        "knowledge": {
+          "documents": [
+            {
+              "name": "cli-luna-low-retest-policy.txt",
+              "status": "SUCCESS"
+            }
+          ],
+          "retrievalMatches": [
+            {
+              "source": "cli-luna-low-retest-policy.txt",
+              "content": "Cedar Supplies fictional test policy (CEDAR-CLI-LUNA-LOW-RETEST). Unused items can be returned within 17 days of purchase. Return shipping is free. The support reference code is CEDAR-CLI-LUNA-LOW-RETEST. This policy is synthetic acceptance-test data."
+            }
+          ]
+        },
+        "pureExecutions": [
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-101"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-101",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-202"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-202",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  ADA@EXAMPLE.TEST  "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "ada@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  BoB@Example.Test "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "bob@example.test"
+            },
+            "path": "success",
+            "error": null
+          }
+        ],
+        "environment": {
+          "trafficPercentage": 0,
+          "releaseIDsUnchanged": true
+        }
+      },
+      "conversationChecks": [
+        {
+          "case": "appointment",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Acme Corp support. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "I would like to request an appointment."
+              },
+              "messages": [
+                "Great, I can help with that. What's your name?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_appointment_booking"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My name is Ada."
+              },
+              "messages": [
+                "Thanks, Ada! What day would you prefer for your appointment?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My preferred day is Tuesday."
+              },
+              "messages": [
+                "Here's what I have for your appointment request:\n\nName: Ada\nPreferred day: Tuesday\n\nJust to confirm \u2014 this is an appointment request only, so it hasn't been booked or submitted yet. Is everything correct?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            }
+          ]
+        },
+        {
+          "case": "orders",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Acme Corp support. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "What is the status of my order EVAL-101?"
+              },
+              "messages": [
+                "I found order EVAL-101, and its status is currently processing.\n\nJust a heads up: this is a test status from a simulated system, so it doesn't reflect a real order. Is there anything else I can help you with?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_order_support",
+                "lookup_order"
+              ],
+              "capturedVariables": {
+                "last_order_id": "EVAL-101",
+                "last_order_status": "processing"
+              }
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "And what is the status of order EVAL-202?"
+              },
+              "messages": [
+                "Order EVAL-202 is also showing as processing \u2014 again, this is a test status from a simulated system, not a real order lookup. Anything else I can check for you?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "lookup_order"
+              ],
+              "capturedVariables": {
+                "last_order_id": "EVAL-202",
+                "last_order_status": "processing"
+              }
+            }
+          ]
+        },
+        {
+          "case": "confirmation",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Acme Corp support. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "Please run the Confirmation workflow now."
+              },
+              "messages": [
+                "Your request is ready for review."
+              ],
+              "ended": true,
+              "calledTools": [
+                "transfer_to_workflow_confirmation"
+              ],
+              "capturedVariables": {}
+            }
+          ]
+        }
+      ],
+      "evidenceSHA256": {
+        ".jsonl": "fd2962187f5d6979d7f9f783c2db5d1ebc1ac1254ac24db70720d2007938f5fb",
+        "-final.txt": "26e69375564d727b78a1f5aa05b07ebf1d44fc5e072a37bd8b229c4698083c93",
+        "-fixture.json": "e4a5b194875a05290ce434360a736d291cc01b47aabf3c4a595af1aaf1af2534",
+        "-verified.json": "4500312e25f0d4e9e408fd05970fb0055d757e75a54f5572edd716b5d9c81e85",
+        "-conversations.json": "e7ac6396613829c92080fbc3fb7aba0d12ba1be8024fda3276cafa780ad5a866"
+      },
+      "functionalResults": {
+        "appointment": "pass",
+        "wiring": "pass",
+        "workflow": "pass",
+        "knowledge": "pass",
+        "debug": "pass"
+      },
+      "finalEnvironment": {
+        "trafficPercentage": 0,
+        "releaseCount": 1,
+        "originalReleaseRetained": true
+      },
+      "qualityWarnings": [
+        "Default Acme Corp identity appeared in a runtime greeting."
+      ]
+    },
+    {
+      "key": "mcp-luna-low-retest",
+      "phase": "retest",
+      "pluginVersion": "0.2.1",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "transport": "mcp",
+      "seconds": 176.84,
+      "status": "completed",
+      "requestSHA256": "7ecd7dc6cbaacc85c8ce79d1c26c8e32e1fae294ff49cfdcc837a7af8941bfec",
+      "actorCompiled": true,
+      "approvalDeclines": 0,
+      "usage": [
+        {
+          "input_tokens": 2439386,
+          "cached_input_tokens": 2375040,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 8484,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "completedCommands": 3,
+      "completedMCPCalls": 50,
+      "checks": {
+        "appointment": {
+          "exists": true,
+          "registered": true,
+          "instructions": "## Appointment request\n\nCollect the customer's name and preferred day, asking only one question per turn. If the user already supplied one of these details, do not ask for it again. Once both are known, summarize the requested day and name and say this is an appointment request for review, not a confirmed booking. Do not claim that an appointment has been booked or submitted."
+        },
+        "wiring": {
+          "playbookExists": true,
+          "registered": true,
+          "functionExists": true,
+          "attached": true,
+          "inputBindingMatchesDeclaredUUID": true,
+          "captureMatches": {
+            "last_order_id": true,
+            "last_order_status": true
+          },
+          "description": "Look up an order and return its ID with the synthetic processing status when the customer asks about an existing order and provides an order ID."
+        },
+        "workflows": [
+          {
+            "name": "Confirmation",
+            "registered": true,
+            "entryConnected": true,
+            "counts": {
+              "blocks": 1,
+              "steps": 2,
+              "unreachableBlocks": 0,
+              "danglingLinks": 0
+            },
+            "stepKinds": [
+              "message",
+              "end"
+            ],
+            "messageTexts": [
+              "Your request is ready for review."
+            ],
+            "warnings": []
+          }
+        ],
+        "knowledge": {
+          "documents": [
+            {
+              "name": "mcp-luna-low-retest-policy.txt",
+              "status": "SUCCESS"
+            }
+          ],
+          "retrievalMatches": [
+            {
+              "source": "mcp-luna-low-retest-policy.txt",
+              "content": "Cedar Supplies fictional test policy (CEDAR-MCP-LUNA-LOW-RETEST). Unused items can be returned within 17 days of purchase. Return shipping is free. The support reference code is CEDAR-MCP-LUNA-LOW-RETEST. This policy is synthetic acceptance-test data."
+            }
+          ]
+        },
+        "pureExecutions": [
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  ADA@EXAMPLE.TEST  "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "ada@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Normalize email",
+            "inputs": {
+              "email": "  BoB@Example.Test "
+            },
+            "success": true,
+            "outputs": {
+              "normalizedEmail": "bob@example.test"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-101"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-101",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          },
+          {
+            "function": "Lookup order",
+            "inputs": {
+              "orderId": "EVAL-202"
+            },
+            "success": true,
+            "outputs": {
+              "returnedOrderId": "EVAL-202",
+              "status": "processing"
+            },
+            "path": "success",
+            "error": null
+          }
+        ],
+        "environment": {
+          "trafficPercentage": 0,
+          "releaseIDsUnchanged": true
+        }
+      },
+      "conversationChecks": [
+        {
+          "case": "appointment",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with whatever you need. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "I would like to request an appointment."
+              },
+              "messages": [
+                "Happy to help with that! To get started, could you tell me your name?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_appointment_booking"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My name is Ada."
+              },
+              "messages": [
+                "Thanks, Ada! What day would you prefer for the appointment?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "My preferred day is Tuesday."
+              },
+              "messages": [
+                "Here's a summary of your appointment request, Ada: you'd like an appointment on Tuesday.\n\nJust to be clear, this is a request for review \u2014 it's not a confirmed booking yet. Is there anything else you'd like me to adjust?"
+              ],
+              "ended": false,
+              "calledTools": [],
+              "capturedVariables": {}
+            }
+          ]
+        },
+        {
+          "case": "orders",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with Acme Corp support. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "What is the status of my order EVAL-101?"
+              },
+              "messages": [
+                "I looked up your order using our order lookup tool, and order EVAL-101 is currently in processing. It's moving along \u2014 is there anything else you'd like to know about it?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "transfer_to_playbook_order_support",
+                "lookup_order"
+              ],
+              "capturedVariables": {
+                "last_order_id": "EVAL-101",
+                "last_order_status": "processing"
+              }
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "And what is the status of order EVAL-202?"
+              },
+              "messages": [
+                "Order EVAL-202 is also in processing, per the same order lookup. Anything else I can check for you?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "lookup_order"
+              ],
+              "capturedVariables": {
+                "last_order_id": "EVAL-202",
+                "last_order_status": "processing"
+              }
+            }
+          ]
+        },
+        {
+          "case": "confirmation",
+          "turns": [
+            {
+              "input": {
+                "type": "launch"
+              },
+              "messages": [
+                "Hi there! I'm here to help with whatever you need. What can I do for you today?"
+              ],
+              "ended": false,
+              "calledTools": [
+                "button"
+              ],
+              "capturedVariables": {}
+            },
+            {
+              "input": {
+                "type": "text",
+                "payload": "Please run the Confirmation workflow now."
+              },
+              "messages": [
+                "Your request is ready for review."
+              ],
+              "ended": true,
+              "calledTools": [
+                "transfer_to_workflow_confirmation"
+              ],
+              "capturedVariables": {}
+            }
+          ]
+        }
+      ],
+      "evidenceSHA256": {
+        ".jsonl": "3a7f294eb280e80a15360e444f2b0023247fadcd56fc3d09a87fa00ebbb51948",
+        "-final.txt": "d75c15e411db8f33d93bf08b235b51dc05cf575d05c15d8b2fdd4df16c758461",
+        "-fixture.json": "0a7f71da1649741910cbe6b69da4c9c72faa50ba9e640beb7eee9ab99db6aea8",
+        "-verified.json": "f0f6add3a2127edde831fb2a8d842372a672e5739bb3d7e60129287d8697304e",
+        "-conversations.json": "040a3d14a11618afa14ef53f540c020fb26fa3d87ded40a6c553867dd1b9c48c"
+      },
+      "functionalResults": {
+        "appointment": "pass",
+        "wiring": "pass",
+        "workflow": "pass",
+        "knowledge": "pass",
+        "debug": "pass"
+      },
+      "finalEnvironment": {
+        "trafficPercentage": 0,
+        "releaseCount": 1,
+        "originalReleaseRetained": true
+      },
+      "qualityWarnings": [
+        "Default Acme Corp identity appeared in a runtime greeting."
+      ]
+    }
+  ],
+  "methodology": {
+    "baselineRuns": 8,
+    "freshRetests": 2,
+    "tasksPerContext": 5,
+    "samplesPerCell": 1,
+    "heldOutRetests": false,
+    "normalAutomaticApprovalReview": true,
+    "baselineCLIDraftsCompiledByVerifier": true,
+    "realChatApplicationCoverage": false,
+    "freshCLIOAuthTested": false,
+    "nativeHostedMCPOAuthTested": true,
+    "testResourcesRetained": true,
+    "baselineFunctionalPasses": 29,
+    "baselineFunctionalChecks": 40,
+    "retestFunctionalPasses": 10,
+    "retestFunctionalChecks": 10
+  },
+  "finalStateEvidenceSHA256": "ab8ea5af046ffe546b9904924140954df159c6df961c14cd7a82672ed60e0838"
+}

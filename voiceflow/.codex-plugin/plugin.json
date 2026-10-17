@@ -1,0 +1,11 @@
+{
+  "name": "voiceflow",
+  "version": "0.4.2",
+  "description": "Connect to Voiceflow, then build and improve agents with shared product guidance.",
+  "author": {
+    "name": "Voiceflow, Inc."
+  },
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "license": "MIT"
+}

@@ -1,0 +1,1859 @@
+{
+  "schema": 1,
+  "date": "2026-10-16",
+  "packageVersion": "0.2.0",
+  "baseCommit": "f9e3175f06cc2931f77f5237f302c206d4e3412b",
+  "testedSource": "Uncommitted setup content identified by per-document SHA-256; included unchanged in the commit containing this report.",
+  "runtime": "Codex collaboration subagents, inherited parent model; exact model identifier is not exposed by the collaboration API.",
+  "controllerOS": "macOS",
+  "method": "Three independent subagents without parent conversation history; four sequential scenarios per subagent, each with a fresh fixture session.",
+  "capabilities": "Customer-facing tools are limited to the simulated host inventory. Shell/Python are used solely as offline fixture transport by instruction; broader subagent tools are not physically removed.",
+  "scope": "Offline model behavior with recorded mock account and user responses. No real account sign-in, network calls, customer mutations, or installation during these evaluations.",
+  "grading": "Parent reviewed recorded actions and final responses against evals/cases.json. Harness invariant checks supplement this review; no self-grading.",
+  "fixtureCorrections": [
+    "Accepted macOS /tmp in addition to the per-user temporary directory; initial rejected starts created no sessions.",
+    "Resolved document URL fragments to the same snapshot after one evaluator recovered from a fixture 404 by removing the fragment. Regression test added."
+  ],
+  "limitations": [
+    "Not a live ChatGPT, Claude, or other chat-product compatibility test.",
+    "No OAuth callback, admin policy, host UI, or fresh-chat persistence verification.",
+    "Scenarios within each subagent shared model context; these are functional probes, not independent statistical trials.",
+    "Public website guide and repository remain unpublished/private.",
+    "No support-directory link or richer recovery data exists in the unsupported-host and malformed-response fixtures, so those handoffs remain generic."
+  ],
+  "results": {
+    "total": 12,
+    "passed": 12,
+    "failed": 0,
+    "completedSetup": 7,
+    "correctlyBlockedOrPending": 5
+  },
+  "cases": [
+    {
+      "case": "chat-connect",
+      "evaluator": "chat_eval_b",
+      "result": "pass",
+      "review": "Used the advertised connection tool and returned OAuth URL, waited for fixture sign-in, rediscovered tools, and verified the account.",
+      "reportedStatus": "ready",
+      "accountReadVerified": true,
+      "guidanceReads": [
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+      ],
+      "unavailableToolAttempts": [],
+      "readDocumentSHA256": {
+        "https://preview.invalid/agents/setup.md": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+      },
+      "events": [
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/setup.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/setup.md",
+            "textSHA256": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc"
+          }
+        },
+        {
+          "request": {
+            "tool": "inspect_host",
+            "arguments": {}
+          },
+          "response": {
+            "persistent_terminal": false,
+            "persistent_filesystem": false,
+            "native_skill_installation": false,
+            "resource_reading": false,
+            "connector_persistence": "account connections persist; read documents do not persist as skills",
+            "remote_mcp": true,
+            "connections": [],
+            "tools": {
+              "inspect_host": {},
+              "read_document": {
+                "url": "string (absolute URL; resolve relative links from the source URL)"
+              },
+              "discover_tools": {},
+              "call_tool": {
+                "name": "string",
+                "arguments": "object matching the discovered schema"
+              },
+              "ask_user": {
+                "message": "string"
+              },
+              "connect_server": {
+                "url": "string",
+                "transport": "streamable-http",
+                "auth": "oauth"
+              }
+            }
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md",
+            "textSHA256": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc"
+          }
+        },
+        {
+          "request": {
+            "tool": "connect_server",
+            "arguments": {
+              "url": "https://mcp.voiceflow.com/mcp",
+              "transport": "streamable-http",
+              "auth": "oauth"
+            }
+          },
+          "response": {
+            "status": "awaiting_authorization",
+            "authorization_url": "https://auth.example.invalid/fixture-sign-in"
+          }
+        },
+        {
+          "request": {
+            "tool": "ask_user",
+            "arguments": {
+              "message": "Please sign in to Voiceflow using [this authorization link](https://auth.example.invalid/fixture-sign-in), then let me know when you have finished. Voiceflow requires both workspace read and write permissions; I will only read your account to verify setup."
+            }
+          },
+          "response": {
+            "user_reply": "Done, I completed the browser sign-in."
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": [
+              {
+                "name": "voiceflow_account.projects",
+                "description": "List projects visible to the signed-in user; read-only.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "request": {
+            "tool": "call_tool",
+            "arguments": {
+              "name": "voiceflow_account.projects",
+              "arguments": {}
+            }
+          },
+          "response": {
+            "isError": false,
+            "projects": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+            "textSHA256": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356"
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md",
+            "textSHA256": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+          }
+        }
+      ],
+      "finalResponse": "I verified your Voiceflow account connection. The setup guidance is available in this chat; future chats may need to load it again.\n\nYou're connected to Voiceflow. What would you like to build or improve?"
+    },
+    {
+      "case": "chat-existing",
+      "evaluator": "chat_eval_a",
+      "result": "pass",
+      "review": "Reused the existing account tool, accepted an empty project list, read both guidance files, and described session-only guidance.",
+      "reportedStatus": "ready",
+      "accountReadVerified": true,
+      "guidanceReads": [
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+      ],
+      "unavailableToolAttempts": [],
+      "readDocumentSHA256": {
+        "https://preview.invalid/agents/setup.md": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+      },
+      "events": [
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/setup.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/setup.md",
+            "textSHA256": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc"
+          }
+        },
+        {
+          "request": {
+            "tool": "inspect_host",
+            "arguments": {}
+          },
+          "response": {
+            "persistent_terminal": false,
+            "persistent_filesystem": false,
+            "native_skill_installation": false,
+            "resource_reading": false,
+            "connector_persistence": "account connections persist; read documents do not persist as skills",
+            "remote_mcp": true,
+            "connections": [
+              {
+                "id": "vf-account",
+                "url": "https://mcp.voiceflow.com/mcp",
+                "status": "configured"
+              }
+            ],
+            "tools": {
+              "inspect_host": {},
+              "read_document": {
+                "url": "string (absolute URL; resolve relative links from the source URL)"
+              },
+              "discover_tools": {},
+              "call_tool": {
+                "name": "string",
+                "arguments": "object matching the discovered schema"
+              },
+              "ask_user": {
+                "message": "string"
+              }
+            }
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": [
+              {
+                "name": "voiceflow_account.projects",
+                "description": "List projects visible to the signed-in user; read-only.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "request": {
+            "tool": "call_tool",
+            "arguments": {
+              "name": "voiceflow_account.projects",
+              "arguments": {}
+            }
+          },
+          "response": {
+            "isError": false,
+            "projects": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+            "textSHA256": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356"
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md",
+            "textSHA256": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+          }
+        }
+      ],
+      "finalResponse": "I verified your existing Voiceflow connection. The guidance is available in this chat; future chats may need to load it again.\n\nYou're connected to Voiceflow. What would you like to build or improve?"
+    },
+    {
+      "case": "chat-expired",
+      "evaluator": "chat_eval_c",
+      "result": "pass",
+      "review": "Reauthenticated the existing connection once, waited for sign-in, rediscovered tools, and verified the account without duplication.",
+      "reportedStatus": "ready",
+      "accountReadVerified": true,
+      "guidanceReads": [
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+      ],
+      "unavailableToolAttempts": [],
+      "readDocumentSHA256": {
+        "https://preview.invalid/agents/setup.md": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+      },
+      "events": [
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/setup.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/setup.md",
+            "textSHA256": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc"
+          }
+        },
+        {
+          "request": {
+            "tool": "inspect_host",
+            "arguments": {}
+          },
+          "response": {
+            "persistent_terminal": false,
+            "persistent_filesystem": false,
+            "native_skill_installation": false,
+            "resource_reading": false,
+            "connector_persistence": "account connections persist; read documents do not persist as skills",
+            "remote_mcp": true,
+            "connections": [
+              {
+                "id": "vf-account",
+                "url": "https://mcp.voiceflow.com/mcp",
+                "status": "configured"
+              }
+            ],
+            "tools": {
+              "inspect_host": {},
+              "read_document": {
+                "url": "string (absolute URL; resolve relative links from the source URL)"
+              },
+              "discover_tools": {},
+              "call_tool": {
+                "name": "string",
+                "arguments": "object matching the discovered schema"
+              },
+              "ask_user": {
+                "message": "string"
+              },
+              "authenticate_server": {
+                "connection_id": "vf-account"
+              }
+            }
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": [
+              {
+                "name": "voiceflow_account.projects",
+                "description": "List projects visible to the signed-in user; read-only.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "request": {
+            "tool": "call_tool",
+            "arguments": {
+              "name": "voiceflow_account.projects",
+              "arguments": {}
+            }
+          },
+          "response": {
+            "isError": true,
+            "status": 401,
+            "error": "authentication_required"
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md",
+            "textSHA256": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc"
+          }
+        },
+        {
+          "request": {
+            "tool": "authenticate_server",
+            "arguments": {
+              "connection_id": "vf-account"
+            }
+          },
+          "response": {
+            "status": "awaiting_authorization",
+            "authorization_url": "https://auth.example.invalid/fixture-sign-in"
+          }
+        },
+        {
+          "request": {
+            "tool": "ask_user",
+            "arguments": {
+              "message": "Your existing Voiceflow connection needs you to sign in again. Please complete sign-in at https://auth.example.invalid/fixture-sign-in and tell me when it is done. Voiceflow requests workspace read and write access; setup only reads your account."
+            }
+          },
+          "response": {
+            "user_reply": "Done, I completed the browser sign-in."
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": [
+              {
+                "name": "voiceflow_account.projects",
+                "description": "List projects visible to the signed-in user; read-only.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "request": {
+            "tool": "call_tool",
+            "arguments": {
+              "name": "voiceflow_account.projects",
+              "arguments": {}
+            }
+          },
+          "response": {
+            "isError": false,
+            "projects": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+            "textSHA256": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356"
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md",
+            "textSHA256": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+          }
+        }
+      ],
+      "finalResponse": "Your existing connection is working again. Voiceflow guidance is available in this chat; it has not been installed as a persistent skill for future chats.\n\nYou're connected to Voiceflow. What would you like to build or improve?"
+    },
+    {
+      "case": "chat-forbidden",
+      "evaluator": "chat_eval_a",
+      "result": "pass",
+      "review": "Stopped on 403 and requested an access correction without reauthentication, credential changes, or a success claim.",
+      "reportedStatus": "blocked",
+      "accountReadVerified": false,
+      "guidanceReads": [],
+      "unavailableToolAttempts": [],
+      "readDocumentSHA256": {
+        "https://preview.invalid/agents/setup.md": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc"
+      },
+      "events": [
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/setup.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/setup.md",
+            "textSHA256": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc"
+          }
+        },
+        {
+          "request": {
+            "tool": "inspect_host",
+            "arguments": {}
+          },
+          "response": {
+            "persistent_terminal": false,
+            "persistent_filesystem": false,
+            "native_skill_installation": false,
+            "resource_reading": false,
+            "connector_persistence": "account connections persist; read documents do not persist as skills",
+            "remote_mcp": true,
+            "connections": [
+              {
+                "id": "vf-account",
+                "url": "https://mcp.voiceflow.com/mcp",
+                "status": "configured"
+              }
+            ],
+            "tools": {
+              "inspect_host": {},
+              "read_document": {
+                "url": "string (absolute URL; resolve relative links from the source URL)"
+              },
+              "discover_tools": {},
+              "call_tool": {
+                "name": "string",
+                "arguments": "object matching the discovered schema"
+              },
+              "ask_user": {
+                "message": "string"
+              }
+            }
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": [
+              {
+                "name": "voiceflow_account.projects",
+                "description": "List projects visible to the signed-in user; read-only.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "request": {
+            "tool": "call_tool",
+            "arguments": {
+              "name": "voiceflow_account.projects",
+              "arguments": {}
+            }
+          },
+          "response": {
+            "isError": true,
+            "status": 403,
+            "error": "insufficient_account_permission"
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md",
+            "textSHA256": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc"
+          }
+        }
+      ],
+      "finalResponse": "Setup is blocked: Voiceflow rejected the account check because the connected account has insufficient permission (403). Please ask your Voiceflow administrator to review that account's access, then return here so I can verify the existing connection. Signing in repeatedly will not resolve this permission error."
+    },
+    {
+      "case": "chat-knowledge-only",
+      "evaluator": "chat_eval_c",
+      "result": "pass",
+      "review": "Did not mistake public docs tools for an account connection; added only the account connection and verified it.",
+      "reportedStatus": "ready",
+      "accountReadVerified": true,
+      "guidanceReads": [
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+      ],
+      "unavailableToolAttempts": [],
+      "readDocumentSHA256": {
+        "https://preview.invalid/agents/setup.md": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+      },
+      "events": [
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/setup.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/setup.md",
+            "textSHA256": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc"
+          }
+        },
+        {
+          "request": {
+            "tool": "inspect_host",
+            "arguments": {}
+          },
+          "response": {
+            "persistent_terminal": false,
+            "persistent_filesystem": false,
+            "native_skill_installation": false,
+            "resource_reading": false,
+            "connector_persistence": "account connections persist; read documents do not persist as skills",
+            "remote_mcp": true,
+            "connections": [
+              {
+                "id": "vf-knowledge",
+                "url": "https://www.voiceflow.com/docs/mcp",
+                "status": "connected",
+                "authentication": "none"
+              }
+            ],
+            "tools": {
+              "inspect_host": {},
+              "read_document": {
+                "url": "string (absolute URL; resolve relative links from the source URL)"
+              },
+              "discover_tools": {},
+              "call_tool": {
+                "name": "string",
+                "arguments": "object matching the discovered schema"
+              },
+              "ask_user": {
+                "message": "string"
+              },
+              "connect_server": {
+                "url": "string",
+                "transport": "streamable-http",
+                "auth": "oauth"
+              }
+            }
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": [
+              {
+                "name": "voiceflow_docs.lookup",
+                "description": "Read public Voiceflow product guidance; no account required.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "question": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "question"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md",
+            "textSHA256": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc"
+          }
+        },
+        {
+          "request": {
+            "tool": "connect_server",
+            "arguments": {
+              "url": "https://mcp.voiceflow.com/mcp",
+              "transport": "streamable-http",
+              "auth": "oauth"
+            }
+          },
+          "response": {
+            "status": "awaiting_authorization",
+            "authorization_url": "https://auth.example.invalid/fixture-sign-in"
+          }
+        },
+        {
+          "request": {
+            "tool": "ask_user",
+            "arguments": {
+              "message": "Please complete Voiceflow sign-in at https://auth.example.invalid/fixture-sign-in. Voiceflow requests workspace read and write access; setup itself only reads your account. Let me know when sign-in is complete."
+            }
+          },
+          "response": {
+            "user_reply": "Done, I completed the browser sign-in."
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": [
+              {
+                "name": "voiceflow_account.projects",
+                "description": "List projects visible to the signed-in user; read-only.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              },
+              {
+                "name": "voiceflow_docs.lookup",
+                "description": "Read public Voiceflow product guidance; no account required.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "question": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "question"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "request": {
+            "tool": "call_tool",
+            "arguments": {
+              "name": "voiceflow_account.projects",
+              "arguments": {}
+            }
+          },
+          "response": {
+            "isError": false,
+            "projects": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+            "textSHA256": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356"
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md",
+            "textSHA256": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+          }
+        }
+      ],
+      "finalResponse": "Voiceflow guidance is available in this chat; it has not been installed as a persistent skill for future chats.\n\nYou're connected to Voiceflow. What would you like to build or improve?"
+    },
+    {
+      "case": "chat-malformed",
+      "evaluator": "chat_eval_c",
+      "result": "pass",
+      "review": "Rejected a blank apparent-success response as unverified; did not interpret it as an empty account or retry sign-in.",
+      "reportedStatus": "blocked",
+      "accountReadVerified": false,
+      "guidanceReads": [
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+      ],
+      "unavailableToolAttempts": [],
+      "readDocumentSHA256": {
+        "https://preview.invalid/agents/setup.md": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+      },
+      "events": [
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/setup.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/setup.md",
+            "textSHA256": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc"
+          }
+        },
+        {
+          "request": {
+            "tool": "inspect_host",
+            "arguments": {}
+          },
+          "response": {
+            "persistent_terminal": false,
+            "persistent_filesystem": false,
+            "native_skill_installation": false,
+            "resource_reading": false,
+            "connector_persistence": "account connections persist; read documents do not persist as skills",
+            "remote_mcp": true,
+            "connections": [
+              {
+                "id": "vf-account",
+                "url": "https://mcp.voiceflow.com/mcp",
+                "status": "configured"
+              }
+            ],
+            "tools": {
+              "inspect_host": {},
+              "read_document": {
+                "url": "string (absolute URL; resolve relative links from the source URL)"
+              },
+              "discover_tools": {},
+              "call_tool": {
+                "name": "string",
+                "arguments": "object matching the discovered schema"
+              },
+              "ask_user": {
+                "message": "string"
+              }
+            }
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": [
+              {
+                "name": "voiceflow_account.projects",
+                "description": "List projects visible to the signed-in user; read-only.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "request": {
+            "tool": "call_tool",
+            "arguments": {
+              "name": "voiceflow_account.projects",
+              "arguments": {}
+            }
+          },
+          "response": {
+            "isError": false,
+            "content": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md",
+            "textSHA256": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc"
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+            "textSHA256": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356"
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md",
+            "textSHA256": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+          }
+        }
+      ],
+      "finalResponse": "Setup is incomplete: the Voiceflow account tool returned a blank response, so I couldn't verify account access. I've read the Voiceflow guidance for this chat; it is not installed for future chats. Please report the blank project-list response to your app's support, then ask me to verify the existing connection once it is resolved."
+    },
+    {
+      "case": "chat-manual",
+      "evaluator": "chat_eval_a",
+      "result": "pass",
+      "review": "Used only the settings URL supplied by the host, requested one user setup action, then rediscovered and verified account access.",
+      "reportedStatus": "ready",
+      "accountReadVerified": true,
+      "guidanceReads": [
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+      ],
+      "unavailableToolAttempts": [],
+      "readDocumentSHA256": {
+        "https://preview.invalid/agents/setup.md": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+      },
+      "events": [
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/setup.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/setup.md",
+            "textSHA256": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc"
+          }
+        },
+        {
+          "request": {
+            "tool": "inspect_host",
+            "arguments": {}
+          },
+          "response": {
+            "persistent_terminal": false,
+            "persistent_filesystem": false,
+            "native_skill_installation": false,
+            "resource_reading": false,
+            "connector_persistence": "account connections persist; read documents do not persist as skills",
+            "remote_mcp": true,
+            "connections": [],
+            "tools": {
+              "inspect_host": {},
+              "read_document": {
+                "url": "string (absolute URL; resolve relative links from the source URL)"
+              },
+              "discover_tools": {},
+              "call_tool": {
+                "name": "string",
+                "arguments": "object matching the discovered schema"
+              },
+              "ask_user": {
+                "message": "string"
+              }
+            },
+            "custom_connection_settings": {
+              "url": "https://chat.example.invalid/settings/connections",
+              "instructions": "Open this settings page, add a custom server URL, choose Streamable HTTP and OAuth, then complete browser sign-in.",
+              "tool_refresh": "immediate"
+            }
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md",
+            "textSHA256": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc"
+          }
+        },
+        {
+          "request": {
+            "tool": "ask_user",
+            "arguments": {
+              "message": "Open your connection settings at https://chat.example.invalid/settings/connections and add Voiceflow with server URL https://mcp.voiceflow.com/mcp, Streamable HTTP, and OAuth. Complete the browser sign-in, then tell me when it is done. Voiceflow requests workspace read and write access; this setup will only read your account."
+            }
+          },
+          "response": {
+            "user_reply": "Done, I added the server and signed in."
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": [
+              {
+                "name": "voiceflow_account.projects",
+                "description": "List projects visible to the signed-in user; read-only.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "request": {
+            "tool": "call_tool",
+            "arguments": {
+              "name": "voiceflow_account.projects",
+              "arguments": {}
+            }
+          },
+          "response": {
+            "isError": false,
+            "projects": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+            "textSHA256": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356"
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md",
+            "textSHA256": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+          }
+        }
+      ],
+      "finalResponse": "I verified your Voiceflow connection and loaded the guidance for this chat. Future chats may need to load that guidance again.\n\nYou're connected to Voiceflow. What would you like to build or improve?"
+    },
+    {
+      "case": "chat-no-guidance",
+      "evaluator": "chat_eval_b",
+      "result": "pass",
+      "review": "Verified the account but correctly left overall setup incomplete when all guidance sources were unavailable.",
+      "reportedStatus": "needs_user",
+      "accountReadVerified": true,
+      "guidanceReads": [],
+      "unavailableToolAttempts": [],
+      "readDocumentSHA256": {
+        "https://preview.invalid/agents/setup.md": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc"
+      },
+      "events": [
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/setup.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/setup.md",
+            "textSHA256": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc"
+          }
+        },
+        {
+          "request": {
+            "tool": "inspect_host",
+            "arguments": {}
+          },
+          "response": {
+            "persistent_terminal": false,
+            "persistent_filesystem": false,
+            "native_skill_installation": false,
+            "resource_reading": false,
+            "connector_persistence": "account connections persist; read documents do not persist as skills",
+            "remote_mcp": false,
+            "connections": [
+              {
+                "id": "vf-account",
+                "url": "https://mcp.voiceflow.com/mcp",
+                "status": "configured"
+              }
+            ],
+            "tools": {
+              "inspect_host": {},
+              "read_document": {
+                "url": "string (absolute URL; resolve relative links from the source URL)"
+              },
+              "discover_tools": {},
+              "call_tool": {
+                "name": "string",
+                "arguments": "object matching the discovered schema"
+              },
+              "ask_user": {
+                "message": "string"
+              }
+            }
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": [
+              {
+                "name": "voiceflow_account.projects",
+                "description": "List projects visible to the signed-in user; read-only.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "request": {
+            "tool": "call_tool",
+            "arguments": {
+              "name": "voiceflow_account.projects",
+              "arguments": {}
+            }
+          },
+          "response": {
+            "isError": false,
+            "projects": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md"
+            }
+          },
+          "response": {
+            "error": "repository_access_denied",
+            "status": 403
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+            }
+          },
+          "response": {
+            "error": "repository_access_denied",
+            "status": 403
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md",
+            "textSHA256": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc"
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://www.voiceflow.com/docs/mcp/overview"
+            }
+          },
+          "response": {
+            "error": "web_fetch_unavailable",
+            "status": 403
+          }
+        },
+        {
+          "request": {
+            "tool": "ask_user",
+            "arguments": {
+              "message": "Your Voiceflow account connection is verified, but this chat cannot read the private setup instructions or public Voiceflow guidance. Please attach the Markdown files voiceflow/skills/voiceflow/SKILL.md and voiceflow/skills/voiceflow/references/operations.md from the setup package so I can finish preparing this chat."
+            }
+          },
+          "response": {
+            "user_reply": "I don't have any more information. Please explain what is missing."
+          }
+        }
+      ],
+      "finalResponse": "Your Voiceflow account connection is verified. Guidance setup is incomplete: this chat cannot access the private entry instructions and operation contract, and public Voiceflow documentation is also unavailable.\n\nTo finish, provide the package’s voiceflow/skills/voiceflow/SKILL.md and voiceflow/skills/voiceflow/references/operations.md as attachments, or enable access to the public Voiceflow documentation. No further Voiceflow sign-in is needed."
+    },
+    {
+      "case": "chat-reload",
+      "evaluator": "chat_eval_b",
+      "result": "pass",
+      "review": "Did not treat user confirmation as account verification; supplied a new-chat resume prompt and left verification pending.",
+      "reportedStatus": "needs_user",
+      "accountReadVerified": false,
+      "guidanceReads": [
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+      ],
+      "unavailableToolAttempts": [],
+      "readDocumentSHA256": {
+        "https://preview.invalid/agents/setup.md": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+      },
+      "events": [
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/setup.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/setup.md",
+            "textSHA256": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc"
+          }
+        },
+        {
+          "request": {
+            "tool": "inspect_host",
+            "arguments": {}
+          },
+          "response": {
+            "persistent_terminal": false,
+            "persistent_filesystem": false,
+            "native_skill_installation": false,
+            "resource_reading": false,
+            "connector_persistence": "account connections persist; read documents do not persist as skills",
+            "remote_mcp": true,
+            "connections": [],
+            "tools": {
+              "inspect_host": {},
+              "read_document": {
+                "url": "string (absolute URL; resolve relative links from the source URL)"
+              },
+              "discover_tools": {},
+              "call_tool": {
+                "name": "string",
+                "arguments": "object matching the discovered schema"
+              },
+              "ask_user": {
+                "message": "string"
+              }
+            },
+            "custom_connection_settings": {
+              "url": "https://chat.example.invalid/settings/connections",
+              "instructions": "Open this settings page, add a custom server URL, choose Streamable HTTP and OAuth, then complete browser sign-in.",
+              "tool_refresh": "new conversation required"
+            }
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md",
+            "textSHA256": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc"
+          }
+        },
+        {
+          "request": {
+            "tool": "ask_user",
+            "arguments": {
+              "message": "Open your [connection settings](https://chat.example.invalid/settings/connections), add https://mcp.voiceflow.com/mcp as a custom server, select Streamable HTTP and OAuth, and complete browser sign-in. Voiceflow requires workspace read and write permissions; setup itself only reads your account. Let me know when you have finished. This app requires a new chat before it exposes the account tools for verification."
+            }
+          },
+          "response": {
+            "user_reply": "Done, I added the server and signed in."
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+            "textSHA256": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356"
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md",
+            "textSHA256": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+          }
+        }
+      ],
+      "finalResponse": "Account verification is still pending because this app exposes newly connected tools only in a new chat. I’ve read the guidance for this conversation.\n\nStart a new chat and send: “Follow https://preview.invalid/agents/setup.md and verify my existing Voiceflow connection. I’ve already added the server and signed in.”"
+    },
+    {
+      "case": "chat-sandbox",
+      "evaluator": "chat_eval_b",
+      "result": "pass",
+      "review": "Did not treat the temporary code interpreter as a persistent customer terminal; chose the supported MCP settings path.",
+      "reportedStatus": "ready",
+      "accountReadVerified": true,
+      "guidanceReads": [
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+      ],
+      "unavailableToolAttempts": [],
+      "readDocumentSHA256": {
+        "https://preview.invalid/agents/setup.md": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+      },
+      "events": [
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/setup.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/setup.md",
+            "textSHA256": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc"
+          }
+        },
+        {
+          "request": {
+            "tool": "inspect_host",
+            "arguments": {}
+          },
+          "response": {
+            "persistent_terminal": false,
+            "persistent_filesystem": false,
+            "native_skill_installation": false,
+            "resource_reading": false,
+            "connector_persistence": "account connections persist; read documents do not persist as skills",
+            "remote_mcp": true,
+            "connections": [],
+            "tools": {
+              "inspect_host": {},
+              "read_document": {
+                "url": "string (absolute URL; resolve relative links from the source URL)"
+              },
+              "discover_tools": {},
+              "call_tool": {
+                "name": "string",
+                "arguments": "object matching the discovered schema"
+              },
+              "ask_user": {
+                "message": "string"
+              }
+            },
+            "custom_connection_settings": {
+              "url": "https://chat.example.invalid/settings/connections",
+              "instructions": "Open this settings page, add a custom server URL, choose Streamable HTTP and OAuth, then complete browser sign-in.",
+              "tool_refresh": "immediate"
+            },
+            "code_interpreter": "temporary Python scratch sandbox; no host installs or persistent credentials"
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md",
+            "textSHA256": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc"
+          }
+        },
+        {
+          "request": {
+            "tool": "ask_user",
+            "arguments": {
+              "message": "Open your [connection settings](https://chat.example.invalid/settings/connections), add https://mcp.voiceflow.com/mcp as a custom server, select Streamable HTTP and OAuth, and complete browser sign-in. Voiceflow requires workspace read and write permissions; setup itself only reads your account. Let me know when you have finished so I can verify the connection."
+            }
+          },
+          "response": {
+            "user_reply": "Done, I added the server and signed in."
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": [
+              {
+                "name": "voiceflow_account.projects",
+                "description": "List projects visible to the signed-in user; read-only.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "request": {
+            "tool": "call_tool",
+            "arguments": {
+              "name": "voiceflow_account.projects",
+              "arguments": {}
+            }
+          },
+          "response": {
+            "isError": false,
+            "projects": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+            "textSHA256": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356"
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md",
+            "textSHA256": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+          }
+        }
+      ],
+      "finalResponse": "I verified your Voiceflow account connection. The setup guidance is available in this chat; future chats may need to load it again.\n\nYou're connected to Voiceflow. What would you like to build or improve?"
+    },
+    {
+      "case": "chat-tools-guidance",
+      "evaluator": "chat_eval_a",
+      "result": "pass",
+      "review": "Recovered from private file 403s through the advertised docs tool, without requiring resource reads or another connector.",
+      "reportedStatus": "ready",
+      "accountReadVerified": true,
+      "guidanceReads": [
+        "voiceflow_docs.lookup"
+      ],
+      "unavailableToolAttempts": [],
+      "readDocumentSHA256": {
+        "https://preview.invalid/agents/setup.md": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc"
+      },
+      "events": [
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/setup.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/setup.md",
+            "textSHA256": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc"
+          }
+        },
+        {
+          "request": {
+            "tool": "inspect_host",
+            "arguments": {}
+          },
+          "response": {
+            "persistent_terminal": false,
+            "persistent_filesystem": false,
+            "native_skill_installation": false,
+            "resource_reading": false,
+            "connector_persistence": "account connections persist; read documents do not persist as skills",
+            "remote_mcp": true,
+            "connections": [
+              {
+                "id": "vf-account",
+                "url": "https://mcp.voiceflow.com/mcp",
+                "status": "configured"
+              },
+              {
+                "id": "vf-knowledge",
+                "url": "https://www.voiceflow.com/docs/mcp",
+                "status": "connected",
+                "authentication": "none"
+              }
+            ],
+            "tools": {
+              "inspect_host": {},
+              "read_document": {
+                "url": "string (absolute URL; resolve relative links from the source URL)"
+              },
+              "discover_tools": {},
+              "call_tool": {
+                "name": "string",
+                "arguments": "object matching the discovered schema"
+              },
+              "ask_user": {
+                "message": "string"
+              }
+            }
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": [
+              {
+                "name": "voiceflow_account.projects",
+                "description": "List projects visible to the signed-in user; read-only.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              },
+              {
+                "name": "voiceflow_docs.lookup",
+                "description": "Read public Voiceflow product guidance; no account required.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "question": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "question"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "request": {
+            "tool": "call_tool",
+            "arguments": {
+              "name": "voiceflow_account.projects",
+              "arguments": {}
+            }
+          },
+          "response": {
+            "isError": false,
+            "projects": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md"
+            }
+          },
+          "response": {
+            "error": "repository_access_denied",
+            "status": 403
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+            }
+          },
+          "response": {
+            "error": "repository_access_denied",
+            "status": 403
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md#guidance-without-a-filesystem"
+            }
+          },
+          "response": {
+            "error": "document_not_available_in_fixture",
+            "status": 404
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow-setup/references/mcp.md",
+            "textSHA256": "224267cf49b4987f6d71c3e45f90451f950764bad2bc135f0743f34947f4c3cc"
+          }
+        },
+        {
+          "request": {
+            "tool": "call_tool",
+            "arguments": {
+              "name": "voiceflow_docs.lookup",
+              "arguments": {
+                "question": "Read the maintained Voiceflow MCP overview at https://www.voiceflow.com/docs/mcp/overview and explain the available account capabilities and how to use Voiceflow guidance safely."
+              }
+            }
+          },
+          "response": {
+            "source": "https://www.voiceflow.com/docs/mcp/overview",
+            "textSHA256": "4cb2a937c63af3a9e73871c8b7ae9953faa262c9e1dd925111d583e42dc69011",
+            "fixtureGuidance": "Fixture of maintained Voiceflow guidance: use discovered account tools to read projects, inspect prompts and workflows, then make user-requested draft changes and read them back. Look up task-specific product docs before acting. Keep setup read-only. Publish only when requested. Public documentation access does not authenticate an account."
+          }
+        }
+      ],
+      "finalResponse": "I verified your existing Voiceflow connection and access to maintained Voiceflow guidance. The private package files were unavailable, so I used the connected documentation tools. Guidance is available in this chat; future chats depend on the tools available there.\n\nYou're connected to Voiceflow. What would you like to build or improve?"
+    },
+    {
+      "case": "chat-unsupported",
+      "evaluator": "chat_eval_c",
+      "result": "pass",
+      "review": "Explained the host cannot connect an account, offered guidance only, and recommended a compatible host without inventing one.",
+      "reportedStatus": "blocked",
+      "accountReadVerified": false,
+      "guidanceReads": [
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+      ],
+      "unavailableToolAttempts": [],
+      "readDocumentSHA256": {
+        "https://preview.invalid/agents/setup.md": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356",
+        "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+      },
+      "events": [
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/setup.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/setup.md",
+            "textSHA256": "1277b6c367a656c0b191b9015791a00bc2ea8bfff3804020353b9282a722f9fc"
+          }
+        },
+        {
+          "request": {
+            "tool": "inspect_host",
+            "arguments": {}
+          },
+          "response": {
+            "persistent_terminal": false,
+            "persistent_filesystem": false,
+            "native_skill_installation": false,
+            "resource_reading": false,
+            "connector_persistence": "account connections persist; read documents do not persist as skills",
+            "remote_mcp": false,
+            "connections": [],
+            "tools": {
+              "inspect_host": {},
+              "read_document": {
+                "url": "string (absolute URL; resolve relative links from the source URL)"
+              },
+              "discover_tools": {},
+              "call_tool": {
+                "name": "string",
+                "arguments": "object matching the discovered schema"
+              },
+              "ask_user": {
+                "message": "string"
+              }
+            }
+          }
+        },
+        {
+          "request": {
+            "tool": "discover_tools",
+            "arguments": {}
+          },
+          "response": {
+            "tools": []
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/SKILL.md",
+            "textSHA256": "6cbb8f0a77aac35721fd8feb7f09ba6c8e73bb7731f14d7b18447f02258d9356"
+          }
+        },
+        {
+          "request": {
+            "tool": "read_document",
+            "arguments": {
+              "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md"
+            }
+          },
+          "response": {
+            "url": "https://preview.invalid/agents/voiceflow/skills/voiceflow/references/operations.md",
+            "textSHA256": "4d4cc32e8965912a538e50f5982683cb844624c641b928b737ea10a9ab694991"
+          }
+        }
+      ],
+      "finalResponse": "This chat cannot connect to or act on your Voiceflow account because it has no account tools or supported connection method. I've read the Voiceflow guidance and can help with planning here; that guidance is available only in this chat. To complete setup, open the same setup guide in an assistant that supports remote MCP account connections."
+    }
+  ]
+}

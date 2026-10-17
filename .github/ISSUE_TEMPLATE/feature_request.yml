@@ -1,0 +1,21 @@
+name: Skill or guide improvement
+description: Suggest a better customer workflow or a missing guide
+title: "[Improvement]: "
+body:
+  - type: textarea
+    id: task
+    attributes:
+      label: What is the customer trying to accomplish?
+    validations:
+      required: true
+  - type: textarea
+    id: improvement
+    attributes:
+      label: What should the assistant do differently?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Public documentation and synthetic examples
+      description: Do not include private transcripts or source.

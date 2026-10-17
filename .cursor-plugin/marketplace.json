@@ -1,0 +1,13 @@
+{
+  "name": "voiceflow-plugins",
+  "owner": {
+    "name": "Voiceflow, Inc."
+  },
+  "plugins": [
+    {
+      "name": "voiceflow",
+      "source": "./voiceflow",
+      "description": "Build with Voiceflow."
+    }
+  ]
+}

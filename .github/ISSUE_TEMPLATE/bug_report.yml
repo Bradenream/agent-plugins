@@ -1,0 +1,31 @@
+name: Package bug
+description: Report a setup, skill, installer, or guide problem
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: "For security issues, use SECURITY.md. Do not include tokens, authorization URLs, customer data, or private source."
+  - type: input
+    id: version
+    attributes:
+      label: Package version or commit
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Assistant, client version, operating system, and CLI or MCP path
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal synthetic reproduction
+      description: Include steps, expected behavior, actual behavior, and sanitized errors.
+    validations:
+      required: true
+  - type: textarea
+    id: checks
+    attributes:
+      label: What have you tried?
+      description: Link relevant public docs or existing issues, if any.
