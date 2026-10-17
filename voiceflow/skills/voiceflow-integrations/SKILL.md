@@ -5,6 +5,9 @@ description: Connect Voiceflow integrations, API tools, MCP tools, and secret-ba
 
 # External services
 
+For embedding an agent on a website, use [Widget](../voiceflow-widget/SKILL.md).
+This skill connects services used by the agent, rather than installing its UI.
+
 Read the [operation contract](../voiceflow/references/operations.md). Inspect
 available integrations and their schemas before writing a custom API/function.
 A connection is not an attached agent tool: verify both.

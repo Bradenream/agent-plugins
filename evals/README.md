@@ -72,3 +72,9 @@ to a populated agent, and repair of unsupported capabilities. It uses separate
 authorized live drafts, never repository tests or CI.
 The [quality report](reports/2026-10-16-quality-product.md) preserves the initial
 failures, targeted collection retests, and sequential handoff repairs.
+
+The [widget protocol](widget-protocol.md) covers platform-specific installation,
+customization, guided chat-only handoffs, and browser lifecycle checks. The
+`widget-*` cases are product cases, not inputs to the setup-only `chat_eval.py`
+transport. CLI fixture and package checks do not execute these model or live
+website scenarios.

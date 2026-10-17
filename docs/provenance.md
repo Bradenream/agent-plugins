@@ -36,6 +36,24 @@ implementation code or real customer content was used in these additions.
 The [quality report](../evals/reports/2026-10-16-quality-product.md) records the
 observations and distinguishes initial runs from post-failure retests.
 
+Version 0.3.0 adds the portable widget skill and eight platform guides. Product
+behavior comes from the website's Install widget, Customize widget, Widget API,
+and Extensions pages; platform insertion/lifecycle guidance was checked against
+the official Webflow, Framer, WordPress, Shopify, Wix, Squarespace, React, Next.js,
+and Astro documentation on 2026-10-16. Links are included in each guide. Interface
+labels and plan eligibility should be rechecked when an account differs.
+
+The widget CLI examples were exercised with the released 0.287.0 binary against
+a localhost fixture: draft-settings read, published/draft snippet selection, and
+a minimal JSON patch supplied on stdin. The fixture verifies HTTP paths, query
+parameters, request body, and output handling; it does not verify server-side
+entitlements, live widget rendering, or a hosted MCP call. MCP operation names
+were checked against the current tool surface, with payload discovery delegated
+to the connected schema. No customer project or website was changed for these
+repository checks. The [widget acceptance protocol](../evals/widget-protocol.md)
+records the next behavioral and live-platform checks; they are not claimed as
+passed by the unit suite.
+
 ## Packaging references
 
 - [Agent Plugins specification](https://agent-plugins.org/)

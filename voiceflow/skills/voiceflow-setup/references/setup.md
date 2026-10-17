@@ -64,7 +64,7 @@ Confirm the entry skill and linked files exist; report any pending host reload.
 repository tool. Resolve relative links from the fetched file's location.
 No clone, ZIP, filesystem, or persistent skill installation is required.
 If an existing Knowledge MCP exposes `voiceflow://skill`, read it as maintained
-product guidance; it is not proof that this repository's fifteen skills are
+product guidance; it is not proof that this repository's packaged skills are
 installed or that the account is connected. If resource reads are unavailable,
 use available documentation tools or web pages; do not require resource support.
 See [chat guidance alternatives](mcp.md#guidance-without-a-filesystem) when the

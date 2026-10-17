@@ -1,6 +1,6 @@
 ---
 name: voiceflow
-description: Use Voiceflow to build, inspect, debug, or improve conversational agents. Routes product tasks to focused skills and establishes the shared operation contract.
+description: Use Voiceflow to build, customize, deploy, inspect, or debug conversational agents and website widgets. Routes product tasks to focused skills and establishes the shared operation contract.
 ---
 
 # Work with Voiceflow
@@ -22,6 +22,7 @@ only the specialist relevant to the task:
 | Import and query documents | [Knowledge](../voiceflow-knowledge/SKILL.md) |
 | Edit reusable messages and prompts | [Messages](../voiceflow-messages/SKILL.md) |
 | Configure spoken conversations | [Voice](../voiceflow-voice/SKILL.md) |
+| Install, customize, or troubleshoot a website widget | [Widget](../voiceflow-widget/SKILL.md) |
 | Diagnose behavior | [Debug](../voiceflow-debug/SKILL.md) |
 | Review customer conversations | [Transcripts](../voiceflow-transcripts/SKILL.md) |
 | Saved tests and quality checks | [Evaluations](../voiceflow-evaluations/SKILL.md) |

@@ -43,7 +43,7 @@ a refusal. `--target /absolute/directory` supports custom locations and tests.
 
 Without Python, copy the whole `voiceflow/skills/` tree using the agent's file
 tools, checking all destinations before copying. Preserve identical files and
-refuse conflicts. Copy all fifteen folders to keep relative references intact.
+refuse conflicts. Copy the entire skill tree to keep relative references intact.
 
 | Client | Default user skill directory |
 | --- | --- |

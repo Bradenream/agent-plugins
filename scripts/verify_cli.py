@@ -7,6 +7,7 @@ from pathlib import Path
 import subprocess
 import threading
 import time
+from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -21,7 +22,9 @@ def main():
     spec.loader.exec_module(probe)
     for command in (["version"], ["auth", "login", "--help"], ["workspace", "list", "--help"],
                     ["docs", "search", "--help"], ["docs", "get", "--help"],
-                    ["workflow", "insert-step", "--help"], ["agent", "patch-prompt", "--help"]):
+                    ["workflow", "insert-step", "--help"], ["agent", "patch-prompt", "--help"],
+                    ["widget", "get", "--help"], ["widget", "get-snippet", "--help"],
+                    ["widget", "update", "--help"]):
         result = subprocess.run([args.vf, *command], capture_output=True, text=True, encoding="utf-8", timeout=10, check=True)
         if command[:2] == ["auth", "login"]:
             assert all(flag in result.stdout for flag in ("--no-browser", "--login-timeout"))
@@ -30,7 +33,15 @@ def main():
 
     class Handler(BaseHTTPRequestHandler):
         def do_GET(self):
-            requested.append(self.path)
+            requested.append(("GET", self.path, None))
+            self.respond()
+
+        def do_PATCH(self):
+            body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+            requested.append(("PATCH", self.path, body))
+            self.respond()
+
+        def respond(self):
             body = json.dumps(scenario["body"]).encode()
             self.send_response(scenario["status"])
             self.send_header("Content-Type", "application/json")
@@ -59,12 +70,46 @@ def main():
             ], capture_output=True, text=True, encoding="utf-8", timeout=20)
             actual = probe.classify(result.returncode, result.stdout, result.stderr)
             assert actual == expected, (status, actual, result.returncode, result.stdout, result.stderr, requested)
-        assert requested and all(path == "/v1/stable/workspace" for path in requested)
+        assert requested and all(method == "GET" and path == "/v1/stable/workspace"
+                                 for method, path, _ in requested)
+
+        # Exercise the documented widget commands against localhost, never an account.
+        patch = {"common": {"primaryColor": {"color": "#245D58"}}}
+        query = {"projectID": ["fixture-project"], "environmentAlias": ["preview"]}
+        widget_cases = (
+            (["get"], None, "GET", "/v1/stable/widget", query,
+             {"widget": patch}),
+            (["get-snippet"], None, "GET", "/v1/stable/widget/snippet",
+             {**query, "version": ["published"]}, {"snippet": "fixture-embed-published"}),
+            (["get-snippet", "--version-param", "draft"], None, "GET", "/v1/stable/widget/snippet",
+             {**query, "version": ["draft"]}, {"snippet": "fixture-embed-draft"}),
+            (["update"], patch, "PATCH", "/v1/stable/widget", query, {"widget": patch}),
+        )
+        for command, body, method, path, expected_query, response in widget_cases:
+            scenario.update(status=200, body=response)
+            previous_count = len(requested)
+            result = subprocess.run([
+                args.vf, "widget", *command, "--project-id", "fixture-project",
+                "--environment-alias", "preview", "--timeout", "2s", "-o", "toon",
+                "--no-interactive", "--color", "never",
+                "--server-url", f"http://127.0.0.1:{server.server_port}",
+                "--token", "local-fixture-not-a-credential",
+            ], input=json.dumps(body) if body is not None else None,
+                capture_output=True, text=True, encoding="utf-8", timeout=20)
+            assert result.returncode == 0, (command, result.stdout, result.stderr)
+            assert len(requested) == previous_count + 1, (command, requested)
+            actual_method, actual_url, actual_body = requested[-1]
+            parsed = urlsplit(actual_url)
+            assert (actual_method, parsed.path, parse_qs(parsed.query), actual_body) == (
+                method, path, expected_query, body), requested[-1]
+            assert result.stdout.strip(), (command, "empty success response")
+            if "snippet" in response:
+                assert response["snippet"] in result.stdout, result.stdout
     finally:
         server.shutdown()
         server.server_close()
         thread.join(timeout=5)
-    print("CLI help and five local HTTP scenarios passed; no Voiceflow account was contacted.")
+    print("CLI help, five connection scenarios, and four widget contracts passed against localhost; no Voiceflow account was contacted.")
 
 
 if __name__ == "__main__":

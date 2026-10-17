@@ -17,6 +17,8 @@ def run(command, env, cwd):
 
 
 def main():
+    skills = ROOT / "voiceflow/skills"
+    expected = {path.parent.name for path in skills.glob("*/SKILL.md")}
     with tempfile.TemporaryDirectory(prefix="voiceflow-hosts-") as temporary:
         directory = Path(temporary)
         for host in ("codex", "claude"):
@@ -35,9 +37,11 @@ def main():
             assert any(e.get("pluginId", e.get("id")) == "voiceflow@voiceflow-plugins" for e in entries)
             cached = list((config / "plugins/cache").glob("voiceflow-plugins/voiceflow/*/skills"))
             assert len(cached) == 1
-            assert len(list(cached[0].glob("*/SKILL.md"))) == 15
+            assert {path.parent.name for path in cached[0].glob("*/SKILL.md")} == expected
             assert (cached[0] / "voiceflow-setup/references/setup.md").is_file()
-            print(f"{host}: installed, enabled, and all 15 skills present in isolated cache")
+            for source in skills.rglob("*.md"):
+                assert (cached[0] / source.relative_to(skills)).read_bytes() == source.read_bytes()
+            print(f"{host}: installed, enabled, and all {len(expected)} skills and Markdown references match the source")
     print("Cursor runtime discovery must be tested in Cursor; no global configuration was changed.")
 
 

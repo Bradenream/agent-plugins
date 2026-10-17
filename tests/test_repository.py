@@ -121,8 +121,11 @@ class SkillInstallTests(unittest.TestCase):
 
     def test_complete_packaged_skill_tree_installs(self):
         installer.install(ROOT / "voiceflow/skills", self.target)
-        self.assertEqual(len(list(self.target.glob("*/SKILL.md"))), 15)
+        self.assertEqual(len(list(self.target.glob("*/SKILL.md"))), 16)
         self.assertTrue((self.target / "voiceflow-setup/references/setup.md").is_file())
+        for source in (ROOT / "voiceflow/skills").rglob("*.md"):
+            installed = self.target / source.relative_to(ROOT / "voiceflow/skills")
+            self.assertEqual(installed.read_bytes(), source.read_bytes())
 
 
 class ConnectionTests(unittest.TestCase):
@@ -189,7 +192,11 @@ class PublicationTests(unittest.TestCase):
         self.assertTrue(manifest["hasUncommittedChanges"])
         with zipfile.ZipFile(site / "voiceflow.zip") as archive:
             self.assertEqual(archive.namelist(), sorted(archive.namelist()))
-            self.assertEqual(len([n for n in archive.namelist() if n.endswith("/SKILL.md")]), 15)
+            self.assertEqual(len([n for n in archive.namelist() if n.endswith("/SKILL.md")]), 16)
+            for source in (self.root / "voiceflow/skills").rglob("*.md"):
+                name = source.relative_to(self.root).as_posix()
+                self.assertEqual(archive.read(name), source.read_bytes())
+                self.assertEqual((site / name).read_bytes(), source.read_bytes())
             for info in archive.infolist():
                 self.assertTrue(info.filename.startswith("voiceflow/"))
                 self.assertNotIn("..", info.filename.split("/"))
@@ -226,7 +233,7 @@ class PublicationTests(unittest.TestCase):
 
 class RepositoryTests(unittest.TestCase):
     def test_all_manifests_and_skill_links(self):
-        self.assertEqual(validator.validate(), 15)
+        self.assertEqual(validator.validate(), 16)
 
 
 @unittest.skipIf(os.name == "nt", "Unix installer; Windows installer runs in Windows CI")

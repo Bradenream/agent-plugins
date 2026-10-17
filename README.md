@@ -33,8 +33,9 @@ Successful setup ends with:
 - Repeatable setup with live, read-only connection verification.
 - Hosted MCP setup and recovery for chat assistants, with guidance available
   through Markdown, the website docs, or the existing Knowledge MCP.
-- Fifteen portable skills for setup, building, prompts, workflows, tools,
-  knowledge, voice, debugging, transcripts, evaluations, and environments.
+- Sixteen portable skills for setup, building, prompts, workflows, tools,
+  knowledge, voice, website widgets, debugging, transcripts, evaluations,
+  and environments.
 - Native Claude Code and Codex packages; a Cursor manifest and standalone
   skill installation for private previews.
 - Checksum-verified CLI installers for macOS, Linux, and Windows.
@@ -44,6 +45,13 @@ Product guidance comes from the [Voiceflow documentation](https://www.voiceflow.
 See the [skill index](voiceflow/skills/voiceflow/SKILL.md),
 [compatibility](docs/compatibility.md), [release checklist](docs/releasing.md),
 and [website publishing contract](docs/website-publishing.md).
+
+The [widget skill](voiceflow/skills/voiceflow-widget/SKILL.md) covers customization,
+installation, browser verification, and troubleshooting through CLI or MCP.
+Its platform guides cover Webflow, Framer, WordPress, Shopify, Wix, Squarespace,
+HTML/Astro, and React/Next.js, including a guided paste workflow when the
+assistant cannot edit the site. These are documented implementation paths;
+live platform acceptance remains separate from package and CLI fixture checks.
 
 ## Develop
 

@@ -5,6 +5,9 @@ description: Diagnose broken Voiceflow behavior from configuration, traces, and 
 
 # Diagnose before editing
 
+For widget loading, styling, duplicate launchers, or website navigation problems,
+use [Widget](../voiceflow-widget/SKILL.md) before changing the agent's behavior.
+
 Read the [operation contract](../voiceflow/references/operations.md). Establish
 the expected behavior, actual behavior, project, environment, and one relevant
 conversation or failing step. Do not assume the currently published version is

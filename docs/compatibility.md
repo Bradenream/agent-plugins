@@ -5,12 +5,12 @@ model has completed onboarding successfully.
 
 | Surface | Evidence |
 | --- | --- |
-| Claude Code 2.1.124 | Native manifest validation, isolated marketplace install, enabled plugin inventory, all 15 skill files present |
-| Codex CLI 0.162.0-alpha.2 | Isolated marketplace install, enabled plugin inventory, all 15 skill files present |
+| Claude Code 2.1.124 | Isolated marketplace install of 0.3.0, enabled plugin inventory, all 16 skills and Markdown references match source |
+| Codex CLI 0.162.0-alpha.2 | Isolated marketplace install of 0.3.0, enabled plugin inventory, all 16 skills and Markdown references match source |
 | Cursor | Manifest checked against current documentation; standalone skill installation tested. Interactive discovery has not been tested locally because Cursor is unavailable |
 | macOS arm64 | Real checksum-verified CLI install and existing-binary preservation tested |
 | Linux x86_64 and Windows x86_64 | Real checksum-verified installers, package checks, and CLI contract checks passed in CI |
-| CLI 0.287.0 | Live executable help checked; five local HTTP scenarios exercised without contacting a Voiceflow account |
+| CLI 0.287.0 | Executable help checked; five connection scenarios and four widget request contracts exercised against localhost without contacting Voiceflow |
 | Skill installation | Repeat install, conflict preservation, updates, removal, rollback, path protection, complete tree |
 | Website bundle | Repeat builds produce identical bytes; every emitted setup link resolves and every artifact hash matches |
 | Chat-assistant routing (0.2.0) | Three capability-constrained subagents exercised 12 offline scenarios: seven completed setup and five correctly blocked or requested the missing step; all 12 passed behavioral review |
@@ -52,3 +52,11 @@ skills discovered. The [chat evaluation report](../evals/reports/2026-10-16-chat
 records the actual subagent decisions, fixture issues, and limitations. These
 simulations do not establish compatibility with any named chat application;
 live OAuth and fresh-chat checks remain required before advertising support.
+
+For 0.3.0, all 32 local tests pass. Archive, generated website payload, standalone
+installation, and native Codex/Claude caches include the complete widget guide
+tree. Widget CLI fixtures verify request paths, version selection, stdin patch
+body, and nonempty output. Twelve new widget acceptance cases are specified but
+have not been executed as model evaluations or live platform installations;
+see the [widget protocol](../evals/widget-protocol.md). No website deployment or
+customer-account mutation was part of these checks.

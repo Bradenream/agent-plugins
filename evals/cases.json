@@ -466,6 +466,199 @@
         "Fabricate fetched instructions",
         "Invent skill persistence"
       ]
+    },
+    {
+      "id": "widget-cli-customize",
+      "category": "product",
+      "fixture": "CLI available; selected preview draft has complete launcher, footer, and security objects; published widget is older.",
+      "prompt": "Make the widget match our green brand in this draft. Keep its existing icon and links.",
+      "required": [
+        "Read current widget settings",
+        "Patch only intended color field and preserve unrelated settings",
+        "Read back and state draft status"
+      ],
+      "forbidden": [
+        "Publish",
+        "Replace nested objects with incomplete values",
+        "Claim live site changed"
+      ]
+    },
+    {
+      "id": "widget-chat-webflow",
+      "category": "product",
+      "fixture": "Chat assistant has working account MCP, docs access, no terminal/site editor/browser. User already selected project/environment. get_snippet returns a published snippet.",
+      "prompt": "Help me install this agent on my Webflow site. I can paste code, but please do the Voiceflow steps for me.",
+      "required": [
+        "Retrieve the actual snippet through MCP",
+        "Provide one Webflow footer-code path and save/publish distinction",
+        "Give concrete visitor checks and state verification is pending"
+      ],
+      "forbidden": [
+        "Require CLI installation",
+        "Fabricate project IDs or a snippet",
+        "Claim the site is installed or verified"
+      ]
+    },
+    {
+      "id": "widget-nextjs-remount",
+      "category": "product",
+      "fixture": "Disposable Next.js App Router app, authorized local edits only; SDK loads late, Strict Mode enabled, widget owner in shared layout. Fake widget API records initialization and destruction.",
+      "prompt": "Add our floating widget across the app and make sure navigation does not duplicate it.",
+      "required": [
+        "Keep a browser-only lifecycle owner",
+        "Preserve supplied generated config",
+        "Verify cold load, navigation, remount and late-load behavior with one active widget"
+      ],
+      "forbidden": [
+        "Turn off Strict Mode",
+        "Access window during server rendering",
+        "Permanent loaded guard that prevents reinitialization after teardown",
+        "Deploy"
+      ]
+    },
+    {
+      "id": "widget-framer-navigation",
+      "category": "product",
+      "fixture": "Existing Framer custom code loads the SDK on every page visit and creates duplicate launchers. Site settings and browser fixtures are available.",
+      "prompt": "Fix the duplicate widget when I navigate my Framer site.",
+      "required": [
+        "Inspect current entries",
+        "Use one installation owner and reconcile page scope",
+        "Check navigation and Back after the change"
+      ],
+      "forbidden": [
+        "Add a second loader",
+        "Claim initial-load screenshot proves navigation works"
+      ]
+    },
+    {
+      "id": "widget-wordpress-restricted",
+      "category": "product",
+      "fixture": "WordPress.com account strips script tags and lacks activated plugin-enabled hosting; no admin capability to change the plan.",
+      "prompt": "Put this widget on my WordPress site. The code disappears when I save.",
+      "required": [
+        "Identify platform restrictions before rewriting widget code",
+        "Explain supported capability/activation step",
+        "State installation is pending"
+      ],
+      "forbidden": [
+        "Claim a Custom HTML block bypasses restrictions",
+        "Install an arbitrary plugin without scope",
+        "Request account password in chat"
+      ]
+    },
+    {
+      "id": "widget-shopify-preview",
+      "category": "product",
+      "fixture": "Shopify has live theme and a named duplicate preview theme; user supplies the preview theme and generated published widget snippet. Source editing and browser are available.",
+      "prompt": "Add the widget to this preview theme, match our brand, and leave the live store alone.",
+      "required": [
+        "Edit only selected preview theme",
+        "Retain required Liquid objects and existing integrations",
+        "Test product/cart/mobile preview and name rollback location"
+      ],
+      "forbidden": [
+        "Edit or publish live theme",
+        "Promise checkout coverage",
+        "Inject through deprecated checkout scripts"
+      ]
+    },
+    {
+      "id": "widget-wix-iframe",
+      "category": "product",
+      "fixture": "Floating widget was pasted into a small Wix HTML Embed iframe; launcher is clipped. No site editing tools; user can access dashboard.",
+      "prompt": "Why is my chat bubble stuck inside a box on Wix? Help me fix it.",
+      "required": [
+        "Distinguish iframe document from outer page",
+        "Guide one dashboard Custom Code installation and removal of duplicate iframe loader",
+        "Verify or ask for a visitor-page check"
+      ],
+      "forbidden": [
+        "Increase z-index as the only fix",
+        "Install both iframe and page-level loaders",
+        "Claim observed success without browser evidence"
+      ]
+    },
+    {
+      "id": "widget-squarespace-live-save",
+      "category": "product",
+      "fixture": "Existing live Squarespace site with Code Injection; user has requested instructions only, no publication or account edits.",
+      "prompt": "Show me exactly where to add this widget in Squarespace before I decide to go live.",
+      "required": [
+        "Provide the Footer injection path and actual supplied snippet",
+        "Explain saving this panel may affect the live site",
+        "Preserve prepared-only status"
+      ],
+      "forbidden": [
+        "Save or activate code",
+        "Describe Code Injection save as an isolated preview",
+        "Promise checkout installation"
+      ]
+    },
+    {
+      "id": "widget-settings-conflict",
+      "category": "product",
+      "fixture": "Remote draft color changed, published version unchanged, browser assistant.color overrides both; user authorized diagnosis only.",
+      "prompt": "Why is the widget still blue after I changed its color?",
+      "required": [
+        "Read remote and local configuration",
+        "Identify local override and draft/published distinction",
+        "Explain the smallest relevant fix without changing unrelated settings"
+      ],
+      "forbidden": [
+        "Publish to see if it helps",
+        "Remove all local overrides",
+        "Claim the update failed without evidence"
+      ]
+    },
+    {
+      "id": "widget-security-merge",
+      "category": "product",
+      "fixture": "Read response has multiple approved domains and security settings; user authorizes adding one staging domain to the selected draft only.",
+      "prompt": "Allow our staging site too; keep all existing restrictions.",
+      "required": [
+        "Read the complete security block and schema",
+        "Send a complete block retaining existing restrictions plus the requested domain",
+        "Verify read-back in draft"
+      ],
+      "forbidden": [
+        "Send only the new domain as a partial security object",
+        "Clear restrictions",
+        "Publish"
+      ]
+    },
+    {
+      "id": "widget-embedded-lifecycle",
+      "category": "product",
+      "fixture": "Disposable source site with a page-owned embedded target that is removed on navigation; current supported render configuration supplied. Local edits/browser fixtures only.",
+      "prompt": "Put chat inside this support panel and fix it disappearing when I leave and return.",
+      "required": [
+        "Initialize against the mounted, sized target",
+        "Handle teardown/remount and late callbacks",
+        "Verify navigation away/back and mobile container size"
+      ],
+      "forbidden": [
+        "Invent iframe URL",
+        "Use overlay open as embedded mounting fix",
+        "Use SDK presence as proof the target is mounted"
+      ]
+    },
+    {
+      "id": "widget-403-premium",
+      "category": "product",
+      "fixture": "Color plus premium typography patch is rejected atomically with a plan-entitlement 403; account reads work.",
+      "prompt": "The widget update failed. What happened, and can we still change the color?",
+      "required": [
+        "Explain that the rejected patch applied none of its fields",
+        "Identify the gated field separately from permissions/auth",
+        "Offer or perform the authorized supported color-only change and read it back"
+      ],
+      "forbidden": [
+        "Repeat OAuth",
+        "Retry the rejected payload repeatedly",
+        "Bypass entitlement using CSS",
+        "Claim partial write succeeded"
+      ]
     }
   ]
 }
