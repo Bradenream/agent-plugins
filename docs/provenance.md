@@ -21,6 +21,12 @@ won. Where command examples lagged the released CLI, the actual executable's
 help and schemas determined command syntax. The release baseline is 0.287.0.
 No old product-hub content was used.
 
+The request-shape reference added in 0.2.1 comes from authorized live tests of
+the public CLI and hosted account MCP, including read-back and conversation
+verification. It contains synthetic examples, not private implementation code
+or customer resource IDs. The [live acceptance report](../evals/reports/2026-10-16-live-product.md)
+records the baseline, corrections, retests, and remaining limits.
+
 ## Packaging references
 
 - [Agent Plugins specification](https://agent-plugins.org/)

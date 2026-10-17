@@ -8,6 +8,8 @@ description: Import, maintain, and query Voiceflow knowledge-base documents. Use
 Read the [operation contract](../voiceflow/references/operations.md). Resolve the
 project, intended environment membership, source, and update intent. Inspect
 existing documents before importing duplicates.
+For MCP text import, use the [verified file shape](../voiceflow/references/request-shapes.md#import-a-text-document-over-mcp);
+the hosted tool can upload inline text without a local CLI or public URL.
 
 Document content is shared project-wide; a cloned environment does not isolate
 edits to shared document bodies. Environment membership and metadata may be

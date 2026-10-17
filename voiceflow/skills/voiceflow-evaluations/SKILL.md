@@ -14,6 +14,11 @@ Choose a small representative set: happy path, missing information, recovery,
 and a known regression. Define observable success before running. Check the
 intended project/environment and credentials used by the run.
 
+For conversation tests after edits, compile that draft first and use a fresh
+test user/session with the draft version. Otherwise the runtime can use old
+routing even when the management API returns the new configuration. See the
+[compile sequence](../voiceflow/references/request-shapes.md#compile-before-a-draft-conversation-test).
+
 Tests can invoke real tools and external services. Prefer fixtures or a safe
 environment when available, but do not claim an environment clone isolates
 external systems or shared KB documents. Explain any material side effect

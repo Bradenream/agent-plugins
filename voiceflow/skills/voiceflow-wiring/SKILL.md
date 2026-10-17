@@ -8,6 +8,8 @@ description: Connect Voiceflow function/API tool inputs, secrets, captured outpu
 Read the [operation contract](../voiceflow/references/operations.md). Inspect the
 resource declarations and the specific attachment using them. Tool definitions,
 attachments, and project variables are different resources.
+Read [attachment request shapes](../voiceflow/references/request-shapes.md#attach-a-function-and-capture-its-results)
+when creating a binding or diagnosing an invalid target/capture payload.
 
 For function inputs, key inputVariables by the declared input UUID, with the same
 functionInputVariableID inside. For API tool inputs use apiToolInputVariableID.

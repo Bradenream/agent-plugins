@@ -8,6 +8,8 @@ description: Read or edit Voiceflow workflow canvas blocks, steps, ports, branch
 Read the [operation contract](../voiceflow/references/operations.md), then the
 workflow and relevant step schemas. A block is a canvas container; steps inside
 it execute in order. A workflow ID, block ID, step ID, and port ID are distinct.
+For the message/end discriminators and entry connection, read the
+[verified example](../voiceflow/references/request-shapes.md#a-message-followed-by-end).
 
 Plan the path before mutation: start, decisions, actions, success, error, and
 termination. Create resources first and connect returned IDs; do not fabricate

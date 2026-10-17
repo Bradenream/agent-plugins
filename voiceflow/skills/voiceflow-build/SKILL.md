@@ -17,6 +17,11 @@ Separate three instruction layers: global identity/style/guardrails, main-agent
 routing, and playbook job instructions. Playbooks inherit the global prompt;
 they do not see each other's private instructions.
 
+For a new agent, align the global identity and starting message with the user's
+business instead of leaving sample-company text. A playbook can collect and
+summarize a request without submitting it anywhere. Do not promise submission,
+booking, or human follow-up unless an actual configured action supports it.
+
 Build in dependency order: agent context, playbook, required resources, tool
 attachments, then instructions referencing those attached tools. Every attachment
 and routing description must say both WHAT it does and WHEN to use it.

@@ -14,6 +14,11 @@ Each environment has draft and live content. A user can mean unpublished draft
 changes when asking to clone; inspect clone options and source version. Do not
 publish merely to make a clone include recent edits.
 
+Compile draft edits before a conversation test: use the environment's `compile`
+operation, check its result, and start a fresh draft conversation. This refreshes
+the runtime representation without publishing. See the
+[verified compile sequence](../voiceflow/references/request-shapes.md#compile-before-a-draft-conversation-test).
+
 Environment isolation has limits: knowledge document bodies and evaluation
 resources can be project-shared; secret names are shared while values are
 environment-specific. Cloning can copy secret values and does not isolate

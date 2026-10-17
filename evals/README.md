@@ -60,5 +60,8 @@ simulated tools; the subagent's broader runtime is restricted by its evaluation
 instructions. A passing simulation does not prove OAuth callbacks, app policy,
 tool discovery, or fresh-chat persistence in a real client.
 
-Browser OAuth and real product-task acceptance remain unrun by the repository's
-automated suite. See the committed reports for separately run model simulations.
+Browser OAuth and real product-task acceptance are never run by the repository's
+automated suite. See the committed reports for separately run model simulations
+and the [live product protocol](live-product-protocol.md) for authorized account
+testing. The [2026-10-16 live report](reports/2026-10-16-live-product.md) records
+actual CLI/MCP work, independent runtime checks, and fresh-context retests.

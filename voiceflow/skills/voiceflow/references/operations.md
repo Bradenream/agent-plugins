@@ -26,6 +26,12 @@ api-tool, variable, secret, document, knowledge-base, message, prompt, integrati
 mcp-server, mcp-tool, transcript, test, evaluation, environment, and other resources.
 Do not translate private helper names into imaginary public commands.
 
+For function bindings, workflow messages, route registries, or MCP text uploads,
+read the relevant section of [verified request shapes](request-shapes.md).
+CLI help may abbreviate nested JSON, and function get_schema describes execution
+inputs rather than every management operation. Use the verified shape and live
+read-back instead of repeated trial writes to discover fields.
+
 Use structured output for reads and supported file/stdin input for complex writes.
 On CLI 0.287.0, prefer `-o toon` with `--timeout`: JSON passthrough can return an
 empty body because of early timeout-context cancellation. Do not interpret blank
