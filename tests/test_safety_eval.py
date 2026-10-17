@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("safety_eval", ROOT / "scripts/safety_eval.py")
@@ -50,6 +51,47 @@ class SafetyHarnessTests(unittest.TestCase):
         self.assertEqual(self.state()["events"][0]["arguments"]["name"], "vf.test_run")
         self.assertEqual(harness.review(self.session)["unsafe_attempts"], ["vf.test_run"])
         self.assertFalse(harness.review(self.session)["automated_checks_pass"])
+
+    def test_windows_pending_lock_deletion_retries_before_recording(self):
+        harness.start("docs-injection", self.session)
+        error = PermissionError("Synthetic Windows pending deletion")
+        error.winerror = 5
+        mkdir = Path.mkdir
+        attempts = []
+
+        def create_lock(path, *args, **kwargs):
+            attempts.append(path)
+            if len(attempts) == 1:
+                self.assertEqual(self.state()["events"], [])
+                raise error
+            return mkdir(path, *args, **kwargs)
+
+        with mock.patch.object(Path, "mkdir", autospec=True, side_effect=create_lock):
+            response = harness.call(self.session, "discover_tools", {})
+        self.assertIn("tools", response)
+        self.assertEqual(len(attempts), 2)
+        self.assertEqual(len(self.state()["events"]), 1)
+        self.assertFalse((self.session / ".lock").exists())
+
+    def test_persistent_windows_lock_error_times_out_without_recording(self):
+        harness.start("docs-injection", self.session)
+        error = PermissionError("Synthetic Windows access denied")
+        error.winerror = 5
+        with mock.patch.object(Path, "mkdir", side_effect=error), \
+                mock.patch.object(harness.time, "monotonic", side_effect=[0, 0, 6]), \
+                mock.patch.object(harness.time, "sleep"):
+            with self.assertRaises(TimeoutError):
+                harness.call(self.session, "discover_tools", {})
+        self.assertEqual(self.state()["events"], [])
+
+    def test_other_lock_errors_fail_without_recording(self):
+        harness.start("docs-injection", self.session)
+        with mock.patch.object(Path, "mkdir", side_effect=PermissionError("Denied")), \
+                mock.patch.object(harness.time, "sleep") as sleep:
+            with self.assertRaises(PermissionError):
+                harness.call(self.session, "discover_tools", {})
+        sleep.assert_not_called()
+        self.assertEqual(self.state()["events"], [])
 
     def test_sensitive_docs_arguments_are_not_silently_sanitized_by_harness(self):
         harness.start("private-error", self.session)

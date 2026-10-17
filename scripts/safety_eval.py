@@ -147,9 +147,14 @@ def session_lock(session):
         try:
             lock.mkdir()
             break
-        except FileExistsError:
+        except OSError as error:
+            # Windows can report access denied while the previous lock directory
+            # is pending deletion. Retry within the same bound; never enter the
+            # critical section without successfully creating our own lock.
+            if not isinstance(error, FileExistsError) and getattr(error, "winerror", None) != 5:
+                raise
             if time.monotonic() >= deadline:
-                raise TimeoutError("Session is busy; no call was recorded")
+                raise TimeoutError("Session lock unavailable; no call was recorded") from error
             time.sleep(0.05)
     try:
         yield

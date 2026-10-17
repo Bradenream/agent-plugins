@@ -36,6 +36,13 @@ directory names. They are excluded from the final acceptance count. The four
 reported final runs used new contexts and neutral session paths; no prior answers
 or rubric were supplied.
 
+A subsequent Windows CI run exposed an intermittent access-denied error while
+the previous lock directory was pending deletion. The transport now retries
+that specific Windows error within the existing five-second limit and records
+nothing unless it acquires the lock. Regression tests cover recovery, persistent
+failure, and unrelated permission errors. This infrastructure correction does
+not change the recorded actor responses or imply another behavioral rerun.
+
 ## Evidence and limits
 
 The [machine-readable record](2026-10-16-adversarial-safety.json) contains all final
