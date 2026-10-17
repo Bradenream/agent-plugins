@@ -25,6 +25,10 @@ repository tools and standalone installer, not native plugin use or the CLI.
 
 ## Evidence and remaining acceptance
 
+[Public installation verification](../evals/reports/2026-10-16-public-install.md)
+records an anonymous clone and raw-reference retrieval, standalone installs for
+all three clients, and isolated native Claude/Codex installation of 0.4.2.
+
 [Historical verification](verification-history.md) retains previous package
 results and limitations. The [acceptance protocols and reports](../evals/README.md)
 record baseline failures separately from post-fix retests. Historical model

@@ -50,8 +50,9 @@ class ReleaseSourceTests(unittest.TestCase):
             with self.subTest(rules=rules), self.assertRaises(ValueError):
                 self.verify()
 
-    def test_weak_review_requirements_are_rejected(self):
-        for key, value in (("required_approving_review_count", 0),
+    def test_invalid_review_requirements_are_rejected(self):
+        for key, value in (("required_approving_review_count", -1),
+                           ("required_approving_review_count", None),
                            ("required_approving_review_count", True),
                            ("required_approving_review_count", "1"),
                            ("dismiss_stale_reviews_on_push", False),
@@ -63,6 +64,16 @@ class ReleaseSourceTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "review"):
                     self.verify()
                 self.rules = original
+
+    def test_sole_maintainer_policy_requires_prs_without_self_approval(self):
+        self.rules[2]["parameters"]["required_approving_review_count"] = 0
+        self.rules[2]["parameters"]["require_code_owner_review"] = False
+        self.assertEqual(self.verify(), "main")
+
+    def test_status_checks_without_pull_requests_are_rejected(self):
+        self.rules = [rule for rule in self.rules if rule["type"] != "pull_request"]
+        with self.assertRaisesRegex(ValueError, "pull requests"):
+            self.verify()
 
     def test_each_required_check_must_be_present_strict_and_from_actions(self):
         original = copy.deepcopy(self.rules)

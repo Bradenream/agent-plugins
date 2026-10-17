@@ -1,6 +1,6 @@
 # Historical verification evidence
 
-This is a private preview. Packaging checks are not a claim that every agent
+These results were recorded during the private preview. Packaging checks are not a claim that every agent
 model has completed onboarding successfully.
 
 | Surface | Evidence |
