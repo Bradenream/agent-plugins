@@ -78,11 +78,13 @@ then coordinate history/artifact cleanup with the maintainer. Never automaticall
 rewrite shared history, paste the secret into an issue, or suppress the finding
 to make CI green. Rerun the full scan after remediation.
 
-## GitHub settings at public launch
+## GitHub protections
 
-CI starts after a push; it cannot block the initial upload of a secret. Enable
-GitHub secret scanning and push protection when the repository becomes eligible,
-verify they are active, and enable private vulnerability reporting. Require the
-security and three-platform checks, maintainer review, and protected branches.
+CI starts after a push; it cannot block the initial upload of a secret. GitHub
+secret scanning, push protection, and private vulnerability reporting are enabled.
+The default branch requires a pull request, the security and three-platform
+checks, and resolved review threads; force pushes and deletion are blocked.
+The owner's sole-maintainer policy does not require an independent approval.
+All outside contributors' workflows require approval before running.
 See [release policy](releasing.md). These settings are separate from this code
 and are not enforced by a policy file or CODEOWNERS alone.

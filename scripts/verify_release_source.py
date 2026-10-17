@@ -30,7 +30,7 @@ def verify_rules(prefix, branch, api):
     types = {rule.get("type") for rule in rules if isinstance(rule.get("type"), str)}
     if not {"deletion", "non_fast_forward"} <= types:
         raise ValueError("Active rules must prevent branch deletion and force pushes")
-    reviewed = False
+    pull_requests_required = False
     checks = set()
     for rule in rules:
         parameters = rule.get("parameters")
@@ -38,9 +38,12 @@ def verify_rules(prefix, branch, api):
             continue
         if rule.get("type") == "pull_request":
             count = parameters.get("required_approving_review_count")
-            reviewed |= (type(count) is int and count >= 1 and all(parameters.get(key) is True for key in (
-                "dismiss_stale_reviews_on_push", "require_code_owner_review",
-                "required_review_thread_resolution")))
+            # The owner chose sole-maintainer operation: a PR and passing checks
+            # are mandatory, but self-authored PRs cannot obtain self-approval.
+            pull_requests_required |= (type(count) is int and count >= 0 and
+                (count == 0 or parameters.get("require_code_owner_review") is True) and
+                all(parameters.get(key) is True for key in (
+                    "dismiss_stale_reviews_on_push", "required_review_thread_resolution")))
         if (rule.get("type") == "required_status_checks" and
                 parameters.get("strict_required_status_checks_policy") is True):
             required = parameters.get("required_status_checks")
@@ -51,8 +54,8 @@ def verify_rules(prefix, branch, api):
                         type(check.get("integration_id")) is int and
                         check["integration_id"] == GITHUB_ACTIONS_APP_ID):
                     checks.add(check["context"])
-    if not reviewed:
-        raise ValueError("Active rules must require approving code-owner review, stale dismissal, and resolved threads")
+    if not pull_requests_required:
+        raise ValueError("Active rules must require pull requests, stale-review dismissal, and resolved threads")
     if not REQUIRED_CHECKS <= checks:
         raise ValueError("Active rules must require all four current GitHub Actions checks with strict status checking")
 

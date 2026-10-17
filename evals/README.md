@@ -3,6 +3,10 @@
 These are behavior evaluations for the agent experience. Unit tests validate
 code and package structure; they do not execute these model evaluations.
 
+[Public installation verification](reports/2026-10-16-public-install.md) records
+anonymous access and isolated package installation separately from these model
+and live-account acceptance cases.
+
 Use `cases.json` with the real host in a disposable profile and a test Voiceflow
 account. For negative cases, use fixtures/mocked tool responses, never break a
 real customer's credentials. Do not grant bypass permissions to make a test pass.
