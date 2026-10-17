@@ -1,7 +1,7 @@
 """Build a reproducible plugin archive and complete static website payload."""
 import hashlib
 import json
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import re
 import shutil
 import subprocess
@@ -16,13 +16,29 @@ def sha(data):
 
 def package_files(root):
     plugin = root / "voiceflow"
+    if plugin.is_symlink():
+        raise ValueError("Symlinks cannot be published")
+    names = (root / "package-files.txt").read_text(encoding="utf-8").splitlines()
+    if not names or len(names) != len(set(names)):
+        raise ValueError("Package inventory must be nonempty and contain no duplicates")
+    for name in names:
+        path = PurePosixPath(name)
+        if (path.as_posix() != name or len(path.parts) < 2 or path.parts[0] != "voiceflow"
+                or ".." in path.parts or "\\" in name or ":" in name):
+            raise ValueError("Invalid path in package inventory")
+    actual = set()
     for path in sorted(plugin.rglob("*"), key=lambda path: path.relative_to(root).as_posix()):
-        if "__pycache__" in path.parts or path.suffix == ".pyc":
-            continue
         if path.is_symlink():
             raise ValueError("Symlinks cannot be published")
+        if "__pycache__" in path.parts or path.suffix == ".pyc":
+            continue
         if path.is_file():
-            yield path.relative_to(root).as_posix(), path.read_bytes()
+            actual.add(path.relative_to(root).as_posix())
+    if actual != set(names):
+        # Fail before reading or publishing extra local files, even ignored ones.
+        raise ValueError("Package inventory mismatch; review missing/extra files against package-files.txt")
+    for name in sorted(names):
+        yield name, (root / name).read_bytes()
 
 
 def rewrite_setup(text, source, root):
@@ -50,17 +66,18 @@ def rewrite_setup(text, source, root):
 
 def build(root=ROOT, output=None):
     root = root.resolve()
-    output = (output or root / "dist").resolve()
+    output = output or root / "dist"
+    if output.is_symlink():
+        raise ValueError("Output symlink refused")
+    output = output.resolve()
     # Only this generated directory is replaced; don't accept arbitrary deletion targets.
     if output != root / "dist":
         raise ValueError("Output must be the repository's dist directory")
-    if output.is_symlink():
-        raise ValueError("Output symlink refused")
+    files = list(package_files(root))
     if output.exists():
         shutil.rmtree(output)
     site = output / "site/agents"
     site.mkdir(parents=True)
-    files = list(package_files(root))
     for name, data in files:
         target = site / name
         target.parent.mkdir(parents=True, exist_ok=True)

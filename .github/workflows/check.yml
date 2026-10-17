@@ -14,7 +14,12 @@ concurrency:
   group: agent-package-${{ github.workflow }}-${{ inputs.source_ref || github.ref }}
   cancel-in-progress: true
 jobs:
+  security:
+    uses: ./.github/workflows/security.yml
+    with:
+      source_ref: ${{ inputs.source_ref || github.sha }}
   checks:
+    needs: security
     strategy:
       fail-fast: false
       matrix:
@@ -25,6 +30,7 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ inputs.source_ref || github.sha }}
+          persist-credentials: false
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'

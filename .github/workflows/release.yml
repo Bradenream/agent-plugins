@@ -34,16 +34,16 @@ jobs:
     uses: ./.github/workflows/check.yml
     with:
       source_ref: ${{ inputs.commit }}
-  draft:
+  assets:
     needs: checks
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ inputs.commit }}
+          fetch-depth: 0
+          persist-credentials: false
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
@@ -52,6 +52,28 @@ jobs:
           RELEASE_COMMIT: ${{ inputs.commit }}
           RELEASE_VERSION: ${{ inputs.version }}
         run: python scripts/prepare_release.py --expected-version "$RELEASE_VERSION" --expected-commit "$RELEASE_COMMIT"
+      - name: Scan the exact release assets
+        run: |
+          bash scripts/install_ci_tools.sh "$RUNNER_TEMP/security-tools"
+          python scripts/scan_secrets.py --gitleaks "$RUNNER_TEMP/security-tools/gitleaks"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: verified-release-assets
+          path: dist/release/
+          if-no-files-found: error
+          retention-days: 7
+  draft:
+    needs: assets
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      # No checkout, source execution, dependency installation, or PR artifacts here.
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: verified-release-assets
+          path: release-assets
       - name: Create an unpublished beta release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -61,8 +83,9 @@ jobs:
         run: |
           set -euo pipefail
           tag="v$RELEASE_VERSION"
-          existing_tags="$(git ls-remote --tags origin "refs/tags/$tag" "refs/tags/$tag^{}")"
-          if [ -n "$existing_tags" ]; then
+          # This job has no Git credentials or checkout; query through the scoped token.
+          existing_tags="$(gh api --paginate "repos/$GH_REPO/git/matching-refs/tags/$tag" --jq '.[].ref')"
+          if printf '%s\n' "$existing_tags" | grep -Fxq "refs/tags/$tag"; then
             echo 'Refusing to replace an existing tag.' >&2
             exit 1
           fi
@@ -71,5 +94,5 @@ jobs:
             exit 1
           fi
           gh release create "$tag" --target "$RELEASE_COMMIT" --draft --prerelease \
-            --title "Voiceflow $tag (beta)" --notes-file dist/release/release-notes.md \
-            dist/release/*.zip dist/release/manifest.json dist/release/SHA256SUMS
+            --title "Voiceflow $tag (beta)" --notes-file release-assets/release-notes.md \
+            release-assets/*.zip release-assets/manifest.json release-assets/SHA256SUMS

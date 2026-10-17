@@ -211,6 +211,7 @@ class PublicationTests(unittest.TestCase):
         self.scratch = tempfile.TemporaryDirectory()
         self.addCleanup(self.scratch.cleanup)
         self.root = Path(self.scratch.name)
+        shutil.copyfile(ROOT / "package-files.txt", self.root / "package-files.txt")
         shutil.copytree(ROOT / "voiceflow", self.root / "voiceflow",
                         ignore=shutil.ignore_patterns("__pycache__"))
 
@@ -271,6 +272,45 @@ class PublicationTests(unittest.TestCase):
             builder.build(self.root, protected)
         self.assertTrue(protected.is_dir())
 
+    def test_extra_local_file_blocks_publication_before_replacing_output(self):
+        site = builder.build(self.root)
+        previous = (site / "voiceflow.zip").read_bytes()
+        for name in (".env", "credentials.json", "notes.md", "private.key"):
+            with self.subTest(name=name):
+                extra = self.root / "voiceflow" / name
+                extra.write_text("synthetic local material", encoding="utf-8")
+                with self.assertRaisesRegex(ValueError, "inventory mismatch"):
+                    builder.build(self.root)
+                self.assertEqual((site / "voiceflow.zip").read_bytes(), previous)
+                extra.unlink()
+
+    def test_inventory_cannot_escape_plugin_or_duplicate_files(self):
+        inventory = self.root / "package-files.txt"
+        for name in ("../outside", "voiceflow/../outside", "/absolute", "voiceflow/a\\b",
+                     "voiceflow/a:b", "voiceflow//file", "voiceflow/LICENSE\nvoiceflow/LICENSE"):
+            inventory.write_text(name + "\n", encoding="utf-8")
+            with self.subTest(name=name), self.assertRaises(ValueError):
+                builder.build(self.root)
+        self.assertFalse((self.root / "dist").exists())
+
+    def test_symlink_in_package_or_output_is_refused(self):
+        outside = self.root / "outside"
+        outside.mkdir()
+        marker = outside / "keep"
+        marker.write_text("preserve", encoding="utf-8")
+        link = self.root / "dist"
+        try:
+            link.symlink_to(outside, target_is_directory=True)
+        except OSError:
+            self.skipTest("Symlink creation unavailable on this host")
+        with self.assertRaisesRegex(ValueError, "symlink"):
+            builder.build(self.root)
+        self.assertEqual(marker.read_text(encoding="utf-8"), "preserve")
+        link.unlink()
+        (self.root / "voiceflow/shortcut").symlink_to(marker)
+        with self.assertRaisesRegex(ValueError, "Symlinks"):
+            builder.build(self.root)
+
 
 class RepositoryTests(unittest.TestCase):
     def test_all_manifests_and_skill_links(self):
@@ -294,6 +334,7 @@ class ReleaseTests(unittest.TestCase):
         self.scratch = tempfile.TemporaryDirectory()
         self.addCleanup(self.scratch.cleanup)
         self.root = Path(self.scratch.name)
+        shutil.copyfile(ROOT / "package-files.txt", self.root / "package-files.txt")
         shutil.copytree(ROOT / "voiceflow", self.root / "voiceflow",
                         ignore=shutil.ignore_patterns("__pycache__"))
         self.site = builder.build(self.root)

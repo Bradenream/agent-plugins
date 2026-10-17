@@ -28,6 +28,8 @@ python3 scripts/build.py
 | `evals/` | Behavioral cases, protocols, and sanitized evidence |
 | `docs/` | Compatibility, release, provenance, and measurement guidance |
 | `dist/` | Generated output; do not commit it |
+| `package-files.txt` | Reviewed list of files allowed into published packages |
+| `AGENTS.md` and `CLAUDE.md` | Shared contributor rules and Claude Code entrypoint |
 
 ## Keep changes focused
 
@@ -41,12 +43,20 @@ Use short skill entrypoints and conditional references. Preserve relative links,
 normal host permissions, user edits, and the shared skill tree. Do not add private
 repository dependencies, internal helpers, or approval-bypass hooks.
 Keep the Voiceflow, Inc. MIT notice in every distributed skill and package.
+When adding a packaged file, review it and add its exact path to
+`package-files.txt`. Unexpected local files must fail packaging, even if ignored
+by Git. Do not regenerate this inventory just to bypass that failure.
 
 ## Verify the right things
 
 The three commands above run offline tests with temporary directories and fake
 credentials. They never sign in or mutate a Voiceflow account. A missing live
 account must not block an ordinary documentation contribution.
+
+Before pushing, install Gitleaks and run `python3 scripts/scan_secrets.py` after
+the build. See [security checks](docs/security-checks.md) for coverage, versions,
+and private handling of findings. CI requires the scanner and tests it against
+synthetic leaks before scanning history, source, and generated archives.
 
 For installer or host packaging changes, maintainers also run the three-OS CI
 jobs and `python3 scripts/verify_hosts.py` with installed Codex/Claude clients;

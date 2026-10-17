@@ -22,7 +22,7 @@ Support is best effort with no response SLA. Report vulnerabilities through
 
 Read current Voiceflow website docs and released CLI help for changed product
 behavior. Run structural validation, unit tests, build, and isolated native host
-verification. Require the Linux, macOS, and Windows CI jobs to pass. Inspect the
+verification. Require the security scan and Linux, macOS, and Windows CI jobs to pass. Inspect the
 archive for license notices, complete references, and unintended material.
 Behavioral changes also require the relevant [acceptance cases](../evals/README.md),
 with unrun checks recorded honestly.
@@ -44,10 +44,13 @@ When protection becomes available through publication, transfer, or a plan chang
 
 - Require a pull request and maintainer review for the default/release branch.
 - Require the three `checks` jobs (Ubuntu, macOS, Windows) from the validation workflow.
+- Require `Secrets and workflow security` from the reusable security workflow.
 - Block force pushes and branch deletion, and dismiss stale approvals.
 - Verify CODEOWNERS resolves to a maintainer with repository access.
 - Enable private vulnerability reporting as an additional route; keep the verified
   security email available independently.
+- Enable and verify GitHub secret scanning and push protection. CI catches
+  committed leaks after upload; push protection helps stop supported secrets before upload.
 
 Confirm the rules in GitHub after enabling them. Written policy or a CODEOWNERS
 file alone is not enforcement. Publication, transfer, and changing a paid plan
@@ -77,8 +80,10 @@ repository's generated `dist/` directory.
 
 Once the workflow is available on the default branch, run **Prepare draft package
 release** in GitHub Actions with an approved full commit SHA and package version.
-It reruns the three-platform checks for that commit, prepares the assets, and
-creates an **unpublished beta draft**. Existing tags/releases are never replaced.
+It reruns security and three-platform checks for that commit, prepares and scans
+the exact assets with read-only permissions, and creates an **unpublished beta
+draft** in a separate write-enabled job that does not execute repository code.
+Existing tags/releases are never replaced.
 No workflow publishes a release automatically. Review its notes, compatibility
 limits, checksums, source commit, and all assets before the owner publishes it.
 For a failed or ambiguous run, inspect existing drafts before retrying.

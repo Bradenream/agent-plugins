@@ -11,6 +11,9 @@ changes; an entry is not proof that a GitHub release or marketplace listing exis
 - Explain docs MCP logging, account permissions, and service/license boundaries.
 - Summarize current compatibility separately from historical evidence.
 - Prepare versioned release archives, checksums, release notes, and a draft-release workflow.
+- Gate CI and release assets on secret scanning; test detection with synthetic canaries.
+- Restrict package contents to a reviewed inventory and isolate release publishing permissions.
+- Add Claude contributor instructions, security check guidance, and Actions dependency updates.
 
 ## 0.4.1 — 2026-10-16 (development milestone)
 

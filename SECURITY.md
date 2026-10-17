@@ -37,3 +37,10 @@ projects, or change permissions. Agents retain normal host execution controls.
 See [data and services](voiceflow/skills/voiceflow/references/data-and-services.md)
 for docs MCP requests, logging, and service boundaries. Removing the skills does
 not revoke OAuth grants or uninstall the CLI.
+
+## Repository safeguards
+
+[Security checks](docs/security-checks.md) document the full-history and artifact
+secret scans, synthetic canary tests, publication inventory, pinned CI tools, and
+release permission boundaries. A real credential finding requires revocation or
+rotation and private maintainer coordination; deleting a file alone is not a fix.

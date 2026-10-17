@@ -4,3 +4,18 @@ __pycache__/
 .DS_Store
 .venv/
 test-results/
+# Local credentials and host state must never become public repository content.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+.npmrc
+.netrc
+.aws/
+.ssh/
+.claude/settings.local.json
+CLAUDE.local.md
+gitleaks-report.*

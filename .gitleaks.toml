@@ -1,0 +1,11 @@
+title = "Voiceflow agent plugins"
+
+# Keep the complete upstream ruleset. Do not baseline away historical findings.
+[extend]
+useDefault = true
+
+[[rules]]
+id = "voiceflow-api-key"
+description = "Voiceflow-prefixed API key"
+regex = '''\bVF\.(?:[A-Z]{2,8}\.)?[A-Za-z0-9_-]{20,}(?:\.[A-Za-z0-9_-]+)*'''
+keywords = ["VF."]
