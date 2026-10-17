@@ -18,17 +18,24 @@ concurrency:
 jobs:
   validate-inputs:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - name: Validate release identifiers
+      # Read the guard from the default branch, never the candidate source commit.
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - name: Verify release source and workflow branch
         env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_REPOSITORY: ${{ github.repository }}
           RELEASE_COMMIT: ${{ inputs.commit }}
           RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_WORKFLOW_REF: ${{ github.ref }}
         run: |
-          python3 - <<'PY'
-          import os, re
-          assert re.fullmatch(r'[a-f0-9]{40}', os.environ['RELEASE_COMMIT']), 'Use a full commit SHA'
-          assert re.fullmatch(r'\d+\.\d+\.\d+', os.environ['RELEASE_VERSION']), 'Use a package version without v'
-          PY
+          python3 scripts/verify_release_source.py \
+            --repository "$RELEASE_REPOSITORY" --commit "$RELEASE_COMMIT" \
+            --version "$RELEASE_VERSION" --workflow-ref "$RELEASE_WORKFLOW_REF"
   checks:
     needs: validate-inputs
     uses: ./.github/workflows/check.yml

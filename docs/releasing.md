@@ -9,7 +9,7 @@ location does not change the package's copyright holder.
 
 This is beta software. Fixes target the newest tagged release; older releases
 and edited forks have no guaranteed backports. Before the first release, the
-implementation branch is a development preview. Package versions follow SemVer:
+default branch is a development preview. Package versions follow SemVer:
 patches correct guidance or compatible behavior, minors add capabilities, and
 breaking changes require an explicit migration note (minor increments while
 0.x). Use [CHANGELOG](../CHANGELOG.md) for customer-visible changes. Package
@@ -46,6 +46,7 @@ When protection becomes available through publication, transfer, or a plan chang
 - Require the three `checks` jobs (Ubuntu, macOS, Windows) from the validation workflow.
 - Require `Secrets and workflow security` from the reusable security workflow.
 - Block force pushes and branch deletion, and dismiss stale approvals.
+- Require workflow approval for all outside contributors.
 - Verify CODEOWNERS resolves to a maintainer with repository access.
 - Enable private vulnerability reporting as an additional route; keep the verified
   security email available independently.
@@ -56,10 +57,23 @@ Confirm the rules in GitHub after enabling them. Written policy or a CODEOWNERS
 file alone is not enforcement. Publication, transfer, and changing a paid plan
 are separate owner decisions.
 
+GitHub Actions policy now permits GitHub-owned actions and repository-local
+workflows, requires full commit-SHA action pins, keeps default tokens read-only,
+and disallows workflow approval of pull requests. Expand the allowed publishers
+only after reviewing a concrete dependency. Fork-workflow approval, native secret
+scanning/push protection, and private reporting are unavailable on this private
+repository and must be enabled and verified at public launch.
+
 ## Prepare a release
 
 A release starts from an approved, clean commit whose package version matches
 the changelog. Rebuild from that commit; never reuse local dirty artifacts.
+The workflow must run from the current default branch, that branch must be
+protected, and the selected commit must already be in its history. The guard is
+loaded from the default branch and rejects API errors, unprotected branches,
+feature-branch dispatches, and unmerged commits before running candidate code.
+While branch protection is unavailable, GitHub draft releases remain blocked;
+local asset preparation remains available for review.
 
 ```sh
 python3 scripts/prepare_release.py --expected-version 0.4.2 --expected-commit FULL_COMMIT_SHA
@@ -78,8 +92,8 @@ Preparation does not create a tag, release, or deployment. It rejects stale or
 tampered content and an existing output directory. Rebuilding replaces only the
 repository's generated `dist/` directory.
 
-Once the workflow is available on the default branch, run **Prepare draft package
-release** in GitHub Actions with an approved full commit SHA and package version.
+After default-branch protection is enabled, run **Prepare draft package release**
+from that branch in GitHub Actions with an approved full commit SHA and package version.
 It reruns security and three-platform checks for that commit, prepares and scans
 the exact assets with read-only permissions, and creates an **unpublished beta
 draft** in a separate write-enabled job that does not execute repository code.
@@ -104,8 +118,8 @@ and publish a corrective package version. Customers can intentionally reinstall
 an earlier package using the same conflict-preserving process, but a website
 rollback does not downgrade installed plugins or revoke OAuth access.
 
-When approved for public launch, promote the implementation to the default branch,
-remove the temporary repository-access note from the README, and test anonymous
+When approved for public launch, remove the temporary repository-access note
+from the README and test anonymous
 retrieval of the setup guide and its references. Keep experimental paths labeled;
 only expand claims after actual host acceptance. Use the
 [website publishing contract](website-publishing.md) for the separate site rollout.

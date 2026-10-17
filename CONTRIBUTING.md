@@ -8,8 +8,8 @@ regression cases. Read the [code of conduct](CODE_OF_CONDUCT.md) and use
 ## Make a change locally
 
 Fork or clone the repository, check out the implementation or release you want
-to improve, and create a feature branch. Until the implementation reaches the
-default branch, start from `codex/voiceflow-agent-plugin` as noted in the README.
+to improve, and create a feature branch. Start from the default branch for the
+development preview or a specific release tag for a released version.
 Use Python 3.10+; no package installation or Voiceflow account is required for
 the default checks.
 

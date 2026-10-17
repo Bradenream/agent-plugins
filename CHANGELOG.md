@@ -14,6 +14,7 @@ changes; an entry is not proof that a GitHub release or marketplace listing exis
 - Gate CI and release assets on secret scanning; test detection with synthetic canaries.
 - Restrict package contents to a reviewed inventory and isolate release publishing permissions.
 - Add Claude contributor instructions, security check guidance, and Actions dependency updates.
+- Require releases to originate from the protected default branch and reject unmerged source commits.
 
 ## 0.4.1 — 2026-10-16 (development milestone)
 
